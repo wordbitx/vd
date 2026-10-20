@@ -1,0 +1,15 @@
+"use client";
+
+import Link from "next/link";
+import { ArrowRight, Minus, Plus, ShoppingBag, Trash2 } from "lucide-react";
+import { useCart } from "@/components/cart-context";
+import { ProductImage } from "@/components/product-image";
+import { products } from "@/lib/site";
+
+export function CartView() {
+  const { items, count, ready, updateQuantity, removeItem, clearCart } = useCart();
+  const entries = items.map((item) => ({ item, product: products.find((product) => product.id === item.id) })).filter((entry): entry is { item: typeof items[number]; product: typeof products[number] } => Boolean(entry.product));
+  if (!ready) return <div className="loading-state" role="status">Loading your demo cart...</div>;
+  if (!entries.length) return <div className="empty-state cart-empty"><ShoppingBag size={31} /><h2>Your cart is waiting for something lovely.</h2><p>Browse the demo pet shop and add a few essentials. Nothing is reserved or purchased until the hospital confirms your enquiry.</p><Link href="/shop" className="button button-primary">Explore the pet shop <ArrowRight size={17} /></Link></div>;
+  return <div className="cart-layout"><div className="cart-items"><div className="cart-items-heading"><h2>Your items <span>({count})</span></h2><button type="button" onClick={clearCart}>Clear cart</button></div>{entries.map(({ item, product }) => <article className="cart-item" key={item.id}><Link href={`/shop/${product.slug}`} className="cart-item-image"><ProductImage product={product} /></Link><div className="cart-item-main"><span className="product-category">DEMO PRODUCT</span><h3><Link href={`/shop/${product.slug}`}>{product.name}</Link></h3><p>Price & availability on enquiry</p><div className="cart-item-controls"><div className="quantity-control"><button type="button" onClick={() => updateQuantity(item.id, item.quantity - 1)} disabled={item.quantity <= 1} aria-label={`Decrease ${product.name} quantity`}><Minus size={15} /></button><span aria-live="polite">{item.quantity}</span><button type="button" onClick={() => updateQuantity(item.id, item.quantity + 1)} disabled={item.quantity >= 99} aria-label={`Increase ${product.name} quantity`}><Plus size={15} /></button></div><button type="button" className="remove-item" onClick={() => removeItem(item.id)} aria-label={`Remove ${product.name}`}><Trash2 size={16} /> Remove</button></div></div></article>)}<Link href="/shop" className="back-link">← Continue browsing</Link></div><aside className="cart-summary"><span className="eyebrow">ORDER ENQUIRY</span><h2>Review your basket</h2><div className="cart-summary-row"><span>Items</span><strong>{count}</strong></div><div className="cart-summary-row"><span>Prices</span><strong>On enquiry</strong></div><p>This is a demonstration cart. Product price and stock will be confirmed by the hospital. No online payment is taken.</p><Link href="/checkout" className="button button-primary">Continue to enquiry <ArrowRight size={17} /></Link><small>Sending an enquiry does not place or confirm an order.</small></aside></div>;
+}
