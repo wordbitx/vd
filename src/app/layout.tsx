@@ -5,19 +5,19 @@ import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { business } from "@/lib/site";
 import { siteBaseUrl } from "@/lib/metadata";
-import { Fraunces, Manrope } from "next/font/google";
+import "@fontsource-variable/manrope";
+import "@fontsource-variable/fraunces";
 import "./globals.css";
 import "./interior.css";
 import "./premium.css";
-
-const manrope = Manrope({ subsets: ["latin"], variable: "--font-manrope", display: "swap", fallback: ["Arial", "sans-serif"] });
-const fraunces = Fraunces({ subsets: ["latin"], variable: "--font-fraunces", display: "swap", style: ["normal", "italic"], axes: ["opsz"], fallback: ["Georgia", "serif"] });
+import "./luxury.css";
+import "./portal.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteBaseUrl),
   robots: process.env.NEXT_PUBLIC_SITE_URL ? { index: true, follow: true } : { index: false, follow: false },
-  title: { default: "Jawad Veterinary Hospital | Veterinary Care & Pet Shop in Lahore", template: "%s | Jawad Veterinary Hospital" },
-  description: "Explore veterinary care options and pet essentials at Jawad Veterinary Hospital in Al Kabir Town, Lahore. Contact the team to plan your pet’s visit.",
+  title: { default: "Jawad Veterinary Hospital | Vet Care, Pet Mall & Home Visits in Lahore", template: "%s | Jawad Veterinary Hospital" },
+  description: "Jawad Veterinary Hospital, Al Kabir Town Lahore — book hospital & home vet visits online with instant booking slip, shop the Pet Mall, manage your Digital Pet Passport, and adopt a pet.",
   openGraph: { siteName: business.name, type: "website", locale: "en_PK" },
   twitter: { card: "summary_large_image" },
 };
@@ -37,7 +37,7 @@ const structuredData = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
-      <body className={`${manrope.variable} ${fraunces.variable}`}>
+      <body>
         <a href="#main-content" className="skip-link">Skip to content</a>
         <CartProvider><SiteHeader />{children}<SiteFooter /></CartProvider>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, "\\u003c") }} />

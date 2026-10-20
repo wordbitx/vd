@@ -1,0 +1,253 @@
+/* Jawad Veterinary Hospital — Luxury layer (Midnight Navy + Champagne Gold).
+   Loaded last. Public-site additions: gold buttons, hero doctor card, Pet Mall
+   pricing, adoption, reviews, fees, FAQs and emergency band. */
+
+:root{
+  --navy:#0a2540; --navy-deep:#071a30; --navy-royal:#14509e;
+  --gold:#c6a469; --gold-dark:#9d7c43; --gold-pale:#f4eddd;
+  --ivory:#fbf9f3; --emergency:#b3261e; --emergency-dark:#8c1d18;
+}
+
+/* Buttons */
+.button-gold{background:linear-gradient(180deg,#d8ba7d 0%,#b28c4a 100%);color:#231806;border:1px solid rgba(120,90,30,.45);box-shadow:0 16px 30px -16px rgba(120,90,30,.75),inset 0 1px 0 rgba(255,255,255,.55)}
+.button-gold:hover{background:linear-gradient(180deg,#e4c98c 0%,#bd9752 100%)}
+.button-emergency{background:linear-gradient(180deg,#c62f27,#9c2018);color:#fff;border:1px solid rgba(120,20,14,.5);box-shadow:0 14px 28px -16px rgba(156,32,24,.8)}
+.button-emergency:hover{background:linear-gradient(180deg,#d63a30,#a9241b)}
+.button-danger-outline{border-color:#e3b3ae;color:var(--emergency);background:#fff}
+.button-danger-outline:hover{background:#fdf1f0;border-color:var(--emergency)}
+
+/* Header additions */
+.header-login{display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:800;color:var(--navy);white-space:nowrap}
+.header-login:hover{color:var(--navy-royal)}
+.header-emergency{min-height:39px;padding:10px 15px;font-size:10.5px}
+.header-account{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:800;color:var(--navy)}
+.header-account .avatar-dot{width:30px;height:30px;border-radius:50%;background:linear-gradient(160deg,var(--navy),var(--navy-royal));color:#f3e7c8;display:grid;place-items:center;font-size:10px;letter-spacing:.04em;border:1px solid rgba(198,164,105,.6)}
+.mobile-menu-section{padding:14px 4px 4px;font-size:9.5px;font-weight:800;letter-spacing:.18em;color:var(--gold-dark);text-transform:uppercase;grid-column:1/-1}
+.mobile-bottom-bar>a.emergency-link{color:var(--emergency);border-color:#eec5c1;background:#fdf3f2}
+
+/* Announcement */
+.announcement{margin:0;background:linear-gradient(90deg,var(--navy-deep),var(--navy) 55%,var(--navy-deep));color:#f3e7c8;text-align:center;font-size:11.5px;font-weight:700;letter-spacing:.05em;padding:9px 16px}
+
+/* Hero: vetsondoor-style trust chips + doctor card + passport access */
+.hero-badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.hero-badges span{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.85);border:1px solid rgba(157,124,67,.4);color:var(--navy);border-radius:999px;padding:7px 12px;font-size:10px;font-weight:800;letter-spacing:.05em}
+.hero-badges svg{color:var(--gold-dark)}
+.hero-doctor-card{position:absolute;left:22px;bottom:22px;z-index:3;display:flex;gap:12px;align-items:center;background:rgba(255,255,255,.96);border:1px solid rgba(198,164,105,.55);border-radius:16px;padding:12px 16px 12px 12px;box-shadow:0 22px 45px -20px rgba(6,24,44,.55);max-width:min(92%,430px)}
+.hero-doctor-photo{position:relative;width:58px;height:58px;border-radius:12px;overflow:hidden;flex:none;border:1px solid rgba(198,164,105,.6)}
+.hero-doctor-photo img{object-fit:cover}
+.hero-doctor-card h3{font-size:13.5px;margin:0;color:var(--navy);letter-spacing:-.02em}
+.hero-doctor-card p{font-size:10px;margin:3px 0 7px;color:#5f6b73;font-weight:700}
+.hero-doctor-tags{display:flex;gap:5px;flex-wrap:wrap}
+.hero-doctor-tags span{font-size:8.5px;font-weight:800;letter-spacing:.07em;background:var(--gold-pale);color:#7c5f26;border-radius:5px;padding:3px 6px;text-transform:uppercase}
+.hero-doctor-wa{margin-left:6px;flex:none;width:40px;height:40px;border-radius:50%;background:#1faa59;color:#fff;display:grid;place-items:center;box-shadow:0 10px 20px -10px rgba(31,170,89,.9)}
+.hero-doctor-wa:hover{background:#178a48}
+.hero-rated{position:absolute;top:20px;right:20px;z-index:3;background:rgba(7,26,48,.88);color:#f3e7c8;border:1px solid rgba(198,164,105,.55);border-radius:12px;padding:9px 13px;font-size:10px;font-weight:800;letter-spacing:.08em;display:flex;align-items:center;gap:7px}
+.hero-rated .stars-inline{color:#e9c766;letter-spacing:1px}
+.passport-access{display:flex;align-items:center;gap:14px;margin-top:26px;background:#fff;border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:14px;padding:14px 16px;box-shadow:0 14px 30px -22px rgba(10,30,52,.45);max-width:560px}
+.passport-access>span{width:42px;height:42px;flex:none;border-radius:11px;background:linear-gradient(160deg,var(--navy),var(--navy-royal));color:#f3e7c8;display:grid;place-items:center}
+.passport-access p{margin:0;font-size:11.5px;line-height:1.6;color:#45525d}
+.passport-access p strong{color:var(--navy);display:block;font-size:12.5px}
+.passport-access .button{margin-left:auto;flex:none}
+.stats-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:0;background:#fff;border:1px solid var(--line);border-radius:16px;margin-top:34px;overflow:hidden;box-shadow:0 18px 40px -28px rgba(10,30,52,.4)}
+.stats-strip>div{padding:20px 18px;text-align:center}
+.stats-strip>div:not(:first-child){border-left:1px solid var(--line)}
+.stats-strip strong{display:block;font-family:var(--display);font-size:27px;font-weight:600;color:var(--navy);letter-spacing:-.02em}
+.stats-strip strong em{font-style:normal;color:var(--gold-dark)}
+.stats-strip small{font-size:9.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#7a868e}
+
+/* Portal promo (replaces app card) */
+.portal-promo{display:flex;align-items:center;gap:18px;background:linear-gradient(120deg,var(--navy-deep),var(--navy) 60%,#0d3054);color:#eef2f7;border-radius:20px;padding:26px 28px;margin-top:22px;border:1px solid rgba(198,164,105,.5);box-shadow:0 26px 50px -28px rgba(6,24,44,.7)}
+.portal-promo .pp-icon{width:56px;height:56px;flex:none;border-radius:15px;background:rgba(255,255,255,.08);border:1px solid rgba(198,164,105,.55);display:grid;place-items:center;color:#e9c766}
+.portal-promo h3{margin:0 0 5px;font-size:19px;color:#fff}
+.portal-promo p{margin:0;font-size:12px;line-height:1.7;color:#c3d0dd;max-width:560px}
+.portal-promo .button{margin-left:auto;flex:none}
+
+/* Trust advantages (numbered) */
+.advantage-index{display:inline-flex;align-items:center;gap:8px;font-size:9px;font-weight:800;letter-spacing:.18em;color:var(--gold);text-transform:uppercase;margin-bottom:10px}
+.advantage-index i{font-style:normal;font-family:var(--display);font-size:21px;letter-spacing:0;color:rgba(255,255,255,.35)}
+
+/* How it works */
+.how-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:17px}
+.how-step{position:relative;background:#fff;border:1px solid var(--line);border-radius:16px;padding:26px 24px 24px;box-shadow:0 14px 34px -26px rgba(10,30,52,.35)}
+.how-step .step-num{width:44px;height:44px;border-radius:50%;background:linear-gradient(160deg,var(--navy),var(--navy-royal));color:#f3e7c8;font-family:var(--display);font-size:19px;display:grid;place-items:center;border:1px solid rgba(198,164,105,.65);margin-bottom:16px}
+.how-step h3{font-size:16px;margin:0 0 8px;color:var(--navy)}
+.how-step p{font-size:12px;line-height:1.75;color:#5f6b73;margin:0}
+.how-step:not(:last-child):after{content:"→";position:absolute;top:38px;right:-16px;z-index:2;width:30px;height:30px;border-radius:50%;background:var(--gold-pale);border:1px solid rgba(157,124,67,.5);color:var(--gold-dark);display:grid;place-items:center;font-weight:800}
+
+/* Meet the vet */
+.meet-vet-grid{display:grid;grid-template-columns:42% 58%;gap:52px;align-items:center}
+.vet-photo-wrap{position:relative;border-radius:22px;overflow:hidden;min-height:520px;background:#e9e2d0;box-shadow:0 30px 60px -30px rgba(6,24,44,.55)}
+.vet-photo-wrap img{object-fit:cover}
+.exp-badge{position:absolute;right:18px;bottom:18px;background:rgba(7,26,48,.92);border:1px solid rgba(198,164,105,.6);color:#f3e7c8;border-radius:14px;padding:13px 17px;text-align:center}
+.exp-badge strong{display:block;font-family:var(--display);font-size:24px;color:#fff}
+.exp-badge small{font-size:8.5px;font-weight:800;letter-spacing:.16em;text-transform:uppercase}
+.vet-quote{font-family:var(--display);font-style:italic;font-size:19px;line-height:1.65;color:#33424f;border-left:3px solid var(--gold);padding-left:20px;margin:22px 0}
+.cred-chips{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 26px}
+.cred-chips span{display:inline-flex;align-items:center;gap:6px;border:1px solid rgba(157,124,67,.5);background:#fff;border-radius:999px;padding:8px 13px;font-size:10px;font-weight:800;letter-spacing:.05em;color:var(--navy)}
+.cred-chips svg{color:var(--gold-dark)}
+
+/* Reviews */
+.reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.review-card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px;box-shadow:0 14px 34px -28px rgba(10,30,52,.4);display:flex;flex-direction:column}
+.review-head{display:flex;align-items:center;gap:11px;margin-bottom:12px}
+.review-avatar{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:800;font-size:13px;flex:none}
+.review-head strong{display:block;font-size:13px;color:var(--navy)}
+.review-head small{font-size:10px;color:#7a868e;font-weight:700}
+.review-g{margin-left:auto;font-family:var(--display);font-weight:700;font-size:17px;color:#42505c}
+.review-g i{font-style:normal;color:#4285f4}.review-g b{color:#ea4335}.review-g u{text-decoration:none;color:#fbbc04}.review-g s{text-decoration:none;color:#34a853}
+.stars{color:#e9a93d;letter-spacing:2px;font-size:13px;margin-bottom:10px}
+.review-card p{font-size:12.3px;line-height:1.8;color:#4d5a64;margin:0}
+
+/* Adopt */
+.adopt-filters{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:26px}
+.adopt-filters button,.adopt-filters a{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);background:#fff;border-radius:999px;padding:10px 17px;font-size:11px;font-weight:800;color:#4d5a64;cursor:pointer;transition:all .2s}
+.adopt-filters button:hover,.adopt-filters a:hover{border-color:var(--gold)}
+.adopt-filters .filter-active{background:var(--navy);color:#f3e7c8;border-color:var(--navy)}
+.adopt-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.adopt-card{background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:0 14px 32px -26px rgba(10,30,52,.4);transition:transform .2s,box-shadow .2s;display:flex;flex-direction:column}
+.adopt-card:hover{transform:translateY(-4px);box-shadow:0 22px 40px -24px rgba(10,30,52,.5)}
+.adopt-photo{position:relative;height:215px;background:#e9e2d0}
+.adopt-photo img{object-fit:cover}
+.adopt-badges{position:absolute;top:10px;left:10px;display:flex;gap:6px;z-index:2}
+.adopt-badges span{font-size:8.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;background:rgba(255,255,255,.94);color:var(--navy);border-radius:6px;padding:4px 7px}
+.adopt-badges .badge-vax{background:#1faa59;color:#fff}
+.adopt-body{padding:15px 16px 16px;display:flex;flex-direction:column;flex:1}
+.adopt-body h3{font-size:16px;margin:0;color:var(--navy);text-transform:capitalize}
+.adopt-meta{font-size:10.5px;color:#7a868e;font-weight:700;margin:4px 0 10px}
+.adopt-meta b{color:var(--gold-dark)}
+.adopt-body p{font-size:11.3px;line-height:1.65;color:#5f6b73;margin:0 0 14px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.adopt-actions{display:flex;gap:8px;margin-top:auto}
+.adopt-actions .button{flex:1;padding-inline:10px}
+.button-whatsapp{background:#1faa59;color:#fff;border:1px solid #178a48}
+.button-whatsapp:hover{background:#178a48}
+.adopt-detail-grid{display:grid;grid-template-columns:46% 54%;gap:44px;align-items:start}
+.adopt-detail-photo{position:relative;border-radius:20px;overflow:hidden;min-height:440px;background:#e9e2d0}
+.adopt-detail-photo img{object-fit:cover}
+.pet-fact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:20px 0}
+.pet-fact-grid>div{border:1px solid var(--line);border-radius:12px;padding:12px 13px;background:#fff}
+.pet-fact-grid span{display:block;font-size:8.5px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;color:#9aa39b;margin-bottom:5px}
+.pet-fact-grid strong{font-size:12.5px;color:var(--navy)}
+
+/* Fees */
+.fee-hero-facts{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
+.fee-hero-facts span{display:inline-flex;align-items:center;gap:7px;background:#fff;border:1px solid rgba(157,124,67,.45);border-radius:999px;padding:9px 14px;font-size:10.5px;font-weight:800;color:var(--navy)}
+.fee-hero-facts svg{color:var(--gold-dark)}
+.included-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.included-grid>div{display:flex;gap:11px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:13px;padding:16px}
+.included-grid svg{color:var(--gold-dark);flex:none;margin-top:1px}
+.included-grid p{margin:0;font-size:12px;line-height:1.65;color:#45525d;font-weight:600}
+.fee-group{margin-bottom:34px}
+.fee-group-head{display:flex;align-items:baseline;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:13px}
+.fee-group-head h3{font-size:21px;margin:0;color:var(--navy)}
+.fee-group-head p{margin:0;font-size:11.5px;color:#7a868e;font-weight:600}
+.fees-table-wrap{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#fff;box-shadow:0 14px 30px -28px rgba(10,30,52,.35)}
+.fees-table{width:100%;border-collapse:collapse;font-size:12.5px}
+.fees-table th{text-align:left;background:linear-gradient(180deg,var(--navy),var(--navy-deep));color:#e9eef4;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;padding:12px 16px}
+.fees-table td{padding:13px 16px;border-top:1px solid #f0e9d8;color:#3d4c5a;vertical-align:top}
+.fees-table tr:nth-child(even) td{background:#fdfaf2}
+.fees-table td.fee-price{font-weight:800;color:var(--navy);white-space:nowrap}
+.fees-table td small{color:#93a0a8;font-weight:600}
+
+/* FAQs */
+.faq-list{display:grid;gap:11px;max-width:880px}
+.faq-item{background:#fff;border:1px solid var(--line);border-radius:13px;overflow:hidden}
+.faq-item summary{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:17px 20px;cursor:pointer;font-size:13.5px;font-weight:800;color:var(--navy);list-style:none}
+.faq-item summary::-webkit-details-marker{display:none}
+.faq-item summary svg{flex:none;color:var(--gold-dark);transition:transform .25s}
+.faq-item[open] summary svg{transform:rotate(45deg)}
+.faq-item .faq-body{padding:0 20px 18px;font-size:12.5px;line-height:1.85;color:#55636e}
+.faq-item[open]{border-color:rgba(157,124,67,.55);box-shadow:0 12px 26px -22px rgba(10,30,52,.4)}
+
+/* Emergency band */
+.emergency-band{background:linear-gradient(120deg,#5f130e,var(--emergency-dark) 55%,#6d1712);border-radius:22px;color:#fff;padding:38px 40px;display:flex;align-items:center;gap:30px;border:1px solid rgba(255,255,255,.15);box-shadow:0 30px 55px -30px rgba(120,20,14,.8)}
+.emergency-band .eb-icon{width:66px;height:66px;flex:none;border-radius:50%;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.3);display:grid;place-items:center}
+.emergency-band h2{color:#fff;margin:0 0 8px;font-size:30px}
+.emergency-band p{margin:0;font-size:13px;line-height:1.75;color:#f6dad7;max-width:620px}
+.emergency-band .eb-actions{margin-left:auto;display:flex;flex-direction:column;gap:10px;flex:none}
+.emergency-band .button-call{background:#fff;color:var(--emergency-dark)}
+.emergency-band .button-call:hover{background:#ffe9e6}
+
+/* Areas */
+.areas-strip{display:flex;flex-wrap:wrap;gap:8px}
+.areas-strip a,.areas-strip span{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 13px;font-size:10.5px;font-weight:700;color:#45525d}
+.areas-strip svg{color:var(--gold-dark)}
+
+/* Product pricing & packshots */
+.product-price{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.product-price .price-now{font-size:15px;font-weight:800;color:var(--navy);letter-spacing:-.02em}
+.product-price .price-was{font-size:11px;color:#a3adb3;text-decoration:line-through;font-weight:700}
+.sale-badge{position:absolute;top:10px;right:10px;z-index:3;background:linear-gradient(180deg,#c62f27,#9c2018);color:#fff;font-size:9.5px;font-weight:800;letter-spacing:.06em;border-radius:7px;padding:5px 8px;box-shadow:0 8px 16px -8px rgba(156,32,24,.8)}
+.stock-note{font-size:10px;font-weight:800;letter-spacing:.04em}
+.stock-note.in{color:#178a48}.stock-note.low{color:#b26a00}.stock-note.out{color:var(--emergency)}
+.product-packshot{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:18px}
+.packshot-scene{width:min(72%,190px);aspect-ratio:1/1;position:relative;display:grid;place-items:center}
+.packshot-scene svg{width:100%;height:100%}
+.packshot-caption{font-size:8.5px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:rgba(10,37,64,.55);text-align:center}
+.shop-trust-cards{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:22px}
+.shop-trust-cards>div{border:1px solid var(--line);border-radius:13px;padding:16px;background:#fff}
+.shop-trust-cards svg{color:var(--gold-dark);margin-bottom:8px}
+.shop-trust-cards h3{font-size:13px;margin:0 0 5px;color:var(--navy)}
+.shop-trust-cards p{margin:0;font-size:11.5px;line-height:1.65;color:#5f6b73}
+.price-detail{display:flex;align-items:baseline;gap:11px;flex-wrap:wrap;margin:14px 0 4px}
+.price-detail .price-now{font-family:var(--display);font-size:36px;font-weight:600;color:var(--navy);letter-spacing:-.03em}
+.price-detail .price-was{font-size:16px;color:#a3adb3;text-decoration:line-through;font-weight:700}
+.price-save{background:#fdecea;color:var(--emergency);font-size:10px;font-weight:800;border-radius:6px;padding:4px 8px}
+.sort-field{display:flex;align-items:center;gap:8px;font-size:11px;font-weight:800;color:#55636e}
+.sort-field select{border:1px solid var(--line);background:#fff;border-radius:9px;padding:9px 10px;font-size:11.5px;font-weight:700;color:var(--navy)}
+
+/* Service booking strip */
+.service-book-strip{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:16px}
+.service-fee-note{display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:800;color:#7c5f26;background:var(--gold-pale);border:1px solid rgba(157,124,67,.4);border-radius:999px;padding:8px 13px}
+
+/* Misc */
+.section-ivory{background:linear-gradient(180deg,#fdfaf3,#f8f2e4)}
+.section-navy{background:linear-gradient(180deg,var(--navy),var(--navy-deep));color:#dbe5ef}
+.section-navy h2{color:#fff}
+.section-navy .section-header p{color:#aebfd1}
+.gallery-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.gallery-strip-item{position:relative;height:230px;border-radius:14px;overflow:hidden}
+.gallery-strip-item img{object-fit:cover}
+.gallery-strip-item span{position:absolute;left:13px;bottom:12px;right:13px;color:#fff;font-size:11px;font-weight:700;text-shadow:0 2px 10px rgba(4,16,31,.8);z-index:2}
+.gallery-strip-item:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(5,20,38,.55))}
+
+@media(max-width:1030px){
+  .adopt-grid{grid-template-columns:repeat(3,1fr)}
+  .reviews-grid{grid-template-columns:repeat(2,1fr)}
+  .meet-vet-grid{grid-template-columns:1fr;gap:34px}
+  .vet-photo-wrap{min-height:420px}
+  .adopt-detail-grid{grid-template-columns:1fr;gap:28px}
+  .gallery-strip{grid-template-columns:repeat(2,1fr)}
+  .included-grid{grid-template-columns:repeat(2,1fr)}
+  .emergency-band{flex-direction:column;align-items:flex-start;padding:30px 24px}
+  .emergency-band .eb-actions{margin-left:0;flex-direction:row;flex-wrap:wrap}
+  .portal-promo{flex-direction:column;align-items:flex-start}
+  .portal-promo .button{margin-left:0}
+}
+@media(max-width:700px){
+  .stats-strip{grid-template-columns:repeat(2,1fr)}
+  .stats-strip>div:nth-child(3){border-left:0}
+  .stats-strip>div{border-top:1px solid var(--line)}
+  .stats-strip>div:nth-child(1),.stats-strip>div:nth-child(2){border-top:0}
+  .how-steps{grid-template-columns:1fr}
+  .how-step:not(:last-child):after{display:none}
+  .adopt-grid{grid-template-columns:repeat(2,1fr);gap:11px}
+  .adopt-photo{height:150px}
+  .adopt-body{padding:12px}
+  .adopt-body h3{font-size:13.5px}
+  .adopt-body p{display:none}
+  .reviews-grid{grid-template-columns:1fr}
+  .hero-doctor-card{left:12px;right:12px;bottom:12px;max-width:none;padding:10px}
+  .hero-doctor-photo{width:46px;height:46px}
+  .hero-doctor-card h3{font-size:12px}
+  .hero-rated{top:12px;right:12px;padding:7px 10px}
+  .passport-access{flex-wrap:wrap}
+  .passport-access .button{margin-left:0;width:100%}
+  .included-grid{grid-template-columns:1fr}
+  .pet-fact-grid{grid-template-columns:repeat(2,1fr)}
+  .adopt-detail-photo{min-height:300px}
+  .gallery-strip-item{height:170px}
+  .shop-trust-cards{grid-template-columns:1fr}
+  .fees-table{font-size:11px}
+  .fees-table th,.fees-table td{padding:10px 11px}
+  .header-emergency{display:none}
+}

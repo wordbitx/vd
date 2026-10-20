@@ -1,15 +1,71 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, Minus, Plus, ShoppingBag, Trash2 } from "lucide-react";
+import { ArrowLeft, ArrowRight, Minus, Plus, ShoppingBag, Trash2, Truck } from "lucide-react";
 import { useCart } from "@/components/cart-context";
 import { ProductImage } from "@/components/product-image";
-import { products } from "@/lib/site";
+import { pkr } from "@/lib/format";
 
-export function CartView() {
-  const { items, count, ready, updateQuantity, removeItem, clearCart } = useCart();
-  const entries = items.map((item) => ({ item, product: products.find((product) => product.id === item.id) })).filter((entry): entry is { item: typeof items[number]; product: typeof products[number] } => Boolean(entry.product));
-  if (!ready) return <div className="loading-state" role="status">Loading your demo cart...</div>;
-  if (!entries.length) return <div className="empty-state cart-empty"><ShoppingBag size={31} /><h2>Your cart is waiting for something lovely.</h2><p>Browse the demo pet shop and add a few essentials. Nothing is reserved or purchased until the hospital confirms your enquiry.</p><Link href="/shop" className="button button-primary">Explore the pet shop <ArrowRight size={17} /></Link></div>;
-  return <div className="cart-layout"><div className="cart-items"><div className="cart-items-heading"><h2>Your items <span>({count})</span></h2><button type="button" onClick={clearCart}>Clear cart</button></div>{entries.map(({ item, product }) => <article className="cart-item" key={item.id}><Link href={`/shop/${product.slug}`} className="cart-item-image"><ProductImage product={product} /></Link><div className="cart-item-main"><span className="product-category">DEMO PRODUCT</span><h3><Link href={`/shop/${product.slug}`}>{product.name}</Link></h3><p>Price & availability on enquiry</p><div className="cart-item-controls"><div className="quantity-control"><button type="button" onClick={() => updateQuantity(item.id, item.quantity - 1)} disabled={item.quantity <= 1} aria-label={`Decrease ${product.name} quantity`}><Minus size={15} /></button><span aria-live="polite">{item.quantity}</span><button type="button" onClick={() => updateQuantity(item.id, item.quantity + 1)} disabled={item.quantity >= 99} aria-label={`Increase ${product.name} quantity`}><Plus size={15} /></button></div><button type="button" className="remove-item" onClick={() => removeItem(item.id)} aria-label={`Remove ${product.name}`}><Trash2 size={16} /> Remove</button></div></div></article>)}<Link href="/shop" className="back-link">← Continue browsing</Link></div><aside className="cart-summary"><span className="eyebrow">ORDER ENQUIRY</span><h2>Review your basket</h2><div className="cart-summary-row"><span>Items</span><strong>{count}</strong></div><div className="cart-summary-row"><span>Prices</span><strong>On enquiry</strong></div><p>This is a demonstration cart. Product price and stock will be confirmed by the hospital. No online payment is taken.</p><Link href="/checkout" className="button button-primary">Continue to enquiry <ArrowRight size={17} /></Link><small>Sending an enquiry does not place or confirm an order.</small></aside></div>;
+export function CartView({ deliveryFee = 250, freeAbove = 5000 }: { deliveryFee?: number; freeAbove?: number }) {
+  const { items, subtotal, ready, updateQuantity, removeItem, clearCart } = useCart();
+  if (!ready) return <div className="loading-state" role="status">Loading your cart…</div>;
+  if (!items.length) {
+    return (
+      <div className="empty-state cart-empty">
+        <ShoppingBag size={31} />
+        <h2>Your cart is feeling light.</h2>
+        <p>Add something your pet will love from the Pet Mall — food, toys, grooming and more, delivered across Lahore.</p>
+        <Link href="/shop" className="button button-primary">Browse the Pet Mall <ArrowRight size={17} /></Link>
+      </div>
+    );
+  }
+  const delivery = subtotal >= freeAbove ? 0 : deliveryFee;
+  const awayFromFree = Math.max(0, freeAbove - subtotal);
+
+  return (
+    <div className="cart-layout">
+      <div className="cart-items">
+        <div className="cart-items-heading">
+          <h2>{items.length} {items.length === 1 ? "product" : "products"} <span>· {items.reduce((sum, item) => sum + item.quantity, 0)} items</span></h2>
+          <button type="button" onClick={clearCart}>Clear cart</button>
+        </div>
+        {items.map((item) => (
+          <div className="cart-item" key={item.id}>
+            <Link href={`/shop/${item.slug}`} className="cart-item-image" aria-label={item.name}>
+              <ProductImage product={item} />
+            </Link>
+            <div className="cart-item-main">
+              <h3><Link href={`/shop/${item.slug}`}>{item.name}</Link></h3>
+              <p>{item.unit ? `${item.unit} · ` : ""}{pkr(item.price)} each</p>
+              <div className="cart-item-controls">
+                <div className="quantity-control" aria-label={`Quantity for ${item.name}`}>
+                  <button type="button" onClick={() => updateQuantity(item.id, item.quantity - 1)} aria-label="Decrease quantity" disabled={item.quantity <= 1}><Minus size={15} /></button>
+                  <span aria-live="polite">{item.quantity}</span>
+                  <button type="button" onClick={() => updateQuantity(item.id, item.quantity + 1)} aria-label="Increase quantity" disabled={item.quantity >= 99}><Plus size={15} /></button>
+                </div>
+                <strong style={{ color: "#0a2540", fontSize: 15 }}>{pkr(item.price * item.quantity)}</strong>
+                <button type="button" className="remove-item" onClick={() => removeItem(item.id)}><Trash2 size={14} /> Remove</button>
+              </div>
+            </div>
+          </div>
+        ))}
+        <Link href="/shop" className="back-link"><ArrowLeft size={16} /> Continue shopping</Link>
+      </div>
+      <aside className="cart-summary">
+        <span className="eyebrow">ORDER SUMMARY</span>
+        <h2>{pkr(subtotal + delivery)}</h2>
+        <div className="cart-summary-row"><span>Subtotal</span><strong>{pkr(subtotal)}</strong></div>
+        <div className="cart-summary-row"><span>Delivery (Lahore)</span><strong>{delivery === 0 ? "FREE" : pkr(delivery)}</strong></div>
+        <p>
+          <Truck size={14} style={{ verticalAlign: -2, marginRight: 5 }} />
+          {awayFromFree > 0
+            ? `Add ${pkr(awayFromFree)} more for free delivery.`
+            : "You've unlocked free delivery!"}{" "}
+          Pay cash on delivery, Easypaisa, JazzCash or bank transfer.
+        </p>
+        <Link href="/checkout" className="button button-gold">Proceed to checkout <ArrowRight size={16} /></Link>
+        <small>Final prices &amp; stock are confirmed when your order is placed. You&apos;ll receive a printable invoice instantly.</small>
+      </aside>
+    </div>
+  );
 }

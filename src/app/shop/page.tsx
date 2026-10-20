@@ -1,17 +1,48 @@
 import Link from "next/link";
-import { ArrowRight, ShoppingBag } from "lucide-react";
+import { ArrowRight, BadgeCheck, ShoppingBag, Truck, Wallet } from "lucide-react";
 import { ShopCatalog } from "@/components/shop-catalog";
-import { DemoNotice, PageHero } from "@/components/page-parts";
+import { PageHero } from "@/components/page-parts";
+import { listProducts } from "@/lib/hospital-db";
 import { categories } from "@/lib/site";
 import { pageMetadata } from "@/lib/metadata";
 
-export const metadata = pageMetadata("Pet Shop in Lahore", "Explore demo pet food, toys, grooming, beds, carriers and everyday essentials at Jawad Veterinary Hospital. Enquire to confirm real prices and availability.", "/shop", "/images/pet-shop.jpg");
+export const metadata = pageMetadata(
+  "Pet Mall — Buy Pet Food & Supplies Online in Lahore",
+  "Shop premium pet food, toys, grooming, beds, carriers and essentials at the Jawad Pet Mall. Lahore-wide delivery, cash on delivery, Easypaisa & JazzCash accepted.",
+  "/shop",
+  "/images/pet-shop.jpg",
+);
+
+export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
 
 export default async function ShopPage({ searchParams }: { searchParams: Promise<{ category?: string }> }) {
   const { category } = await searchParams;
+  const products = listProducts(true);
   const initialCategory = categories.some((item) => item.slug === category) ? category : "";
-  return <main id="main-content">
-    <PageHero eyebrow="JAWAD PET SHOP" title="Everything your pet needs, all in one place." description="Discover everyday essentials for your pet’s nutrition, comfort, playtime and care. This shoppable preview shows representative items; enquire with the hospital for the actual range." image="/images/pet-shop.jpg" imageAlt="Illustrative shelves of pet food and accessories in a boutique pet store"><Link href="/cart" className="button button-primary"><ShoppingBag size={17} /> View demo cart <ArrowRight size={16} /></Link></PageHero>
-    <section className="shop-catalog-section"><div className="container"><DemoNotice>All product names and photographs are sample content. Brands, prices, sizes and stock status are pending client confirmation; no live inventory or online payment is connected.</DemoNotice><ShopCatalog initialCategory={initialCategory ?? ""} /></div></section>
-  </main>;
+  return (
+    <main id="main-content">
+      <PageHero
+        eyebrow="Jawad PET MALL"
+        title="Everything your pet will love."
+        description="Food, toys, care essentials and everyday favourites — genuine products, honest PKR prices and fast Lahore delivery."
+        image="/images/pet-shop.jpg"
+        imageAlt="Inside the Jawad Pet Mall boutique"
+      >
+        <Link href="/cart" className="button button-primary"><ShoppingBag size={17} /> View cart <ArrowRight size={16} /></Link>
+      </PageHero>
+      <section className="shop-catalog-section">
+        <div className="container">
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(230px,1fr))", gap: 12, marginBottom: 26 }}>
+            <div className="included-grid" style={{ display: "contents" }}>
+              <div><Truck size={20} /><p><strong>Lahore-wide delivery</strong> — Rs 250, free above Rs 5,000.</p></div>
+              <div><Wallet size={20} /><p><strong>Pay your way</strong> — cash on delivery, Easypaisa, JazzCash, bank.</p></div>
+              <div><BadgeCheck size={20} /><p><strong>Vet-approved range</strong> — selected by the Jawad hospital team.</p></div>
+            </div>
+          </div>
+          <ShopCatalog products={products} initialCategory={initialCategory ?? ""} />
+        </div>
+      </section>
+    </main>
+  );
 }

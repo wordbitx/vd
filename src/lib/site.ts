@@ -6,6 +6,7 @@ export const business = {
   shortAddress: "Al Kabir Town, Main Raiwind Road, Lahore",
   plusCode: "962Q+36 Lahore, Pakistan",
   phone: "+92 300 7755230",
+  email: "care@jawadvethospital.pk",
   phoneHref: "tel:+923007755230",
   whatsappNumber: "923007755230",
   // Reported listing hours only. Confirm the day-by-day schedule with the owner before launch.
@@ -118,37 +119,7 @@ export const categories: Category[] = [
   { slug: "medicines-supplements", name: "Veterinary Medicines and Supplements", shortName: "Supplements" },
 ];
 
-export type Product = {
-  id: string;
-  slug: string;
-  name: string;
-  categorySlug: string;
-  sheet: string;
-  quadrant: 0 | 1 | 2 | 3;
-  description: string;
-  highlights: string[];
-  featured?: boolean;
-};
-
-// Representative unbranded demo products. No live inventory, verified brands, or prices are implied.
-export const products: Product[] = [
-  { id: "p01", slug: "adult-dog-dry-food", name: "Adult Dog Dry Food", categorySlug: "dog-food", sheet: "/images/products-food.jpg", quadrant: 0, featured: true, description: "A representative everyday dry food option for adult dogs. Actual brands, sizes and formulations will be added after approval.", highlights: ["Sample product listing", "Brand and pack size to be confirmed", "Ask about suitable feeding options"] },
-  { id: "p02", slug: "everyday-cat-food", name: "Everyday Cat Food", categorySlug: "cat-food", sheet: "/images/products-food.jpg", quadrant: 1, featured: true, description: "A sample cat food listing to demonstrate the future shop experience. Ask the team about currently available options.", highlights: ["Sample product listing", "Available formulas to be confirmed", "Ask about your cat’s needs"] },
-  { id: "p03", slug: "puppy-starter-food", name: "Puppy Starter Food", categorySlug: "puppy-kitten-food", sheet: "/images/products-food.jpg", quadrant: 2, featured: true, description: "A representative growing-pet food listing. Exact recipes and availability are pending confirmation.", highlights: ["Sample product listing", "Feeding suitability varies by pet", "Packaging shown is illustrative"] },
-  { id: "p04", slug: "clumping-cat-litter", name: "Clumping Cat Litter", categorySlug: "cat-litter", sheet: "/images/products-food.jpg", quadrant: 3, featured: true, description: "A sample litter and litter-care category item for the demo shop.", highlights: ["Sample product listing", "Type and size to be confirmed", "Ask about litter accessories"] },
-  { id: "p05", slug: "cotton-rope-play-set", name: "Cotton Rope Play Set", categorySlug: "toys-enrichment", sheet: "/images/products-accessories.jpg", quadrant: 0, featured: true, description: "A representative toy for playtime and enrichment. Choose toys appropriate for your pet’s size and supervise play.", highlights: ["Sample product listing", "Colours may vary", "Supervise playtime"] },
-  { id: "p06", slug: "adjustable-walk-harness", name: "Adjustable Walk Harness", categorySlug: "collars-leashes-harnesses", sheet: "/images/products-accessories.jpg", quadrant: 1, featured: true, description: "A sample adjustable harness and leash pairing for everyday walks.", highlights: ["Sample product listing", "Sizing to be confirmed", "Check fit before use"] },
-  { id: "p07", slug: "gentle-grooming-essentials", name: "Gentle Grooming Essentials", categorySlug: "grooming-hygiene", sheet: "/images/products-accessories.jpg", quadrant: 2, featured: true, description: "A representative shampoo and brush set for everyday grooming.", highlights: ["Sample product listing", "Ingredients and sizes to be confirmed", "Ask about sensitive skin"] },
-  { id: "p08", slug: "ceramic-food-water-bowls", name: "Ceramic Food & Water Bowls", categorySlug: "bowls-feeders", sheet: "/images/products-accessories.jpg", quadrant: 3, featured: true, description: "A sample set of simple ceramic feeding bowls for pets.", highlights: ["Sample product listing", "Sizes and colours to be confirmed", "Everyday feeding essential"] },
-  { id: "p09", slug: "natural-treat-selection", name: "Treat & Chew Selection", categorySlug: "treats-chews", sheet: "/images/products-more.jpg", quadrant: 0, description: "A representative treats category listing. Ingredient details and suitable options must be confirmed before purchase.", highlights: ["Sample product listing", "Check ingredients for your pet", "Supervise chewing"] },
-  { id: "p10", slug: "soft-pet-bed", name: "Soft Pet Bed", categorySlug: "pet-beds", sheet: "/images/products-more.jpg", quadrant: 1, description: "A sample comfortable bed for a pet’s own little corner of the home.", highlights: ["Sample product listing", "Sizes and colours to be confirmed", "Comfort for everyday rest"] },
-  { id: "p11", slug: "ventilated-pet-carrier", name: "Ventilated Pet Carrier", categorySlug: "travel-accessories", sheet: "/images/products-more.jpg", quadrant: 2, description: "A representative carrier for safer, more comfortable trips.", highlights: ["Sample product listing", "Check sizing before travel", "Style and stock to be confirmed"] },
-  { id: "p12", slug: "pet-care-record-kit", name: "Pet Care Record Kit", categorySlug: "pet-stationery", sheet: "/images/products-more.jpg", quadrant: 3, description: "A sample notebook and record-keeping essential for keeping pet-care notes together.", highlights: ["Sample product listing", "Design to be confirmed", "For everyday pet-care notes"] },
-  { id: "p13", slug: "wet-food-selection", name: "Wet Food Selection", categorySlug: "dry-wet-food", sheet: "/images/products-extra.jpg", quadrant: 0, description: "A representative wet food category item. Ask the shop about brands and formulations currently available.", highlights: ["Sample product listing", "Recipes and pack sizes to be confirmed", "Choose according to your pet’s needs"] },
-  { id: "p14", slug: "veterinary-supplement-enquiry", name: "Pet Supplement Enquiry", categorySlug: "medicines-supplements", sheet: "/images/products-extra.jpg", quadrant: 3, description: "An enquiry-only category example. Veterinary medicines and supplements should be supplied only where appropriately stocked and legally permitted, with professional guidance where required.", highlights: ["Enquiry only", "No medicine is sold through this demo", "Availability and suitability require confirmation"] },
-  { id: "p15", slug: "kitten-starter-food", name: "Kitten Starter Food", categorySlug: "puppy-kitten-food", sheet: "/images/products-extra.jpg", quadrant: 1, description: "A representative starter food option for kittens. The actual formulation will depend on available brands.", highlights: ["Sample product listing", "Age-specific nutrition varies", "Ask about available options"] },
-  { id: "p16", slug: "cat-wand-toy-set", name: "Cat Wand Toy Set", categorySlug: "toys-enrichment", sheet: "/images/products-extra.jpg", quadrant: 2, description: "A representative interactive toy set for cats. Supervise play and store wand toys safely afterward.", highlights: ["Sample product listing", "Colours may vary", "Interactive play essential"] },
-];
+// Shop products now live in src/lib/catalog.ts (seed) and the database (managed in /admin).
 
 export const galleryItems = [
   { id: "g1", src: "/images/hero-vet.jpg", title: "A gentler visit", alt: "Illustrative veterinarian caring for a dog and cat in a clinic", caption: "Illustrative demo image — not a photograph of Jawad Veterinary Hospital." },
@@ -158,8 +129,8 @@ export const galleryItems = [
   { id: "g5", src: "/images/care-cat.jpg", title: "Care for feline friends", alt: "Illustrative close-up of a cat at a veterinary examination", caption: "Illustrative demo image — not an actual hospital photograph." },
   { id: "g6", src: "/images/team-at-work.jpg", title: "Working together for pets", alt: "Illustrative veterinary professionals caring for a dog", caption: "Illustrative demo image. Actual team photographs pending client approval." },
   { id: "g7", src: "/images/gallery-pets.jpg", title: "A happy, healthy companion", alt: "Illustrative photograph of a golden retriever resting indoors in soft sunlight", caption: "Illustrative stock photograph — not an actual patient of Jawad Veterinary Hospital." },
-  { id: "g8", src: "/images/gallery-exam.jpg", title: "Careful, calm examinations", alt: "Illustrative photograph of a veterinary professional examining a small dog", caption: "Illustrative stock photograph — not an actual Jawad team member or patient." },
-  { id: "g9", src: "/images/gallery-care.jpg", title: "A gentle health check", alt: "Illustrative photograph of a veterinarian using a stethoscope on a small dog", caption: "Illustrative stock photograph. Replace with approved hospital photography before launch." },
+  { id: "g8", src: "/images/care-consultation.jpg", title: "Careful, calm examinations", alt: "Illustrative photograph of a veterinary professional examining a small dog", caption: "Illustrative stock photograph — not an actual Jawad team member or patient." },
+  { id: "g9", src: "/images/care-cat.jpg", title: "A gentle health check", alt: "Illustrative photograph of a veterinarian using a stethoscope on a small dog", caption: "Illustrative stock photograph. Replace with approved hospital photography before launch." },
 ];
 
 export type Article = {

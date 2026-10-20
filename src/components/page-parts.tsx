@@ -20,7 +20,7 @@ export function DemoNotice({ children }: { children: React.ReactNode }) {
 
 export function BookingCta({ title = "Let’s make their next visit a little easier.", description = "Tell us about your pet and your preferred time. The team can follow up to discuss availability." }: { title?: string; description?: string }) {
   return (
-    <section className="container booking-cta-wrap"><div className="booking-cta"><div className="booking-cta-decoration" aria-hidden="true">✳</div><div><span className="eyebrow eyebrow-light">HERE FOR YOUR PET</span><h2>{title}</h2><p>{description}</p></div><div className="booking-cta-actions"><Link href="/book-appointment" className="button button-cream"><CalendarDays size={18} /> Request a visit <ArrowRight size={16} /></Link><a href={business.phoneHref} className="button button-outline-light"><Phone size={17} /> Call {business.phone}</a></div></div></section>
+    <section className="container booking-cta-wrap"><div className="booking-cta"><div className="booking-cta-decoration" aria-hidden="true">✳</div><div><span className="eyebrow eyebrow-light">HERE FOR YOUR PET</span><h2>{title}</h2><p>{description}</p></div><div className="booking-cta-actions"><Link href="/book" className="button button-cream"><CalendarDays size={18} /> Request a visit <ArrowRight size={16} /></Link><a href={business.phoneHref} className="button button-outline-light"><Phone size={17} /> Call {business.phone}</a></div></div></section>
   );
 }
 

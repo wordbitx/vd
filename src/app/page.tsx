@@ -1,78 +1,390 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight, BadgeCheck, CalendarDays, ChevronRight, Heart, HeartHandshake, MapPin, MessageCircle, PawPrint, Phone, ShoppingBag, Sparkles, Stethoscope } from "lucide-react";
-import { ProductCard, ServiceCard, ServiceIconView } from "@/components/cards";
-import { BookingCta, DemoNotice } from "@/components/page-parts";
-import { articles, business, categories, products, services, whatsappUrl } from "@/lib/site";
+import { ArrowRight, ArrowUpRight, BadgeCheck, CalendarDays, ChevronRight, Clock3, Heart, HeartHandshake, MapPin, MessageCircle, PawPrint, Phone, ShieldCheck, ShoppingBag, Siren, Smartphone, Sparkles, Star, Stethoscope, Syringe } from "lucide-react";
+import { AdoptCard, ProductCard, ServiceCard, ServiceIconView } from "@/components/cards";
+import { DemoNotice } from "@/components/page-parts";
+import { lahoreAreas, testimonials } from "@/lib/catalog";
+import { getSettings, listAdoptions, listProducts } from "@/lib/hospital-db";
+import { articles, business, categories, services, whatsappUrl } from "@/lib/site";
 import { pageMetadata } from "@/lib/metadata";
 
-export const metadata = pageMetadata("Veterinary Care & Pet Shop in Lahore", "Meet Jawad Veterinary Hospital in Al Kabir Town, Lahore. Explore veterinary care options, request a visit and browse pet essentials in our shop preview.", "/");
+export const metadata = pageMetadata(
+  "Jawad Veterinary Hospital | Vet Care, Pet Mall & Home Visits in Lahore",
+  "Premium veterinary hospital in Al Kabir Town, Lahore. Book online in 2 minutes with an instant booking slip, shop the Pet Mall, keep a Digital Pet Passport and book Lahore home visits.",
+  "/",
+);
+
+export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
+
+const AVATAR_COLORS = ["#14509e", "#9d7c43", "#146c3f", "#5b3ea8", "#a9241b"];
 
 export default function HomePage() {
+  const settings = getSettings();
+  const featuredProducts = listProducts(true).filter((product) => product.featured).slice(0, 8);
+  const adoptionPets = listAdoptions(["available"]).slice(0, 4);
+
   return (
     <main id="main-content">
-      <section className="hero-section"><div className="container hero-grid">
-        <div className="hero-copy">
-          <div className="hero-eyebrow"><span className="eyebrow-paw"><PawPrint size={14} fill="currentColor" strokeWidth={1.5} /></span> COMPASSIONATE CARE. HEALTHIER PETS.</div>
-          <h1>Expert veterinary care for your <em>beloved pets.</em></h1>
-          <p className="hero-description">From routine checkups and vaccinations to treatment and surgery, Jawad Veterinary Hospital is here to help you navigate your pet’s care. Explore veterinary options and discover everyday essentials for your furry family members.</p>
-          <div className="hero-actions"><Link href="/book-appointment" className="button button-primary button-large"><CalendarDays size={18} /> Book an Appointment <ArrowRight size={16} /></Link><Link href="/services" className="button button-outline button-large">Explore Our Services <ArrowUpRight size={17} /></Link></div>
-          <Link href="/shop" className="hero-shop-link"><ShoppingBag size={16} /> Shop pet essentials <ArrowRight size={16} /></Link>
-          <div className="hero-trust"><div><span><Stethoscope size={17} /></span><p>Experienced<br />veterinary team</p></div><div><span><HeartHandshake size={17} /></span><p>Complete pet<br />care + essentials</p></div><div><span><MapPin size={17} /></span><p>Convenient location<br />in Lahore</p></div></div>
+      {settings.announcement && <p className="announcement">{settings.announcement}</p>}
+
+      {/* ------------------------------ HERO ------------------------------ */}
+      <section className="hero-section">
+        <div className="container hero-grid">
+          <div className="hero-copy">
+            <div className="hero-eyebrow">
+              <span className="eyebrow-paw"><PawPrint size={14} fill="currentColor" strokeWidth={1.5} /></span>
+              LAHORE&apos;S PREMIUM VETERINARY HOSPITAL
+            </div>
+            <h1>Exceptional vet care for your <em>beloved pets.</em></h1>
+            <p className="hero-description">
+              From routine checkups and vaccinations to surgery, grooming and gentle home visits across Lahore —
+              Jawad Veterinary Hospital brings hospital-grade care and a complete Pet Mall together under one roof in Al Kabir Town.
+            </p>
+            <div className="hero-actions">
+              <Link href="/book" className="button button-gold button-large"><CalendarDays size={18} /> Book a Visit <ArrowRight size={16} /></Link>
+              <Link href="/login?mode=signup" className="button button-outline button-large"><PawPrint size={17} /> Sign Up Free</Link>
+              <Link href="/login" className="button button-outline button-large">Log In</Link>
+            </div>
+            <div className="hero-badges" aria-label="Hospital highlights">
+              <span><Clock3 size={13} /> Open Daily 8 AM – 11:30 PM</span>
+              <span><ShieldCheck size={13} /> Expert Veterinarians</span>
+              <span><Stethoscope size={13} /> Fully Equipped Hospital</span>
+              <span><Heart size={13} /> All Pets Welcome</span>
+            </div>
+            <div className="passport-access">
+              <span><Smartphone size={21} /></span>
+              <p><strong>Already a patient?</strong>Access your free Digital Pet Passport — vaccinations, visit history &amp; reports.</p>
+              <Link href="/dashboard/pets" className="button button-primary">Access <ArrowRight size={15} /></Link>
+            </div>
+          </div>
+
+          <div className="hero-visual">
+            <Image src="/images/hero-vet.jpg" alt="Veterinarian gently examining a golden retriever inside the Jawad Veterinary Hospital clinic" fill priority sizes="(max-width: 900px) 100vw, 52vw" className="hero-image" />
+            <div className="hero-rated"><Star size={13} fill="#e9c766" color="#e9c766" /> TOP RATED IN LAHORE</div>
+            <div className="hero-doctor-card">
+              <span className="hero-doctor-photo"><Image src="/images/care-consultation.jpg" alt="Dr. Jawad, lead veterinarian (illustrative)" fill sizes="58px" className="object-cover" /></span>
+              <div>
+                <h3>Dr. Jawad</h3>
+                <p>Lead Veterinarian &amp; Medical Director</p>
+                <span className="hero-doctor-tags"><span>DVM</span><span>Small Animal Specialist</span></span>
+              </div>
+              <a className="hero-doctor-wa" href={whatsappUrl("Hello Jawad Veterinary Hospital, I would like to consult about my pet.")} target="_blank" rel="noopener noreferrer" aria-label="Consult on WhatsApp"><MessageCircle size={19} /></a>
+            </div>
+            <span className="hero-image-note">Illustrative imagery</span>
+          </div>
         </div>
-        <div className="hero-visual"><Image src="/images/hero-vet.jpg" alt="Illustrative veterinarian gently caring for a golden retriever and cat in a bright clinic" fill priority sizes="(max-width: 900px) 100vw, 52vw" className="hero-image" /><div className="hero-image-card"><span><Heart size={20} fill="currentColor" /></span><div><strong>Care for every paw</strong><small>Little moments. Lasting care.</small></div></div><span className="hero-image-note">Illustrative demo photograph</span></div>
-      </div></section>
+
+        <div className="container" style={{ paddingBottom: 42 }}>
+          <div className="stats-strip">
+            <div><strong>7 <em>days</em></strong><small>Open every week</small></div>
+            <div><strong>100<em>%</em></strong><small>Lahore home-visit coverage</small></div>
+            <div><strong>8<em>+</em></strong><small>Specialist services</small></div>
+            <div><strong>Free</strong><small>Digital Pet Passport</small></div>
+          </div>
+          <div className="portal-promo">
+            <span className="pp-icon"><Smartphone size={27} /></span>
+            <div>
+              <h3>The Jawad Pet Parent Portal</h3>
+              <p>Book in seconds, download your token slip, track Pet Mall orders and keep every vaccine record in your pet&apos;s Digital Passport.</p>
+            </div>
+            <Link href="/login?mode=signup" className="button button-gold">Create free account <ArrowRight size={15} /></Link>
+          </div>
+        </div>
+      </section>
 
       <div className="marquee-strip" aria-hidden="true"><div className="marquee-track">
-        <span>Consultations <i>◆</i> Vaccination enquiries <i>◆</i> Surgery conversations <i>◆</i> Diagnostics enquiries <i>◆</i> Grooming <i>◆</i> Pet food & essentials <i>◆</i> Al Kabir Town, Lahore <i>◆</i></span>
-        <span>Consultations <i>◆</i> Vaccination enquiries <i>◆</i> Surgery conversations <i>◆</i> Diagnostics enquiries <i>◆</i> Grooming <i>◆</i> Pet food & essentials <i>◆</i> Al Kabir Town, Lahore <i>◆</i></span>
+        <span>Consultations <i>◆</i> Vaccination <i>◆</i> Surgery <i>◆</i> Diagnostics &amp; Lab <i>◆</i> Dental <i>◆</i> Grooming <i>◆</i> Home Visits <i>◆</i> Pet Mall <i>◆</i> Al Kabir Town, Lahore <i>◆</i></span>
+        <span>Consultations <i>◆</i> Vaccination <i>◆</i> Surgery <i>◆</i> Diagnostics &amp; Lab <i>◆</i> Dental <i>◆</i> Grooming <i>◆</i> Home Visits <i>◆</i> Pet Mall <i>◆</i> Al Kabir Town, Lahore <i>◆</i></span>
       </div></div>
-      <section className="quick-section"><div className="container"><div className="quick-heading"><span className="eyebrow"><span className="eyebrow-line" /> EXPLORE YOUR OPTIONS</span><span>Thoughtful care starts with the right conversation.</span></div><div className="quick-grid">{services.slice(0, 6).map((service) => <Link key={service.slug} href={`/services/${service.slug}`} className="quick-card"><span className="quick-icon"><ServiceIconView name={service.icon} size={25} /></span><strong>{service.shortTitle}</strong><small>{service.summary}</small><span className="quick-learn">Learn more <ArrowRight size={14} /></span></Link>)}</div><p className="quick-note">Care options shown for this website demo. Please confirm specific service availability with the hospital before visiting.</p></div></section>
 
-      <section className="section care-section"><div className="container"><div className="section-header"><div><span className="eyebrow"><span className="eyebrow-line" /> COMPLETE VETERINARY CARE</span><h2>Everything your pet needs<br /><em>to feel their best.</em></h2><p>From a first checkup to questions that need a closer look, explore ways to care for your companion at every stage.</p></div><Link href="/services" className="button button-outline">View all services <ArrowRight size={17} /></Link></div><div className="service-photo-grid">{services.slice(0, 4).map((service) => <ServiceCard key={service.slug} service={service} image />)}</div></div></section>
-
-      <section className="one-roof-section"><div className="container">
-        <div className="section-header compact"><div><span className="eyebrow"><span className="eyebrow-line" /> ONE LOCATION, BOTH WORLDS</span><h2>A clinic for their health.<br /><em>A shop for their every day.</em></h2><p>Jawad Veterinary Hospital brings veterinary services and a pet food &amp; items store together — so one visit can cover care, food, toys and everyday essentials.</p></div></div>
-        <div className="one-roof-grid">
-          <article className="one-roof-panel">
-            <div className="one-roof-media"><Image src="/images/care-consultation.jpg" alt="Illustrative veterinary clinic consultation with a small dog" fill sizes="(max-width: 800px) 100vw, 50vw" className="object-cover" /><span className="image-disclaimer">Illustrative clinic image</span><span className="one-roof-ribbon">01 · Veterinary Clinic</span></div>
-            <div className="one-roof-body">
-              <span className="one-roof-index">Care side</span>
-              <h3>Services for dogs, cats &amp; other pets.</h3>
-              <p>Consultations, preventive-care conversations, treatment enquiries, grooming and urgent assessments — discussed with the hospital team before you visit.</p>
-              <ul className="one-roof-list">{services.slice(0, 6).map((service) => <li key={service.slug}><span className="list-mark cross" aria-hidden="true" />{service.shortTitle}</li>)}</ul>
-              <div className="one-roof-actions"><Link href="/services" className="button button-outline">All services <ArrowRight size={16} /></Link><Link href="/book-appointment" className="text-link">Book a visit <ArrowRight size={15} /></Link></div>
+      {/* ---------------------------- SERVICES ---------------------------- */}
+      <section className="section care-section">
+        <div className="container">
+          <div className="section-header">
+            <div>
+              <span className="eyebrow"><span className="eyebrow-line" /> OUR VETERINARY SERVICES</span>
+              <h2>Complete care for every <em>stage of life.</em></h2>
+              <p>Comprehensive veterinary care for dogs, cats, birds, rabbits and more — at our Al Kabir Town hospital or at your home anywhere in Lahore.</p>
             </div>
-          </article>
-          <article className="one-roof-panel">
-            <div className="one-roof-media"><Image src="/images/pet-shop.jpg" alt="Illustrative pet food and supplies shelves in a store" fill sizes="(max-width: 800px) 100vw, 50vw" className="object-cover" /><span className="image-disclaimer">Illustrative shop image</span><span className="one-roof-ribbon">02 · Pet Food &amp; Items</span></div>
-            <div className="one-roof-body">
-              <span className="one-roof-index">Shop side</span>
-              <h3>Food, accessories &amp; daily essentials.</h3>
-              <p>Dog and cat food, puppy &amp; kitten food, treats, litter, toys, collars, beds, bowls, grooming supplies, carriers and everyday pet-care items in one store.</p>
-              <ul className="one-roof-list">{categories.slice(0, 6).map((category) => <li key={category.slug}><span className="list-mark dot" aria-hidden="true" />{category.name}</li>)}</ul>
-              <div className="one-roof-actions"><Link href="/shop" className="button button-primary">Browse pet shop <ArrowRight size={16} /></Link><Link href="/shop" className="text-link">View all categories <ArrowRight size={15} /></Link></div>
-            </div>
-          </article>
+            <Link href="/services" className="button button-outline">View all services <ArrowRight size={17} /></Link>
+          </div>
+          <div className="service-photo-grid">
+            {services.map((service) => <ServiceCard key={service.slug} service={service} image />)}
+          </div>
         </div>
-        <DemoNotice>Both sides are shown as demo content for client review. Confirmed services, stocked brands and product categories will be updated after approval with the hospital.</DemoNotice>
-      </div></section>
-      <section className="shop-section"><div className="container"><div className="shop-intro"><div className="shop-intro-copy"><span className="eyebrow"><span className="eyebrow-line" /> THE PET SHOP</span><h2>Everything your pet needs, <em>all in one place.</em></h2><p>Discover everyday essentials for your pet’s nutrition, comfort, playtime and care. Browse the demo collection, then enquire about what’s available.</p><Link href="/shop" className="button button-primary">Explore the pet shop <ArrowRight size={17} /></Link></div><div className="shop-intro-image"><Image src="/images/pet-shop.jpg" alt="Illustrative boutique pet store with food, toys and accessories on shelves" fill sizes="(max-width: 900px) 100vw, 46vw" className="object-cover" /><span className="image-disclaimer">Illustrative shop image</span></div></div><div className="shop-products-head"><div><span className="eyebrow"><span className="eyebrow-line" /> A LITTLE SOMETHING FOR EVERY PET</span><h3>Explore the essentials</h3></div><Link href="/shop" className="text-link">View all products <ArrowRight size={17} /></Link></div><div className="category-shortcuts">{[categories[0], categories[1], categories[6], categories[10], categories[8]].map((category) => <Link key={category.slug} href={`/shop?category=${category.slug}`}>{category.shortName}<ChevronRight size={14} /></Link>)}</div><div className="product-grid home-product-grid">{products.filter((product) => product.featured).map((product) => <ProductCard key={product.id} product={product} />)}</div><DemoNotice>Products, photos and availability are illustrative for this preview. Prices and actual stock will be added after confirmation.</DemoNotice></div></section>
+      </section>
 
-      <section className="section about-home"><div className="container about-home-grid"><div className="about-photo"><Image src="/images/gallery-interior.jpg" alt="Illustrative warm and welcoming veterinary clinic interior, not the actual hospital" fill sizes="(max-width: 900px) 100vw, 48vw" className="object-cover" /><span className="image-disclaimer">Illustrative facility image</span><div className="about-photo-badge"><PawPrint size={24} /><span>Care with<br /><strong>heart.</strong></span></div></div><div className="about-copy"><span className="eyebrow"><span className="eyebrow-line" /> ABOUT JAWAD VETERINARY HOSPITAL</span><h2>Care that puts<br /><em>your pet first.</em></h2><p>At Jawad Veterinary Hospital, we understand that pets are cherished members of the family. Our goal is to make veterinary care accessible, convenient and reassuring for pet owners while helping animals receive the attention they need.</p><p>From preventive healthcare to treatment and everyday pet-care essentials, our hospital and pet store aim to bring important pet-care services together in one convenient location.</p><Link href="/about" className="button button-outline">More about us <ArrowRight size={17} /></Link></div></div></section>
+      {/* ----------------------------- PET MALL ----------------------------- */}
+      <section className="shop-section">
+        <div className="container">
+          <div className="shop-intro">
+            <div className="shop-intro-copy">
+              <span className="eyebrow"><span className="eyebrow-line" /> SHOP ESSENTIALS</span>
+              <h2>The Jawad <em>Pet Mall.</em></h2>
+              <p>Premium food, toys, grooming and everyday essentials — order online for Lahore-wide delivery, or pick up at the hospital. Cash on delivery, Easypaisa, JazzCash &amp; bank transfer accepted.</p>
+              <Link href="/shop" className="button button-gold">Shop all products <ArrowRight size={17} /></Link>
+            </div>
+            <div className="shop-intro-image">
+              <Image src="/images/pet-shop.jpg" alt="Inside the Jawad Pet Mall boutique" fill sizes="(max-width: 900px) 100vw, 46vw" className="object-cover" />
+              <span className="image-disclaimer">Illustrative shop image</span>
+            </div>
+          </div>
+          <div className="category-shortcuts">
+            {[categories[0], categories[1], categories[6], categories[10], categories[8], categories[4]].map((category) => (
+              <Link key={category.slug} href={`/shop?category=${category.slug}`}>{category.shortName}<ChevronRight size={14} /></Link>
+            ))}
+          </div>
+          <div className="product-grid home-product-grid">
+            {featuredProducts.map((product) => <ProductCard key={product.id} product={product} />)}
+          </div>
+          <div style={{ textAlign: "center", marginTop: 30 }}>
+            <Link href="/shop" className="button button-outline"><ShoppingBag size={16} /> Browse the full Pet Mall <ArrowRight size={16} /></Link>
+          </div>
+        </div>
+      </section>
 
-      <section className="why-section"><div className="container"><div className="why-heading"><span className="eyebrow eyebrow-light">WHY PET PARENTS VISIT</span><h2>A little more thought<br />in every part of their care.</h2></div><div className="why-grid"><div><span><Stethoscope size={24} /></span><h3>Veterinary conversations</h3><p>A place to ask questions and talk through your pet’s needs with a team.</p></div><div><span><ShoppingBag size={24} /></span><h3>Care meets essentials</h3><p>Explore pet food, comfort, play and daily-care categories alongside hospital information.</p></div><div><span><MessageCircle size={24} /></span><h3>Clear next steps</h3><p>Request a time online or contact the hospital directly before you visit.</p></div><div><span><MapPin size={24} /></span><h3>Easy to find in Lahore</h3><p>Located by Town Gate 3 in Al Kabir Town on Main Raiwind Road.</p></div></div></div></section>
+      {/* ------------------------------ WHY US ------------------------------ */}
+      <section className="why-section">
+        <div className="container">
+          <div className="why-heading">
+            <span className="eyebrow eyebrow-light">WHY PET PARENTS TRUST US</span>
+            <h2>A premium hospital experience,<br />built around your pet.</h2>
+          </div>
+          <div className="why-grid">
+            <div>
+              <span className="advantage-index"><i>01</i> Advantage</span>
+              <h3>Fully Equipped Hospital</h3>
+              <p>Consultation, diagnostics, surgery support, dental and grooming facilities in one calm, spotless space — prepared for routine care and urgent cases alike.</p>
+            </div>
+            <div>
+              <span className="advantage-index"><i>02</i> Advantage</span>
+              <h3>Care + Pet Mall, One Roof</h3>
+              <p>Finish your visit with the exact food, medicine and essentials your vet recommends — no second trip across the city, in-store or delivered to your door.</p>
+            </div>
+            <div>
+              <span className="advantage-index"><i>03</i> Advantage</span>
+              <h3>Home Visits Across Lahore</h3>
+              <p>Anxious pet or busy schedule? Our mobile team brings checkups, vaccination and follow-up care to your home — booked online in two minutes.</p>
+            </div>
+            <div>
+              <span className="advantage-index"><i>04</i> Advantage</span>
+              <h3>Digital Pet Passport</h3>
+              <p>Every patient&apos;s vaccinations, visits and prescriptions live in your free online passport — track bookings, slips and orders from one portal.</p>
+            </div>
+          </div>
+        </div>
+      </section>
 
-      <section className="section team-home"><div className="container team-home-grid"><div className="team-home-copy"><span className="eyebrow"><span className="eyebrow-line" /> THE PEOPLE BEHIND THE CARE</span><h2>A team for the pets<br />who mean <em>everything.</em></h2><p>There are real people behind every pet-care visit. This preview keeps individual profiles open for the hospital to add confirmed names, photographs, roles and qualifications.</p><div className="team-placeholder-list"><div><span>01</span><div><strong>Veterinarian Profile</strong><small>Name & qualification to be confirmed</small></div></div><div><span>02</span><div><strong>Care Team Profile</strong><small>Name & role to be confirmed</small></div></div></div><Link href="/team" className="button button-outline">Meet our team <ArrowRight size={17} /></Link></div><div className="team-home-photo"><Image src="/images/team-at-work.jpg" alt="Illustrative veterinary care team gently checking a dog; not actual staff" fill sizes="(max-width: 900px) 100vw, 48vw" className="object-cover" /><span className="image-disclaimer">Illustrative team image</span><div className="team-photo-note"><Sparkles size={16} /><span>Profiles ready for the real Jawad team.</span></div></div></div></section>
+      {/* ------------------------------- ADOPT ------------------------------- */}
+      <section className="section">
+        <div className="container">
+          <div className="section-header">
+            <div>
+              <span className="eyebrow"><span className="eyebrow-line" /> FIND A FRIEND</span>
+              <h2>Adopt a <em>pet.</em></h2>
+              <p>Give a loving animal a forever home. Every listing is reviewed by our team, and most pets come vaccinated and dewormed.</p>
+            </div>
+            <Link href="/adopt" className="button button-outline">View all pets <ArrowRight size={17} /></Link>
+          </div>
+          <div className="adopt-grid">
+            {adoptionPets.map((pet) => <AdoptCard key={pet.id} pet={pet} />)}
+          </div>
+        </div>
+      </section>
 
-      <section className="gallery-home"><div className="container"><div className="section-header compact"><div><span className="eyebrow"><span className="eyebrow-line" /> A CLOSER LOOK</span><h2>Scenes from a world of care.</h2><p>Placeholder imagery for this preview. The final gallery will feature the hospital’s own spaces and team.</p></div><Link href="/gallery" className="button button-outline">Explore gallery <ArrowRight size={17} /></Link></div><div className="gallery-home-grid"><Link href="/gallery" className="gallery-home-item"><Image src="/images/care-consultation.jpg" alt="Illustrative dog consultation" fill sizes="(max-width: 700px) 100vw, 45vw" className="object-cover" /><span>Care moments <ArrowUpRight size={17} /></span></Link><Link href="/gallery" className="gallery-home-item"><Image src="/images/care-cat.jpg" alt="Illustrative cat veterinary examination" fill sizes="(max-width: 700px) 50vw, 23vw" className="object-cover" /><span>For feline friends <ArrowUpRight size={17} /></span></Link><Link href="/gallery" className="gallery-home-item"><Image src="/images/pet-shop.jpg" alt="Illustrative pet shop" fill sizes="(max-width: 700px) 50vw, 23vw" className="object-cover" /><span>Daily essentials <ArrowUpRight size={17} /></span></Link></div></div></section>
+      {/* --------------------------- HOW IT WORKS --------------------------- */}
+      <section className="section section-ivory">
+        <div className="container">
+          <div className="section-header compact">
+            <div>
+              <span className="eyebrow"><span className="eyebrow-line" /> EFFORTLESS BOOKING</span>
+              <h2>Book in 3 <em>simple steps.</em></h2>
+            </div>
+            <Link href="/book" className="button button-gold"><CalendarDays size={16} /> Start booking <ArrowRight size={16} /></Link>
+          </div>
+          <div className="how-steps">
+            <div className="how-step">
+              <span className="step-num">1</span>
+              <h3>Fill the booking form</h3>
+              <p>Share your pet&apos;s details, choose a service, and pick a hospital or home visit at a time that suits you.</p>
+            </div>
+            <div className="how-step">
+              <span className="step-num">2</span>
+              <h3>Get your booking slip</h3>
+              <p>Instantly receive a booking slip with your token number — print it or keep it on your phone. We also confirm on WhatsApp.</p>
+            </div>
+            <div className="how-step">
+              <span className="step-num">3</span>
+              <h3>Meet your veterinarian</h3>
+              <p>Walk in with your token, or welcome our vet at your door — fully equipped to examine and treat your pet.</p>
+            </div>
+          </div>
+        </div>
+      </section>
 
-      <section className="section journal-home"><div className="container"><div className="section-header compact"><div><span className="eyebrow"><span className="eyebrow-line" /> THE PET CARE JOURNAL</span><h2>Good questions. Better care.</h2><p>Helpful reading for the little questions that come with loving a pet.</p></div><Link href="/blog" className="button button-outline">Visit the journal <ArrowRight size={17} /></Link></div><div className="article-grid">{articles.slice(0, 3).map((article) => <article className="article-card" key={article.slug}><Link href={`/blog/${article.slug}`} className="article-image"><Image src={article.image} alt={`Illustrative image for ${article.title}`} fill sizes="(max-width: 700px) 100vw, 33vw" className="object-cover" /></Link><div className="article-card-body"><span className="article-meta">{article.category} <span>·</span> Draft for veterinary review</span><h3><Link href={`/blog/${article.slug}`}>{article.title}</Link></h3><p>{article.excerpt}</p><Link href={`/blog/${article.slug}`} className="text-link">Read article <ArrowRight size={16} /></Link></div></article>)}</div></div></section>
+      {/* ---------------------------- MEET THE VET ---------------------------- */}
+      <section className="section">
+        <div className="container meet-vet-grid">
+          <div className="vet-photo-wrap">
+            <Image src="/images/team-at-work.jpg" alt="The Jawad Veterinary Hospital team caring for a patient (illustrative photograph)" fill sizes="(max-width: 900px) 100vw, 42vw" className="object-cover" />
+            <span className="image-disclaimer">Illustrative portrait</span>
+            <div className="exp-badge"><strong>Since</strong><small>Serving Lahore families</small></div>
+          </div>
+          <div>
+            <span className="eyebrow"><span className="eyebrow-line" /> MEET YOUR VETERINARIAN</span>
+            <h2 style={{ fontSize: "clamp(34px,3.4vw,48px)", margin: "13px 0 6px" }}>Dr. Jawad</h2>
+            <p style={{ fontSize: 13, fontWeight: 800, letterSpacing: ".06em", color: "#7c5f26", margin: 0 }}>DOCTOR OF VETERINARY MEDICINE · LEAD VETERINARIAN &amp; MEDICAL DIRECTOR</p>
+            <blockquote className="vet-quote">
+              &ldquo;We built Jawad Veterinary Hospital so no pet in Lahore has to wait in pain or fear for good care. Whether you walk into our hospital or we come to your home, your pet is treated like our own family.&rdquo;
+            </blockquote>
+            <div className="cred-chips">
+              <span><BadgeCheck size={14} /> DVM Qualified</span>
+              <span><Syringe size={14} /> Preventive Medicine</span>
+              <span><Stethoscope size={14} /> Small Animal Specialist</span>
+              <span><HeartHandshake size={14} /> Gentle Handling</span>
+            </div>
+            <div style={{ display: "flex", gap: 11, flexWrap: "wrap" }}>
+              <Link href="/book" className="button button-primary"><CalendarDays size={16} /> Book with Dr. Jawad</Link>
+              <a href={whatsappUrl("Hello Dr. Jawad, I would like advice about my pet.")} target="_blank" rel="noopener noreferrer" className="button button-whatsapp"><MessageCircle size={16} /> Chat on WhatsApp</a>
+            </div>
+            <p style={{ fontSize: 10.5, color: "#93a0a8", marginTop: 18, lineHeight: 1.65 }}>
+              Portrait and profile are presented for this website — the hospital will confirm the official photograph, credentials and biography at launch.
+            </p>
+          </div>
+        </div>
+      </section>
 
-      <section className="feedback-section"><div className="container feedback-inner"><div className="feedback-icon"><Heart size={26} /></div><div><span className="eyebrow"><span className="eyebrow-line" /> TRUSTED CARE FOR OUR FURRY FRIENDS</span><h2>Real stories belong here.</h2><p>Once the client provides approved customer feedback, you’ll find it here. This demo does not use invented reviews, ratings or pet-parent names.</p></div><Link href="/contact" className="button button-outline">Get in touch <ArrowRight size={17} /></Link></div></section>
+      {/* --------------------------- EVENTS & TIPS --------------------------- */}
+      <section className="section" style={{ paddingTop: 0 }}>
+        <div className="container">
+          <div className="section-header compact">
+            <div>
+              <span className="eyebrow"><span className="eyebrow-line" /> COMMUNITY UPDATES</span>
+              <h2>Events &amp; <em>tips.</em></h2>
+              <p>Pet-health guidance and know-how from our veterinary team.</p>
+            </div>
+            <Link href="/blog" className="button button-outline">View all articles <ArrowRight size={17} /></Link>
+          </div>
+          <div className="article-grid">
+            {articles.slice(0, 3).map((article) => (
+              <article className="article-card" key={article.slug}>
+                <Link href={`/blog/${article.slug}`} className="article-image">
+                  <Image src={article.image} alt={`Illustrative image for ${article.title}`} fill sizes="(max-width: 700px) 100vw, 33vw" className="object-cover" />
+                </Link>
+                <div className="article-card-body">
+                  <span className="article-meta">{article.category} <span>·</span> {article.readTime}</span>
+                  <h3><Link href={`/blog/${article.slug}`}>{article.title}</Link></h3>
+                  <p>{article.excerpt}</p>
+                  <Link href={`/blog/${article.slug}`} className="text-link">Read article <ArrowRight size={16} /></Link>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
 
-      <section className="location-section"><div className="container location-grid"><div><span className="eyebrow"><span className="eyebrow-line" /> COME SAY HELLO</span><h2>Right here in <em>Lahore.</em></h2><p>Find Jawad Veterinary Hospital near Town Gate 3, Al Kabir Town on Main Raiwind Road.</p><div className="location-actions"><a href={business.mapsUrl} target="_blank" rel="noopener noreferrer" className="button button-primary"><MapPin size={17} /> Get directions <ArrowUpRight size={16} /></a><a href={whatsappUrl("Hello Jawad Veterinary Hospital, I would like to ask a question before visiting.")} target="_blank" rel="noopener noreferrer" className="button button-outline">WhatsApp us <ArrowUpRight size={16} /></a></div></div><div className="location-card"><span className="location-card-icon"><MapPin size={22} /></span><h3>Jawad Veterinary Hospital</h3><p>{business.address}</p><div className="location-card-row"><Phone size={17} /><a href={business.phoneHref}>{business.phone}</a></div><div className="location-card-row"><BadgeCheck size={17} /><span>Plus Code: {business.plusCode}</span></div><div className="location-card-hours">{business.reportedHours} <span>· {business.hoursNote}</span></div></div></div></section>
-      <BookingCta />
+      {/* ------------------------------ GALLERY ------------------------------ */}
+      <section className="section" style={{ paddingTop: 0 }}>
+        <div className="container">
+          <div className="section-header compact">
+            <div>
+              <span className="eyebrow"><span className="eyebrow-line" /> OUR WORK IN ACTION</span>
+              <h2>Inside the <em>hospital.</em></h2>
+            </div>
+            <Link href="/gallery" className="button button-outline">Explore gallery <ArrowUpRight size={16} /></Link>
+          </div>
+          <div className="gallery-strip">
+            {[
+              { src: "/images/care-consultation.jpg", caption: "Gentle, unhurried consultations" },
+              { src: "/images/care-cat.jpg", caption: "Feline-friendly examinations" },
+              { src: "/images/service-grooming.jpg", caption: "Spa-style grooming studio" },
+              { src: "/images/team-at-work.jpg", caption: "A team that loves what it does" },
+            ].map((item) => (
+              <Link href="/gallery" className="gallery-strip-item" key={item.src}>
+                <Image src={item.src} alt={item.caption} fill sizes="(max-width: 700px) 50vw, 25vw" className="object-cover" />
+                <span>{item.caption}</span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ------------------------------ REVIEWS ------------------------------ */}
+      <section className="section section-ivory">
+        <div className="container">
+          <div className="section-header">
+            <div>
+              <span className="eyebrow"><span className="eyebrow-line" /> PET PARENTS LOVE US</span>
+              <h2>Jawad Veterinary Hospital — <em>Lahore&apos;s trusted pet care.</em></h2>
+            </div>
+            <a href={business.mapsUrl} target="_blank" rel="noopener noreferrer" className="button button-outline">Write a review <ArrowUpRight size={16} /></a>
+          </div>
+          <div className="reviews-grid">
+            {testimonials.map((review, index) => (
+              <article className="review-card" key={review.name}>
+                <div className="review-head">
+                  <span className="review-avatar" style={{ background: AVATAR_COLORS[index % AVATAR_COLORS.length] }} aria-hidden="true">
+                    {review.name.split(" ").map((part) => part[0]).slice(0, 2).join("")}
+                  </span>
+                  <div>
+                    <strong>{review.name}</strong>
+                    <small>{review.area} · {review.when}</small>
+                  </div>
+                  <span className="review-g" aria-hidden="true"><i>G</i></span>
+                </div>
+                <span className="stars" aria-label={`${review.rating} out of 5 stars`}>★★★★★</span>
+                <p>{review.text}</p>
+              </article>
+            ))}
+          </div>
+          <DemoNotice>Testimonials shown are sample content for this website presentation. The hospital&apos;s live Google reviews will be connected here before launch.</DemoNotice>
+        </div>
+      </section>
+
+      {/* ------------------------------- AREAS ------------------------------- */}
+      <section className="section" style={{ paddingBottom: 70 }}>
+        <div className="container">
+          <div className="section-header compact">
+            <div>
+              <span className="eyebrow"><span className="eyebrow-line" /> HOME VISITS &amp; DELIVERY</span>
+              <h2>Serving all of <em>Lahore.</em></h2>
+              <p>Based in Al Kabir Town on Main Raiwind Road — our home-visit team and Pet Mall riders cover:</p>
+            </div>
+          </div>
+          <div className="areas-strip">
+            {lahoreAreas.slice(0, -1).map((area) => (
+              <span key={area}><MapPin size={12} /> {area}</span>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ----------------------------- EMERGENCY ----------------------------- */}
+      <section style={{ paddingBottom: 84 }}>
+        <div className="container">
+          <div className="emergency-band">
+            <span className="eb-icon"><Siren size={30} /></span>
+            <div>
+              <h2>Pet emergency?</h2>
+              <p>Don&apos;t wait for an online reply. Call us now and we will guide you immediately — and if your pet needs urgent treatment, head straight to the hospital while someone calls ahead.</p>
+            </div>
+            <div className="eb-actions">
+              <a href={business.phoneHref} className="button button-call"><Phone size={16} /> Call {business.phone}</a>
+              <a href={`mailto:${business.email}`} className="button button-outline-light">or email {business.email}</a>
+            </div>
+          </div>
+          <div style={{ display: "flex", gap: 10, justifyContent: "center", marginTop: 22, flexWrap: "wrap" }}>
+            <Link href="/fees" className="text-link">Transparent fees — no hidden charges <ArrowRight size={15} /></Link>
+            <span aria-hidden="true" style={{ color: "#c9bb92" }}>·</span>
+            <Link href="/faqs" className="text-link">Questions? Read our FAQs <ArrowRight size={15} /></Link>
+            <span aria-hidden="true" style={{ color: "#c9bb92" }}>·</span>
+            <Link href="/services/urgent-veterinary-assessment" className="text-link"><Sparkles size={14} /> Urgent care guidance</Link>
+            <span aria-hidden="true" style={{ color: "#c9bb92" }}>·</span>
+            <span style={{ display: "inline-flex", gap: 6, alignItems: "center", fontSize: 12, fontWeight: 800, color: "#0a2540" }}><ServiceIconView name="stethoscope" size={15} /> Open today till 11:30 PM</span>
+          </div>
+        </div>
+      </section>
     </main>
   );
 }
