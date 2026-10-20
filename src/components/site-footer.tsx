@@ -1,18 +1,96 @@
 import Link from "next/link";
-import { ArrowUpRight, MapPin, Phone, Clock3, MessageCircle } from "lucide-react";
-import { SiteLogo } from "@/components/site-logo";
-import { business, whatsappUrl } from "@/lib/site";
+import { ArrowRight, Mail, MapPin, Phone } from "lucide-react";
+import { business, services } from "@/lib/site";
+import { FacebookIcon, InstagramIcon, MapsIcon, WhatsAppIcon } from "@/components/icons";
+import type { Settings } from "@/lib/types";
 
-export function SiteFooter() {
+export function SiteFooter({ settings, productCategories }: { settings?: Settings; productCategories?: { slug: string; name: string }[] }) {
+  const clinicName = settings?.clinicName ?? business.name;
+  const phone = settings?.phone ?? business.phone;
+  const year = new Date().getFullYear();
+
   return (
     <footer className="site-footer">
-      <div className="container footer-main">
-        <div className="footer-brand"><SiteLogo light /><p>Thoughtful veterinary care and everyday pet essentials, together in one convenient Lahore location.</p><span className="footer-small-label">HERE FOR THE PETS YOU LOVE.</span></div>
-        <div className="footer-col"><h3>Explore</h3><Link href="/">Home</Link><Link href="/about">About Us</Link><Link href="/services">Veterinary Services</Link><Link href="/shop">Pet Shop</Link><Link href="/team">Our Team</Link><Link href="/gallery">Gallery</Link></div>
-        <div className="footer-col"><h3>Pet care</h3><Link href="/book-appointment">Book an Appointment</Link><Link href="/services/general-consultation">General Consultation</Link><Link href="/services/vaccination-preventive-care">Preventive Care</Link><Link href="/shop?category=dog-food">Dog Food</Link><Link href="/shop?category=cat-food">Cat Food</Link><Link href="/blog">Pet Care Journal</Link></div>
-        <div className="footer-col footer-contact"><h3>Visit & contact</h3><p><MapPin size={17} /><span>{business.address}</span></p><a href={business.phoneHref}><Phone size={17} /><span>{business.phone}</span></a><p><Clock3 size={17} /><span>{business.reportedHours}<br /><small>{business.hoursNote}</small></span></p><a href={business.mapsUrl} target="_blank" rel="noopener noreferrer" className="footer-direction">Get directions <ArrowUpRight size={15} /></a><a href={whatsappUrl("Hello Jawad Veterinary Hospital, I would like to make an enquiry.")} target="_blank" rel="noopener noreferrer" className="footer-direction"><MessageCircle size={15} /> WhatsApp us <ArrowUpRight size={15} /></a></div>
+      <div className="container">
+        <div className="footer-grid">
+          <div className="footer-brand">
+            <div className="brand">
+              <span className="brand-mark"><span>{settings?.monogram ?? business.monogram}</span></span>
+              <span className="brand-text">
+                <b>{clinicName}</b>
+                <small>{business.descriptor}</small>
+              </span>
+            </div>
+            <p className="footer-note">
+              Veterinary hospital, home-visit service and pet mall in Al Kabir Town, Lahore. Consultations, vaccination,
+              dentistry, surgery aftercare, diagnostics and everyday pet supplies — with records you can actually keep.
+            </p>
+            <div className="row" style={{ gap: 10 }}>
+              <a className="button button-brass button-sm" href={`https://wa.me/${business.whatsappNumber}?text=${encodeURIComponent("Assalam-o-Alaikum, I need veterinary advice for my pet.")}`} target="_blank" rel="noopener noreferrer">
+                <WhatsAppIcon /> WhatsApp the clinic
+              </a>
+              <Link href="/book-vet-appointment-lahore" className="button button-outline-light button-sm">Book a visit <ArrowRight size={15} /></Link>
+            </div>
+            <div className="socials" style={{ marginTop: 6 }}>
+              <a href={business.mapsUrl} target="_blank" rel="noreferrer" aria-label="Directions on Google Maps"><MapsIcon /></a>
+              <a href="#" aria-label="Instagram"><InstagramIcon /></a>
+              <a href="#" aria-label="Facebook"><FacebookIcon /></a>
+            </div>
+          </div>
+
+          <nav aria-label="Clinic">
+            <h4>Clinic</h4>
+            <div className="footer-links">
+              {[["/about", "About the hospital"], ["/team", "Our veterinarians"], ["/gallery", "Clinic gallery"], ["/pet-care-tips", "Events & vet tips"], ["/adopt", "Adopt a pet"], ["/contact-vet-lahore", "Contact & directions"], ["/portal", "Client portal"], ["/shop", "Pet Mall"]].map(([href, label]) => (
+                <Link key={href} href={href}>{label}</Link>
+              ))}
+            </div>
+          </nav>
+
+          <nav aria-label="Services">
+            <h4>Veterinary services</h4>
+            <div className="footer-links">
+              {services.slice(0, 8).map((service) => (
+                <Link key={service.slug} href={`/services/${service.slug}`}>{service.shortTitle}</Link>
+              ))}
+              <Link href="/services" style={{ color: "var(--brass-3)", fontWeight: 700 }}>All services & fees →</Link>
+            </div>
+          </nav>
+
+          <div>
+            <h4>Visit or call</h4>
+            <div className="footer-hours">
+              <div><span><MapPin size={14} style={{ display: "inline", verticalAlign: "-2px", marginRight: 6 }} />Address</span><span style={{ textAlign: "right" }}>{business.shortAddress}</span></div>
+              <div><span><Phone size={14} style={{ display: "inline", verticalAlign: "-2px", marginRight: 6 }} />Phone</span><span><a href={`tel:${phone.replace(/\s/g, "")}`}>{phone}</a></span></div>
+              <div><span><Mail size={14} style={{ display: "inline", verticalAlign: "-2px", marginRight: 6 }} />Email</span><span><a href={`mailto:${settings?.email ?? business.email}`}>{settings?.email ?? business.email}</a></span></div>
+              {business.hours.map((h) => (
+                <div key={h.day}><span>{h.day}</span><span>{h.hours}</span></div>
+              ))}
+            </div>
+            {productCategories?.length ? (
+              <div style={{ marginTop: 18 }}>
+                <h4>Pet mall</h4>
+                <div className="row" style={{ gap: 7 }}>
+                  {productCategories.slice(0, 6).map((c) => (
+                    <Link key={c.slug} href={`/shop?category=${c.slug}`} className="pill pill-dark" style={{ textTransform: "none", letterSpacing: 0, fontWeight: 650, fontSize: 11.5 }}>
+                      {c.name}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            ) : null}
+          </div>
+        </div>
+
+        <div className="footer-bottom">
+          <span>© {year} {clinicName}. {business.registration}. Prices shown are starting fees and confirmed before treatment.</span>
+          <div className="row" style={{ gap: 16 }}>
+            <Link href="/privacy-policy">Privacy</Link>
+            <Link href="/terms-and-conditions">Terms</Link>
+            <Link href="/slip/JVH">Verify a booking slip</Link>
+          </div>
+        </div>
       </div>
-      <div className="container footer-bottom"><span>© {new Date().getFullYear()} Jawad Veterinary Hospital. Website preview for client review.</span><div><Link href="/privacy-policy">Privacy Policy</Link><Link href="/terms-and-conditions">Terms & Conditions</Link><Link href="/contact">Contact</Link></div></div>
     </footer>
   );
 }

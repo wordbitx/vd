@@ -1,52 +1,112 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ArrowUpRight, CalendarDays, MapPin, Menu, Phone, ShoppingBag, X } from "lucide-react";
+import { useEffect, useState } from "react";
+import { ArrowRight, Menu, ShoppingBag, User, X } from "lucide-react";
+import type { SessionUser } from "@/lib/types";
+import { initials } from "@/lib/format";
 import { useCart } from "@/components/cart-context";
-import { SiteLogo } from "@/components/site-logo";
-import { business } from "@/lib/site";
 
-const navLinks = [
-  { href: "/", label: "Home" },
-  { href: "/about", label: "About Us" },
-  { href: "/services", label: "Veterinary Services" },
-  { href: "/shop", label: "Pet Shop" },
-  { href: "/team", label: "Our Team" },
-  { href: "/gallery", label: "Gallery" },
-  { href: "/contact", label: "Contact" },
-];
+export type NavLink = { href: string; label: string };
 
-export function SiteHeader() {
+export function SiteHeader({
+  links, user, announcement, announcementHref, phone, clinicName, monogram, tagline,
+}: { links: NavLink[]; user: SessionUser | null; announcement?: string; announcementHref?: string; phone: string; clinicName: string; monogram: string; tagline: string }) {
   const pathname = usePathname();
-  const { count } = useCart();
+  const { count: cartCount } = useCart();
   const [open, setOpen] = useState(false);
-  const isActive = (href: string) => href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    // Subscribes to the scroll position; state only changes from the browser's callback.
+    const onScroll = () => setScrolled(window.scrollY > 14);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const closeMenu = () => setOpen(false);
+
+  const isActive = (href: string) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
 
   return (
-    <>
-      <header className="site-header">
-          <div className="topbar"><div className="container topbar-inner"><span><span className="topbar-sparkle">✦</span> Veterinary clinic &amp; pet food store · Al Kabir Town, Lahore</span><span className="topbar-location"><MapPin size={13} /> Food, accessories &amp; pet-care items in store</span></div></div>
-        <div className="nav-wrap"><div className="container nav-inner">
-          <SiteLogo />
-          <nav className="desktop-nav" aria-label="Main navigation">{navLinks.map((link) => <Link key={link.href} href={link.href} className={isActive(link.href) ? "nav-active" : ""} aria-current={isActive(link.href) ? "page" : undefined}>{link.label}</Link>)}</nav>
-          <div className="header-actions">
-            <a href={business.phoneHref} className="header-phone" aria-label={`Call ${business.phone}`}><Phone size={17} /><span>{business.phone}</span></a>
-            <Link href="/book-appointment" className="button button-primary header-book"><CalendarDays size={16} /><span>Book Appointment</span></Link>
-            <Link href="/cart" className="cart-nav" aria-label={`Demo shopping cart, ${count} items`}><ShoppingBag size={21} strokeWidth={1.8} />{count > 0 && <span className="cart-badge">{count > 9 ? "9+" : count}</span>}</Link>
-            <button type="button" className="menu-toggle" aria-expanded={open} aria-controls="mobile-menu" aria-label={open ? "Close menu" : "Open menu"} onClick={() => setOpen((value) => !value)}>{open ? <X size={25} /> : <Menu size={25} />}</button>
+    <header className="site-header" data-scrolled={scrolled ? "true" : "false"} style={scrolled ? { boxShadow: "0 10px 30px -22px rgba(7,26,32,.5)" } : undefined}>
+      <div className="topbar">
+        <div className="container topbar-inner">
+          <div className="row" style={{ gap: 18 }}>
+            <span className="topbar-item">📍 Al Kabir Town, Main Raiwind Road, Lahore</span>
+            <span className="topbar-sep hidden-sm" />
+            <span className="topbar-item hidden-sm">Open till 11 pm · Home visits 24/7</span>
           </div>
-        </div></div>
-        {open && <nav id="mobile-menu" className="mobile-menu" aria-label="Mobile navigation">
-          <div className="container mobile-menu-inner">
-            {navLinks.map((link) => <Link key={link.href} href={link.href} className={isActive(link.href) ? "mobile-active" : ""} onClick={() => setOpen(false)}>{link.label}<ArrowUpRight size={16} /></Link>)}
-            <Link href="/blog" onClick={() => setOpen(false)}>Pet Care Journal<ArrowUpRight size={16} /></Link>
-            <div className="mobile-menu-cta"><a href={business.phoneHref} className="button button-outline"><Phone size={17} /> Call us</a><Link href="/book-appointment" className="button button-primary" onClick={() => setOpen(false)}><CalendarDays size={17} /> Book a visit</Link></div>
+          <div className="row" style={{ gap: 16 }}>
+            {announcement ? (
+              <Link className="topbar-item" href={announcementHref || "/"} style={{ color: "var(--brass-3)", fontWeight: 800 }}>
+                ✦ {announcement}
+              </Link>
+            ) : null}
+            <a className="topbar-item" href={`tel:${phone.replace(/\s/g, "")}`}><span style={{ color: "var(--brass-3)" }}>☏</span> {phone}</a>
           </div>
-        </nav>}
-      </header>
-      <div className="mobile-bottom-bar" aria-label="Quick contact actions"><a href={business.phoneHref}><Phone size={18} /> Call us</a><Link href="/book-appointment"><CalendarDays size={18} /> Book a visit</Link></div>
-    </>
+        </div>
+      </div>
+
+      <div className="container nav">
+        <Link href="/" className="brand" aria-label={`${clinicName} — home`}>
+          <span className="brand-mark"><span>{monogram}</span></span>
+          <span className="brand-text">
+            <b>{clinicName.replace(" Veterinary Hospital", "")}<span style={{ color: "var(--brass-2)" }}>.</span></b>
+            <small>{tagline}</small>
+          </span>
+        </Link>
+
+        <nav className="nav-links" aria-label="Main">
+          {links.map((link) => (
+            <Link key={link.href} href={link.href} data-active={isActive(link.href) ? "true" : undefined}>
+              {link.label}
+            </Link>
+          ))}
+        </nav>
+
+        <div className="nav-actions">
+          <Link href="/cart" className="icon-btn" aria-label={`Cart, ${cartCount} item${cartCount === 1 ? "" : "s"}`} style={{ position: "relative" }}>
+            <ShoppingBag size={17} />
+            {cartCount > 0 ? (
+              <span style={{ position: "absolute", top: -6, right: -6, minWidth: 17, height: 17, borderRadius: 99, background: "var(--brass)", color: "#241a08", fontSize: 10, fontWeight: 800, display: "grid", placeItems: "center", padding: "0 4px" }}>{cartCount}</span>
+            ) : null}
+          </Link>
+          {user ? (
+            <Link href={user.role === "customer" ? "/portal" : "/admin"} className="nav-account">
+              <span className="avatar">{initials(user.name)}</span>
+              {user.name.split(" ")[0]}
+            </Link>
+          ) : (
+            <Link href="/login" className="button button-ghost button-sm">My portal</Link>
+          )}
+          <Link href="/book-vet-appointment-lahore" className="button button-primary button-lg">
+            Book appointment <ArrowRight size={16} />
+          </Link>
+          <button className="nav-toggle" onClick={() => setOpen((v) => !v)} aria-expanded={open} aria-label="Menu">
+            {open ? <X size={19} /> : <Menu size={19} />}
+          </button>
+        </div>
+      </div>
+
+      <div className="mobile-nav" data-open={open ? "true" : "false"}>
+        <div className="container mobile-nav-inner">
+          {links.map((link) => (
+            <Link key={link.href} href={link.href} onClick={closeMenu} data-active={isActive(link.href) ? "true" : undefined}>
+              {link.label}
+            </Link>
+          ))}
+          <div className="row" style={{ gap: 10, marginTop: 8 }}>
+            <Link href={user ? (user.role === "customer" ? "/portal" : "/admin") : "/login"} className="button button-ghost" style={{ flex: 1 }}>
+              <User size={16} /> {user ? "My account" : "Sign in"}
+            </Link>
+            <Link href="/cart" className="button button-ghost" style={{ flex: 1 }}>Basket ({cartCount})</Link>
+          </div>
+          <Link href="/book-vet-appointment-lahore" className="button button-primary button-block">Book appointment <ArrowRight size={16} /></Link>
+        </div>
+      </div>
+      <style>{`.hidden-sm{display:inline-flex}@media(max-width:980px){.hidden-sm{display:none}}`}</style>
+    </header>
   );
 }

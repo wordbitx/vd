@@ -1,15 +1,84 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Minus, Plus, ShoppingBag, Trash2 } from "lucide-react";
+import { ArrowRight, Minus, Plus, ShieldCheck, Truck, X } from "lucide-react";
+import { money } from "@/lib/format";
 import { useCart } from "@/components/cart-context";
-import { ProductImage } from "@/components/product-image";
-import { products } from "@/lib/site";
 
-export function CartView() {
-  const { items, count, ready, updateQuantity, removeItem, clearCart } = useCart();
-  const entries = items.map((item) => ({ item, product: products.find((product) => product.id === item.id) })).filter((entry): entry is { item: typeof items[number]; product: typeof products[number] } => Boolean(entry.product));
-  if (!ready) return <div className="loading-state" role="status">Loading your demo cart...</div>;
-  if (!entries.length) return <div className="empty-state cart-empty"><ShoppingBag size={31} /><h2>Your cart is waiting for something lovely.</h2><p>Browse the demo pet shop and add a few essentials. Nothing is reserved or purchased until the hospital confirms your enquiry.</p><Link href="/shop" className="button button-primary">Explore the pet shop <ArrowRight size={17} /></Link></div>;
-  return <div className="cart-layout"><div className="cart-items"><div className="cart-items-heading"><h2>Your items <span>({count})</span></h2><button type="button" onClick={clearCart}>Clear cart</button></div>{entries.map(({ item, product }) => <article className="cart-item" key={item.id}><Link href={`/shop/${product.slug}`} className="cart-item-image"><ProductImage product={product} /></Link><div className="cart-item-main"><span className="product-category">DEMO PRODUCT</span><h3><Link href={`/shop/${product.slug}`}>{product.name}</Link></h3><p>Price & availability on enquiry</p><div className="cart-item-controls"><div className="quantity-control"><button type="button" onClick={() => updateQuantity(item.id, item.quantity - 1)} disabled={item.quantity <= 1} aria-label={`Decrease ${product.name} quantity`}><Minus size={15} /></button><span aria-live="polite">{item.quantity}</span><button type="button" onClick={() => updateQuantity(item.id, item.quantity + 1)} disabled={item.quantity >= 99} aria-label={`Increase ${product.name} quantity`}><Plus size={15} /></button></div><button type="button" className="remove-item" onClick={() => removeItem(item.id)} aria-label={`Remove ${product.name}`}><Trash2 size={16} /> Remove</button></div></div></article>)}<Link href="/shop" className="back-link">← Continue browsing</Link></div><aside className="cart-summary"><span className="eyebrow">ORDER ENQUIRY</span><h2>Review your basket</h2><div className="cart-summary-row"><span>Items</span><strong>{count}</strong></div><div className="cart-summary-row"><span>Prices</span><strong>On enquiry</strong></div><p>This is a demonstration cart. Product price and stock will be confirmed by the hospital. No online payment is taken.</p><Link href="/checkout" className="button button-primary">Continue to enquiry <ArrowRight size={17} /></Link><small>Sending an enquiry does not place or confirm an order.</small></aside></div>;
+export function CartView({ freeOver = 5000 }: { freeOver?: number }) {
+  const { items, ready, setQty, remove, subtotal, delivery, total, count, freeDeliveryGap } = useCart();
+
+  if (!ready) {
+    return <div className="empty"><p style={{ margin: 0 }}>Loading your basket…</p></div>;
+  }
+  if (!items.length) {
+    return (
+      <div className="empty">
+        <Truck size={26} style={{ color: "var(--line-2)" }} />
+        <h3>Your basket is empty</h3>
+        <p>Pet food, skin care and vet-approved essentials from the Al Kabir Town store — delivered across Lahore.</p>
+        <Link href="/shop" className="button button-primary button-sm">Browse the Pet Mall <ArrowRight size={15} /></Link>
+      </div>
+    );
+  }
+
+  return (
+    <div className="grid" style={{ gap: 18, gridTemplateColumns: "minmax(0,1fr)", alignItems: "start" }}>
+      <div className="app-card">
+        <div className="app-card-body" style={{ paddingTop: 6, paddingBottom: 6 }}>
+          {items.map((line) => (
+            <div className="cart-line" key={`${line.id}-${line.size ?? ""}`}>
+              <span className="cart-thumb">
+                <Image src={line.image} alt="" width={140} height={120} className="object-cover" unoptimized />
+              </span>
+              <div className="col" style={{ gap: 5 }}>
+                <Link href={`/shop/${line.slug}`} style={{ fontWeight: 750, fontSize: 14, letterSpacing: "-0.015em" }}>{line.name}</Link>
+                <span className="tiny muted">{money(line.price)} each{line.size ? ` · ${line.size}` : ""}</span>
+                <div className="row" style={{ gap: 10, marginTop: 4 }}>
+                  <span className="qty">
+                    <button type="button" onClick={() => setQty(line.id, line.qty - 1, line.size)} aria-label="Decrease"><Minus size={13} /></button>
+                    <span>{line.qty}</span>
+                    <button type="button" onClick={() => setQty(line.id, line.qty + 1, line.size)} aria-label="Increase"><Plus size={13} /></button>
+                  </span>
+                  <button type="button" className="link-arrow" style={{ color: "var(--muted)", fontSize: 11.5 }} onClick={() => remove(line.id, line.size)}>
+                    <X size={13} /> Remove
+                  </button>
+                </div>
+              </div>
+              <b className="tnum" style={{ fontFamily: "var(--serif)", fontSize: 19, fontWeight: 500, letterSpacing: "-0.03em" }}>{money(line.price * line.qty)}</b>
+            </div>
+          ))}
+        </div>
+        <div className="app-card-foot">
+          <span className="small muted">{count} item{count === 1 ? "" : "s"} · prices include GST where applicable</span>
+          <span className="spacer" />
+          <Link href="/shop" className="button button-ghost button-sm">Keep shopping</Link>
+        </div>
+      </div>
+
+      <div className="app-card">
+        <div className="app-card-body">
+          {freeDeliveryGap > 0 ? (
+            <div className="col" style={{ gap: 8, marginBottom: 14 }}>
+              <span className="tiny" style={{ fontWeight: 750, color: "var(--muted)" }}>
+                <Truck size={13} style={{ display: "inline", verticalAlign: "-2px", marginRight: 5 }} />
+                Add {money(freeDeliveryGap)} more for free delivery in Lahore
+              </span>
+              <span className="meter"><span style={{ width: `${Math.min(100, Math.round(((freeOver - freeDeliveryGap) / freeOver) * 100))}%` }} /></span>
+            </div>
+          ) : (
+            <p className="notice notice-ok small" style={{ marginTop: 0 }}>Free Lahore delivery unlocked.</p>
+          )}
+          <div className="fee-row"><span>Subtotal</span><b>{money(subtotal)}</b></div>
+          <div className="fee-row"><span>Delivery (Lahore)</span><b>{delivery ? money(delivery) : "Free"}</b></div>
+          <div className="fee-row fee-total"><span>Total due on delivery</span><b>{money(total)}</b></div>
+          <Link href="/checkout" className="button button-primary button-block button-lg" style={{ marginTop: 16 }}>
+            Checkout <ArrowRight size={16} />
+          </Link>
+          <p className="tiny muted center" style={{ margin: "12px 0 0" }}><ShieldCheck size={13} style={{ display: "inline", verticalAlign: "-2px" }} /> Cash on delivery, Easypaisa or bank transfer. No card details are stored.</p>
+        </div>
+      </div>
+    </div>
+  );
 }
