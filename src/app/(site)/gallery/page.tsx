@@ -30,8 +30,8 @@ export default async function GalleryPage() {
           <Breadcrumbs items={[{ label: "Gallery" }]} />
           <SectionHead
             eyebrow={`${business.city} · Al Kabir Town`}
-            title={<>Where your pet will <em>actually be seen.</em></>}
-            lead="No stock-photo theatre: the rooms, the kit we carry to your home and the shelves we stock. Tap any photo to open it full size."
+            title="Our Work in Action"
+            lead="See our team delivering compassionate, professional vet care across Lahore — the rooms, the kit we carry to your home and the shelves we stock. Tap any photo to open it full size."
             action={<a href={business.mapsUrl} target="_blank" rel="noreferrer" className="button button-ghost button-sm"><MapPin size={15} /> Open in Maps</a>}
           />
         </div>

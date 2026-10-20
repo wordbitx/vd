@@ -34,7 +34,7 @@ export default async function ContactPage() {
             <div>
               <Eyebrow>Get in touch</Eyebrow>
               <h1 style={{ margin: "16px 0 16px", fontSize: "clamp(32px,4.4vw,56px)" }}>
-                Talk to someone who has <em>actually seen the file.</em></h1>
+                Contact Us</h1>
               <p className="lead">
                 The desk answers between 10 am and 11 pm; clinical questions are passed to the veterinarian on duty. If your pet is in
                 danger, skip the form and call — we will triage on the phone and dispatch.

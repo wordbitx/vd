@@ -102,3 +102,39 @@ Type: **Fraunces Variable** (display, optical size axis) + **Manrope Variable** 
 | No card payments | PCI scope; the clinic takes cash/transfer today | Stripe/Checkout or a local PSP; `payment` objects already carry `method`/`status`/`reference` |
 | Photography is AI-generated | No client photo library supplied | Swap files in `public/images/`; `npm run check:images` fails the build if a reference breaks |
 | Opening hours are seeded, not confirmed | The listing hours on Google were unverified | Admin → Clinic settings |
+
+---
+
+## 7. Reference-layout parity pass (21 Oct 2026, second review)
+
+The client reviewed the first build and asked for the public site to follow the reference's actual page
+architecture rather than an editorial interpretation of it. The public site was therefore rebuilt section-for-section:
+
+| Reference section (vetsondoor.com) | This build (home) |
+|---|---|
+| Sticky header: logo, nav, Get App / Log In / Emergency / Book Now | Same structure, same labels, cart and account added |
+| Hero: two trust badges, 2-line headline, CTA row, 5 trust chips, vet photo card with WhatsApp, Digital Pet Passport strip | Same |
+| 24/7 · coverage · certified · equipped stat bar | Same, four cells |
+| App promo strip | "Jawad Care" strip → client portal |
+| "Our Veterinary Services" grid with Book Service links | 8 services, fee + duration + Book Service |
+| "Pet Mall" (Shop Essentials) — 4 product cards with discount badges | Same, driven by live catalogue |
+| "Why Pet Parents Trust Us" — three numbered advantages | Same |
+| "Adopt a Pet" — 4 cards with Vaccinated / sex badges + WhatsApp | Same, vet-checked listings |
+| "Book in 3 Simple Steps" | Same |
+| "Meet Your Veterinarian" — photo, years badge, quote, certification chips, WhatsApp | Same, Dr. Jawad Hussain |
+| "Events & Tips" — 4 article cards | Same, live journal posts |
+| "Our Work in Action" gallery | 4-image gallery strip |
+| Google review wall | 5 published reviews + rating card |
+| "Pet Emergency?" band with call/email | Same, clinic number and email |
+| Footer | Explore / Clinic / Visit-or-call columns, socials, legal links |
+
+Supporting pages were aligned to the reference's simple title + grid pattern: `/services` ("Veterinary Services in
+Lahore"), `/shop` ("Everything Your Pet Will Love" → Browse Categories → Trending Now), `/book-vet-appointment-lahore`
+("Book a Vet Home Visit"), `/about` ("Professional Veterinary Care, Delivered to Your Doorstep Across Lahore."),
+`/team` ("Meet Our Veterinary Team"), `/adopt` ("Adopt a Pet"), `/gallery` ("Our Work in Action") and `/contact-vet-lahore`
+("Contact Us"). A floating Emergency / Book Visit bar appears on mobile, as on the reference.
+
+**Palette remains deliberately different** (as briefed): petrol teal `#0e3a44`, brass `#a97a30` / `#c69a4f` and warm
+ivory `#f7f3ea` / `#fffdfa` on white cards, with Manrope as the public typeface. All new public styles live in
+`src/app/site.css`, scoped under `.site-shell`, so the clinic console, client portal and printable slips keep their own
+design system untouched. The booking slip, barcode and portal/admin behaviour were not changed by this pass.

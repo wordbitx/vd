@@ -6,6 +6,7 @@ import { siteBaseUrl } from "@/lib/metadata";
 import { catalogProducts } from "@/server/catalog";
 import { getSettings } from "@/server/store";
 import "./globals.css";
+import "./site.css";
 import "./portal.css";
 import "./slip.css";
 

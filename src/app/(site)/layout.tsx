@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
-import { business, navLinks } from "@/lib/site";
+import { business, primaryNav } from "@/lib/site";
 import { currentUser } from "@/server/auth";
 import { catalogCategories } from "@/server/catalog";
 import { getSettings } from "@/server/store";
@@ -14,9 +14,9 @@ export default async function SiteLayout({ children }: { children: ReactNode }) 
   ]);
 
   return (
-    <>
+    <div className="site-shell">
       <SiteHeader
-        links={navLinks.filter((l) => l.href !== "/portal")}
+        links={primaryNav}
         user={user}
         clinicName={settings?.clinicName ?? business.name}
         monogram={settings?.monogram ?? business.monogram}
@@ -27,6 +27,10 @@ export default async function SiteLayout({ children }: { children: ReactNode }) 
       />
       <main id="main-content" style={{ flex: 1, display: "flex", flexDirection: "column" }}>{children}</main>
       <SiteFooter settings={settings} productCategories={categories} />
-    </>
+      <div className="v-mobilebar">
+        <a href={`tel:${(settings?.phone ?? business.phone).replace(/[^\d+]/g, "")}`} className="v-mobilebar-em">Emergency</a>
+        <a href="/book-vet-appointment-lahore" className="v-mobilebar-book">Book Visit</a>
+      </div>
+    </div>
   );
 }

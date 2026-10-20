@@ -63,7 +63,11 @@ for (const page of publicPages) {
 
 const home = await get("/");
 assert(home.body.includes("Jawad Veterinary Hospital"), "home page has the clinic name");
-assert(home.body.includes("Booking reference"), "home page shows the booking slip motif");
+assert(home.body.includes("Professional Vet Care"), "home page leads with the reference hero headline");
+assert(home.body.includes("Book in 3 Simple Steps"), "home page shows the three-step booking section");
+assert(home.body.includes("Our veterinary services"), "home page shows the services section");
+assert(home.body.includes("Pet Mall"), "home page shows the pet mall section");
+assert(home.body.includes("Meet your veterinarian"), "home page shows the vet profile section");
 assert(!home.body.includes("Illustrative"), "no leftover demo disclaimers on the home page");
 
 // 404

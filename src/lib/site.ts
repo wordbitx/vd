@@ -399,3 +399,14 @@ export const navLinks = [
   { href: "/adopt", label: "Adopt" },
   { href: "/contact-vet-lahore", label: "Contact" },
 ];
+
+/** Header links in the same order as the reference site's navigation. */
+export const primaryNav = [
+  { href: "/shop", label: "Pet Mall" },
+  { href: "/services", label: "Services" },
+  { href: "/team", label: "Team" },
+  { href: "/about", label: "About" },
+  { href: "/contact-vet-lahore", label: "Contact" },
+  { href: "/adopt", label: "Adopt a Pet" },
+  { href: "/pet-care-tips", label: "Events" },
+];

@@ -20,8 +20,8 @@ export default function TeamPage() {
       <section className="page-head">
         <div className="container">
           <Breadcrumbs items={[{ label: "Our team" }]} />
-          <SectionHead eyebrow={`Clinicians · ${business.city}`} title={<>The people who <em>will actually touch your pet.</em></>}
-            lead="Four registered veterinarians and a manager who runs the pharmacy and dispatch rota. Everyone here answers the WhatsApp thread they are named in." />
+          <SectionHead eyebrow={`Our team · ${business.city}`} title="Meet Our Veterinary Team"
+            lead="Dedicated professionals committed to delivering clinic-grade veterinary care directly to your doorstep — and in our Al Kabir Town hospital." />
         </div>
       </section>
 

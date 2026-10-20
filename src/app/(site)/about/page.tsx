@@ -25,9 +25,9 @@ export default async function AboutPage() {
           <Breadcrumbs items={[{ label: "About" }]} />
           <div className="split">
             <div>
-              <Eyebrow>Since {business.established} · {business.shortAddress}</Eyebrow>
+              <Eyebrow>About us · since {business.established}</Eyebrow>
               <h1 style={{ margin: "16px 0 18px", fontSize: "clamp(34px,4.8vw,60px)" }}>
-                A small hospital built to <em>treat the pet and the person.</em></h1>
+                Professional Veterinary Care, Delivered to Your Doorstep Across Lahore.</h1>
               <p className="lead">
                 Jawad Veterinary Hospital started as a two-room clinic on Raiwind Road with one rule: never let a frightened animal be
                 handled roughly, and never let an owner leave without understanding the plan. Seven years later that rule still runs the

@@ -32,10 +32,10 @@ export default async function BookPage({ searchParams }: { searchParams: Promise
             <div style={{ maxWidth: 680 }}>
               <Eyebrow>Booking · {business.city}</Eyebrow>
               <h1 style={{ margin: "14px 0 12px", fontSize: "clamp(32px,4.4vw,54px)" }}>
-                Book a veterinarian for <em>your pet, today.</em></h1>
+                Book a Vet Home Visit</h1>
               <p className="lead" style={{ margin: 0 }}>
-                Three short steps. You will see the exact fee, get a barcode booking slip you can print or send on WhatsApp, and a
-                confirmation from the clinic — usually inside twenty minutes.
+                Premium veterinary care at your doorstep in Lahore — or at our Al Kabir Town hospital. Three short steps,
+                the exact fee shown up front, and a printable booking slip with a barcode reference.
               </p>
             </div>
             <div className="row" style={{ gap: 10, flexWrap: "wrap" }}>

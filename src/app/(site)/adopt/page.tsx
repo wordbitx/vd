@@ -25,8 +25,8 @@ export default async function AdoptPage() {
           <Breadcrumbs items={[{ label: "Adopt a pet" }]} />
           <SectionHead
             eyebrow="The adoption desk"
-            title={<>A second chance, <em>with a vet attached.</em></>}
-            lead="These animals were rescued, surrendered or born to a clinic patient. Each is examined, dewormed and vaccinated before listing — and the first year of follow-up care is on us."
+            title="Adopt a Pet"
+            lead="Give a loving animal a forever home. These pets were rescued, surrendered or born to a clinic patient — each is examined, dewormed and vaccinated before listing, with the first year of follow-up care on us."
             action={<Link href="/contact-vet-lahore" className="button button-ghost button-sm">Ask about adopting <ArrowRight size={15} /></Link>}
           />
           <div className="grid cols-4" style={{ gap: 12, marginTop: 28 }}>
