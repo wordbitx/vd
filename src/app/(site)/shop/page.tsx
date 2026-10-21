@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { ArrowRight, ChevronRight } from "lucide-react";
 import { ProductCard } from "@/components/cards";
-import { CategoryIcon } from "@/components/icons";
+import { CategoryArt } from "@/components/category-art";
 import { catalogCategories, catalogProducts } from "@/server/catalog";
 import { pageMetadata } from "@/lib/metadata";
 
@@ -43,7 +43,7 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
                 className="r-cat"
                 data-active={c.slug === active?.slug ? "true" : undefined}
               >
-                <CategoryIcon slug={c.slug} />
+                <span className="r-cat-art"><CategoryArt slug={c.slug} /></span>
                 <span className="r-cat-name">{c.name}</span>
                 <span className="r-cat-go"><ChevronRight size={13} /></span>
               </Link>
