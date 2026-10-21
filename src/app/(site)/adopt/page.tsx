@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
-import { PawPrint } from "lucide-react";
+import { PawPrint, ShoppingBag } from "lucide-react";
 import { AdoptionCard } from "@/components/cards";
 import { business } from "@/lib/site";
 import { rows } from "@/server/store";
@@ -29,27 +29,27 @@ export default async function AdoptPage({ searchParams }: { searchParams: Promis
 
   return (
     <>
-      <section className="r-pagehero r-pagehero-centered">
+      <section className="r-adopt-hero-wrap">
         <div className="r-wrap">
-          <div className="r-adopt-hero">
-            <span className="r-adopt-mark" aria-hidden="true">
-              <PawPrint size={22} />
-            </span>
-            <span className="r-adopt-wordmark">{business.name}</span>
-            <h1>Find Your Perfect Companion</h1>
-            <p>Give a loving pet the forever home they deserve.</p>
-            <div className="r-filters r-filters-center">
-              {FILTERS.map((item) => (
-                <Link
-                  key={item.key}
-                  href={item.key === "all" ? "/adopt" : `/adopt?species=${item.key}`}
-                  className="r-filter"
-                  data-active={item.key === "all" ? (!species ? "true" : undefined) : species === item.key ? "true" : undefined}
-                >
-                  {item.label}
-                </Link>
-              ))}
+          <div className="r-adopt-card">
+            <ShoppingBag className="r-adopt-watermark" size={210} strokeWidth={0.9} aria-hidden="true" />
+            <div className="r-adopt-card-copy">
+              <h1>Find Your Perfect Companion</h1>
+              <p>Give a loving pet the forever home they deserve.</p>
             </div>
+          </div>
+
+          <div className="r-filters r-adopt-filters">
+            {FILTERS.map((item) => (
+              <Link
+                key={item.key}
+                href={item.key === "all" ? "/adopt" : `/adopt?species=${item.key}`}
+                className="r-filter"
+                data-active={item.key === "all" ? (!species ? "true" : undefined) : species === item.key ? "true" : undefined}
+              >
+                {item.label}
+              </Link>
+            ))}
           </div>
         </div>
       </section>

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { PostCard } from "@/components/cards";
 import { catalogPosts } from "@/server/catalog";
+import { PageHero } from "@/components/page-hero";
 import { pageMetadata } from "@/lib/metadata";
 
 export const metadata: Metadata = pageMetadata(
@@ -15,18 +16,14 @@ export default async function EventsPage() {
 
   return (
     <>
-      <section className="r-pagehero">
-        <div className="r-wrap">
-          <div className="r-pagehero-inner r-pagehero-single">
-            <div>
-              <h1>Events &amp; Tips</h1>
-              <p>Browse the latest events, daily insights and pet health tips from our veterinary experts.</p>
-            </div>
-          </div>
-        </div>
-      </section>
+      <PageHero
+        variant="plain"
+        crumb="Events"
+        title={<>Events &amp; Tips</>}
+        subtitle="Browse the latest events, daily insights and pet health tips from our veterinary experts."
+      />
 
-      <section className="r-section" style={{ paddingTop: 30 }}>
+      <section className="r-section" style={{ paddingTop: 10 }}>
         <div className="r-wrap">
           {posts.length ? (
             <div className="r-posts r-posts-3">

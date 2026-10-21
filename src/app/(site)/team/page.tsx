@@ -1,7 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
-import { ArrowRight, BadgeCheck, Calendar, Mail, ShieldCheck } from "lucide-react";
+import { ArrowRight, BadgeCheck, Calendar, Mail, ShieldCheck, Sparkles } from "lucide-react";
+import { PageHero } from "@/components/page-hero";
 import { WhatsAppIcon } from "@/components/icons";
 import { business, team } from "@/lib/site";
 import { pageMetadata } from "@/lib/metadata";
@@ -18,32 +19,30 @@ export default function TeamPage() {
 
   return (
     <>
-      <section className="r-pagehero">
-        <div className="r-wrap">
-          <div className="r-pagehero-inner r-pagehero-single">
-            <div>
-              <h1>Meet Our Veterinary Team</h1>
-              <p>Dedicated professionals committed to delivering clinic-grade veterinary care directly to your doorstep.</p>
-            </div>
-          </div>
-        </div>
-      </section>
+      <PageHero
+        variant="gradient"
+        crumb="Team"
+        title="Meet Our Veterinary Team"
+        subtitle="Dedicated professionals committed to delivering clinic-grade veterinary care directly to your doorstep."
+      />
 
-      <section className="r-section" style={{ paddingTop: 30 }}>
+      <section className="r-section" style={{ paddingTop: 40 }}>
         <div className="r-wrap">
-          <span className="r-kicker">Lead Vet</span>
-          <article className="r-teamlead" style={{ marginTop: 12 }}>
+          <article className="r-teamlead">
             <div className="r-teamlead-media">
-              <Image src={lead.image} alt={lead.name} fill sizes="(max-width:860px) 100vw, 38vw" className="object-cover" priority unoptimized />
-              <span className="r-teamlead-badge">Founder</span>
+              <span className="r-teamlead-badge"><BadgeCheck size={12} /> Lead Vet</span>
+              <div className="r-teamlead-photo">
+                <Image src={lead.image} alt={lead.name} fill sizes="(max-width:860px) 100vw, 38vw" className="object-cover" priority unoptimized />
+              </div>
             </div>
             <div className="r-teamlead-body">
+              <span className="r-eyebrow">Founder</span>
               <h2>{lead.name}</h2>
-              <span className="r-role">{lead.credentials} | Lead Veterinarian</span>
+              <span className="r-role"><b>{lead.credentials}</b> <i>|</i> Lead Veterinarian</span>
               <p>{lead.bio}</p>
 
-              <div>
-                <h3 className="r-subhead">Specialisations</h3>
+              <div className="r-teamlead-focus">
+                <h3 className="r-subhead"><Sparkles size={12} /> Specialisations</h3>
                 <div className="r-chips-row">
                   {lead.focus.map((item) => <span key={item} className="r-filter">{item}</span>)}
                 </div>
@@ -73,8 +72,8 @@ export default function TeamPage() {
 
           <div className="r-panel r-creds" style={{ marginTop: 24 }}>
             <div className="r-head-row">
-              <h3 className="r-subhead" style={{ margin: 0 }}>Credentials &amp; Qualifications</h3>
-              <Link href="/contact-vet-lahore" className="r-link">Ask for the full CV <ArrowRight size={13} /></Link>
+              <h3 className="r-subhead" style={{ margin: 0 }}><ShieldCheck size={12} /> Credentials &amp; Qualifications</h3>
+              <Link href="/contact-vet-lahore" className="r-link">View Full CV <ArrowRight size={13} /></Link>
             </div>
             <div className="r-creds-rows">
               {[

@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Check, MapPin, Star } from "lucide-react";
+import { ArrowRight, Check, Clock, MapPin, Star } from "lucide-react";
 import { pkrLabel } from "@/lib/format";
 import { business } from "@/lib/site";
 import { ServiceGlyph, WhatsAppIcon } from "@/components/icons";
@@ -16,16 +16,22 @@ export function ServiceCard({
   return (
     <article className="r-svc2">
       <div className="r-svc2-top">
-        <span className="r-svc2-icon"><ServiceGlyph icon={service.icon} size={21} /></span>
+        <span className="r-svc2-icon"><ServiceGlyph icon={service.icon} size={20} /></span>
+        <h3>{service.shortTitle ?? service.title}</h3>
       </div>
-      <h3>{service.shortTitle ?? service.title}</h3>
       <p>{service.summary}</p>
-      <span className="r-svc2-duration">Typical Duration: {service.duration}</span>
       <div className="r-svc2-foot">
-        <Link href={href ?? `/services/${service.slug}`} className="r-btn r-btn-outline">Learn More</Link>
-        <Link href={`/book-vet-appointment-lahore?service=${service.slug}`} className="r-btn r-btn-teal">
-          Book Now <ArrowRight size={13} />
-        </Link>
+        <span className="r-svc2-duration">
+          <Clock size={12} /> Typical Duration: {service.duration}
+        </span>
+        <div className="r-svc2-actions">
+          <Link href={href ?? `/services/${service.slug}`} className="r-svc2-more">
+            Learn More <ArrowRight size={12} />
+          </Link>
+          <Link href={`/book-vet-appointment-lahore?service=${service.slug}`} className="r-svc2-book">
+            Book Now
+          </Link>
+        </div>
       </div>
     </article>
   );
@@ -63,9 +69,14 @@ export function PostCard({ post }: { post: PostRow | { slug: string; title: stri
       <div className="r-post-body">
         <span className="r-post-cat">{post.category}</span>
         <Link href={`/pet-care-tips/${post.slug}`} className="r-post-title">{post.title}</Link>
-        <span className="r-post-date">
-          {new Date(`${post.date}T00:00:00`).toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" })}
-        </span>
+        <div className="r-post-foot">
+          <span className="r-post-date">
+            {new Date(`${post.date}T00:00:00`).toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" })}
+          </span>
+          <Link href={`/pet-care-tips/${post.slug}`} className="r-post-go" aria-label={post.title}>
+            <ArrowRight size={13} />
+          </Link>
+        </div>
       </div>
     </article>
   );
@@ -96,13 +107,13 @@ export function AdoptionCard({ pet }: { pet: { id: string; name: string; species
     <article className="r-adopt">
       <Link href={`/adopt/${pet.id}`} className="r-adopt-media" aria-label={`Meet ${pet.name}`}>
         <Image src={pet.image} alt={pet.name} fill sizes="(max-width:900px) 45vw,25vw" className="object-cover" unoptimized />
-        {pet.status === "reserved" ? <span className="r-adopt-badges"><span className="r-badge">Reserved</span></span> : null}
-      </Link>
-      <div className="r-adopt-body">
         <span className="r-adopt-flags">
           {pet.vaccinated ? <span className="r-badge r-badge-green">Vaccinated</span> : null}
           <span className="r-adopt-sex">{pet.sex}</span>
+          {pet.status === "reserved" ? <span className="r-badge">Reserved</span> : null}
         </span>
+      </Link>
+      <div className="r-adopt-body">
         <Link href={`/adopt/${pet.id}`} className="r-adopt-name">{pet.name}</Link>
         <span className="r-adopt-meta">{pet.breed.toLowerCase()} · {pet.age}</span>
         <a

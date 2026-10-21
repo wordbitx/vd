@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { ServiceCard } from "@/components/cards";
+import { PageHero } from "@/components/page-hero";
 import { WhatsAppIcon } from "@/components/icons";
 import { business } from "@/lib/site";
 import { catalogServices } from "@/server/catalog";
@@ -44,20 +45,16 @@ export default async function ServicesPage() {
 
   return (
     <>
-      <section className="r-pagehero">
-        <div className="r-wrap">
-          <div className="r-pagehero-inner r-pagehero-single">
-            <div>
-              <h1>Veterinary Services in Lahore</h1>
-              <p>Clinic-grade home vet care across all areas of Lahore</p>
-            </div>
-          </div>
-        </div>
-      </section>
+      <PageHero
+        variant="gradient"
+        crumb="Services"
+        title="Veterinary Services in Lahore"
+        subtitle="Clinic-grade home vet care across all areas of Lahore"
+      />
 
-      <section className="r-section" style={{ paddingTop: 34 }}>
+      <section className="r-section r-services-section">
         <div className="r-wrap">
-          <div className="r-cards">
+          <div className="r-cards r-cards-services">
             {services.map((service) => (
               <ServiceCard
                 key={service.slug}

@@ -1,11 +1,11 @@
-@import "@fontsource-variable/fraunces/opsz.css";
-@import "@fontsource-variable/fraunces/standard-italic.css";
-@import "@fontsource-variable/manrope/wght.css";
+@import "@fontsource-variable/playfair-display/wght.css";
+@import "@fontsource-variable/playfair-display/wght-italic.css";
+@import "@fontsource-variable/inter/wght.css";
 @import "tailwindcss";
 
 /* ==================================================================
    Jawad Veterinary Hospital — design system
-   Petrol blue + brass on warm ivory. Fraunces (display) / Manrope (UI).
+   Teal + ivory, matching the reference. Playfair Display (headings) / Inter (UI).
    ================================================================== */
 
 :root {
@@ -43,8 +43,8 @@
   --shadow-lg: 0 4px 10px rgba(7, 26, 32, 0.06), 0 42px 90px -20px rgba(7, 26, 32, 0.26);
   --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
   --header-h: 74px;
-  --serif: "Fraunces Variable", "Iowan Old Style", Georgia, "Times New Roman", serif;
-  --sans: "Manrope Variable", "Helvetica Neue", Arial, sans-serif;
+  --serif: "Playfair Display Variable", "Iowan Old Style", Georgia, "Times New Roman", serif;
+  --sans: "Inter Variable", "Helvetica Neue", Arial, sans-serif;
 }
 
 * { box-sizing: border-box; }

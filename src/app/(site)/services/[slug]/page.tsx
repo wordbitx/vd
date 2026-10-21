@@ -5,6 +5,7 @@ import { ArrowRight, BadgeCheck, CheckCircle2, Clock, MapPin, Phone, ShieldCheck
 import { WhatsAppIcon } from "@/components/icons";
 import { business } from "@/lib/site";
 import { catalogServices } from "@/server/catalog";
+import { PageHero } from "@/components/page-hero";
 import { pageMetadata } from "@/lib/metadata";
 
 type Params = { params: Promise<{ slug: string }> };
@@ -59,29 +60,26 @@ export default async function ServicePage({ params }: Params) {
 
   return (
     <>
-      <section className="r-pagehero">
-        <div className="r-wrap">
-          <div className="r-pagehero-inner r-pagehero-single">
-            <div>
-              <span className="label"><Stethoscope size={13} /> {service.duration} · {service.homeAvailable ? "at your home" : "at our hospital"}</span>
-              <h1>{service.title} in Lahore</h1>
-              <p>{service.overview}</p>
-              <div className="r-pagehero-chips">
-                <span className="r-chip r-chip-teal"><Clock size={11} /> Duration: {service.duration}</span>
-                <span className="r-chip r-chip-teal"><MapPin size={11} /> {service.homeAvailable ? "All Lahore Areas" : business.shortAddress}</span>
-              </div>
-              <div className="r-pagehero-actions">
-                <Link href={`/book-vet-appointment-lahore?service=${service.slug}`} className="r-btn r-btn-teal r-btn-lg">
-                  Book This Service <ArrowRight size={15} />
-                </Link>
-                <a href={tel(business.phone)} className="r-btn r-btn-outline r-btn-lg">
-                  <Phone size={15} /> Call {business.phone}
-                </a>
-              </div>
-            </div>
-          </div>
+      <PageHero
+        variant="gradient"
+        crumb="Services"
+        eyebrow={<><Stethoscope size={12} /> {service.duration} · {service.homeAvailable ? "at your home" : "at our hospital"}</>}
+        title={`${service.title} in Lahore`}
+        subtitle={service.overview}
+      >
+        <div className="r-pagehero-chips">
+          <span className="r-chip r-chip-teal"><Clock size={11} /> Duration: {service.duration}</span>
+          <span className="r-chip r-chip-teal"><MapPin size={11} /> {service.homeAvailable ? "All Lahore Areas" : business.shortAddress}</span>
         </div>
-      </section>
+        <div className="r-pagehero-actions">
+          <Link href={`/book-vet-appointment-lahore?service=${service.slug}`} className="r-btn r-btn-teal r-btn-lg">
+            Book This Service <ArrowRight size={15} />
+          </Link>
+          <a href={tel(business.phone)} className="r-btn r-btn-outline r-btn-lg">
+            <Phone size={15} /> Call {business.phone}
+          </a>
+        </div>
+      </PageHero>
 
       <section className="r-section" style={{ paddingTop: 34 }}>
         <div className="r-wrap">
