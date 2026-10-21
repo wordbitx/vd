@@ -21,7 +21,7 @@ const sections = [
   {
     h: "Fees and payment",
     p: [
-      `Service pages show the professional fee. A home visit adds ${money(fees.visitHomeStandard)} for travel (${money(fees.visitHomeEmergency)} for emergency or night dispatch). Medicines, lab analysis, imaging, anaesthesia and hospitalisation are quoted separately, in writing, before they begin.`,
+      `Fees are confirmed when you book. A home visit adds ${money(fees.visitHomeStandard)} for travel (${money(fees.visitHomeEmergency)} for emergency or night dispatch). Medicines, lab analysis, imaging, anaesthesia and hospitalisation are quoted separately, in writing, before they begin.`,
       "Payment is due at the visit: cash, bank transfer or Easypaisa. Where a treatment plan runs across visits, we will agree a schedule in writing. We do not take card details online.",
     ],
   },

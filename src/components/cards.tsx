@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Calendar, Check, Clock, MapPin, Star } from "lucide-react";
+import { ArrowRight, Check, MapPin, Star } from "lucide-react";
 import { pkrLabel } from "@/lib/format";
 import { business } from "@/lib/site";
 import { ServiceGlyph, WhatsAppIcon } from "@/components/icons";
@@ -8,34 +8,30 @@ import type { PostRow } from "@/lib/types";
 import AddToCart from "@/components/add-to-cart";
 
 export function ServiceCard({
-  service, href, cta = "Book this service",
+  service, href,
 }: {
-  service: { slug: string; title: string; summary: string; icon: string; price: number; duration: string; homeAvailable?: boolean };
+  service: { slug: string; shortTitle?: string; title: string; summary: string; icon: string; duration: string };
   href?: string;
-  cta?: string;
 }) {
   return (
     <article className="r-svc2">
       <div className="r-svc2-top">
         <span className="r-svc2-icon"><ServiceGlyph icon={service.icon} size={21} /></span>
-        <span className="r-chip r-chip-teal"><Clock size={11} /> {service.duration}</span>
       </div>
-      <h3>{service.title}</h3>
+      <h3>{service.shortTitle ?? service.title}</h3>
       <p>{service.summary}</p>
+      <span className="r-svc2-duration">Typical Duration: {service.duration}</span>
       <div className="r-svc2-foot">
-        <span className="r-svc2-price"><small>From</small><b>{pkrLabel(service.price)}</b></span>
-        <span className="r-svc2-actions">
-          <Link href={href ?? `/services/${service.slug}`} className="r-btn r-btn-outline">Details</Link>
-          <Link href={`/book-vet-appointment-lahore?service=${service.slug}`} className="r-btn r-btn-teal">
-            {cta} <ArrowRight size={13} />
-          </Link>
-        </span>
+        <Link href={href ?? `/services/${service.slug}`} className="r-btn r-btn-outline">Learn More</Link>
+        <Link href={`/book-vet-appointment-lahore?service=${service.slug}`} className="r-btn r-btn-teal">
+          Book Now <ArrowRight size={13} />
+        </Link>
       </div>
     </article>
   );
 }
 
-export function ProductCard({ product, priority = false }: { product: { id: string; slug: string; name: string; brand: string; price: number; compareAt?: number; image: string; rating: number; reviews: number; badge?: string; categorySlug: string; stock: number }; priority?: boolean }) {
+export function ProductCard({ product, priority = false, categoryName }: { product: { id: string; slug: string; name: string; brand: string; price: number; compareAt?: number; image: string; rating: number; reviews: number; badge?: string; categorySlug: string; stock: number }; priority?: boolean; categoryName?: string }) {
   const off = product.compareAt && product.compareAt > product.price ? Math.round(((product.compareAt - product.price) / product.compareAt) * 100) : 0;
   return (
     <article className="r-prod">
@@ -44,12 +40,8 @@ export function ProductCard({ product, priority = false }: { product: { id: stri
         <Image src={product.image} alt={product.name} fill sizes="(max-width:720px) 50vw,(max-width:1180px) 33vw,25vw" className="object-cover" priority={priority} unoptimized />
       </Link>
       <div className="r-prod-body">
-        <span className="r-prod-cat">{product.brand}</span>
+        {categoryName ? <span className="r-prod-cat">{categoryName}</span> : null}
         <Link href={`/shop/${product.slug}`} className="r-prod-name">{product.name}</Link>
-        <span className="r-product-stars" style={{ display: "inline-flex", alignItems: "center", gap: 4, fontSize: 10.5, color: "#8b9aa0" }}>
-          <Star size={11} fill="currentColor" strokeWidth={0} style={{ color: "var(--r-orange)" }} /> {product.rating.toFixed(1)}
-          <span style={{ fontWeight: 500 }}>({product.reviews})</span>
-        </span>
         <div className="r-prod-foot">
           <span className="r-prod-price">
             <b>{pkrLabel(product.price)}</b>
@@ -57,11 +49,6 @@ export function ProductCard({ product, priority = false }: { product: { id: stri
           </span>
           <AddToCart id={product.id} disabled={product.stock <= 0} label="" className="r-prod-cart" />
         </div>
-        {product.stock <= 0 ? (
-          <span style={{ fontSize: 10.5, fontWeight: 800, color: "var(--r-orange)" }}>Out of stock — ask about the next delivery</span>
-        ) : product.stock <= 6 ? (
-          <span style={{ fontSize: 10.5, fontWeight: 700, color: "var(--r-gold)" }}>Only {product.stock} left in store</span>
-        ) : null}
       </div>
     </article>
   );
@@ -76,14 +63,9 @@ export function PostCard({ post }: { post: PostRow | { slug: string; title: stri
       <div className="r-post-body">
         <span className="r-post-cat">{post.category}</span>
         <Link href={`/pet-care-tips/${post.slug}`} className="r-post-title">{post.title}</Link>
-        <div className="r-post-foot">
-          <span className="r-post-date">
-            {new Date(`${post.date}T00:00:00`).toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" })} · {post.readTime}
-          </span>
-          <Link href={`/pet-care-tips/${post.slug}`} className="r-post-arrow" aria-label={`Read ${post.title}`}>
-            <ArrowRight size={14} />
-          </Link>
-        </div>
+        <span className="r-post-date">
+          {new Date(`${post.date}T00:00:00`).toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" })}
+        </span>
       </div>
     </article>
   );
@@ -114,15 +96,15 @@ export function AdoptionCard({ pet }: { pet: { id: string; name: string; species
     <article className="r-adopt">
       <Link href={`/adopt/${pet.id}`} className="r-adopt-media" aria-label={`Meet ${pet.name}`}>
         <Image src={pet.image} alt={pet.name} fill sizes="(max-width:900px) 45vw,25vw" className="object-cover" unoptimized />
-        <span className="r-adopt-badges">
-          {pet.vaccinated ? <span className="r-badge r-badge-green">Vaccinated</span> : null}
-          {pet.status === "reserved" ? <span className="r-badge">Reserved</span> : null}
-        </span>
+        {pet.status === "reserved" ? <span className="r-adopt-badges"><span className="r-badge">Reserved</span></span> : null}
       </Link>
       <div className="r-adopt-body">
-        <span className="r-adopt-sex">{pet.sex}</span>
-        <span className="r-adopt-name">{pet.name}</span>
-        <span className="r-adopt-meta">{pet.breed} · {pet.age}</span>
+        <span className="r-adopt-flags">
+          {pet.vaccinated ? <span className="r-badge r-badge-green">Vaccinated</span> : null}
+          <span className="r-adopt-sex">{pet.sex}</span>
+        </span>
+        <Link href={`/adopt/${pet.id}`} className="r-adopt-name">{pet.name}</Link>
+        <span className="r-adopt-meta">{pet.breed.toLowerCase()} · {pet.age}</span>
         <a
           className="r-adopt-wa"
           href={`https://wa.me/${business.whatsappNumber}?text=${encodeURIComponent(`Assalam-o-Alaikum, I am interested in adopting ${pet.name}.`)}`}

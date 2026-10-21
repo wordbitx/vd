@@ -1,7 +1,7 @@
 "use client";
 
 import { useActionState, useMemo, useState } from "react";
-import { ArrowRight, Check, Send } from "lucide-react";
+import { ArrowRight, Check } from "lucide-react";
 import { sendMessage } from "@/server/actions/account";
 import { whatsappUrl } from "@/lib/site";
 import { WhatsAppIcon } from "@/components/icons";
@@ -17,7 +17,6 @@ const SUBJECTS = [
 
 export function ContactForm({ signedIn }: { signedIn: boolean }) {
   const [state, formAction, pending] = useActionState<Awaited<ReturnType<typeof sendMessage>> | null, FormData>(sendMessage, null);
-  const [sent, setSent] = useState(false);
   const [name, setName] = useState("");
   const [subject, setSubject] = useState(SUBJECTS[0]);
   const [body, setBody] = useState("");
@@ -31,13 +30,20 @@ export function ContactForm({ signedIn }: { signedIn: boolean }) {
     [subject, body, name],
   );
 
+  const openWhatsApp = () => {
+    // The reference form hands the message straight to WhatsApp; the record below keeps the clinic inbox in sync.
+    try {
+      window.open(waHref, "_blank", "noopener,noreferrer");
+    } catch { /* pop-up blocked — the stored message still reaches the front desk */ }
+  };
+
   return (
     <form
       action={formAction}
       className="col"
       style={{ gap: 14 }}
       noValidate
-      onSubmit={() => setSent(false)}
+      onSubmit={openWhatsApp}
     >
       <div className="r-form-grid">
         <div className="field">
@@ -101,18 +107,13 @@ export function ContactForm({ signedIn }: { signedIn: boolean }) {
       ) : state && !state.ok ? (
         <p className="notice notice-error" style={{ margin: 0 }}>{state.message}</p>
       ) : null}
-      <div className="row-between" style={{ flexWrap: "wrap", gap: 10 }}>
-        <span className="tiny muted">
-          {signedIn ? "Sent to the front desk and your portal inbox." : "For emergencies call the hospital — do not use this form."}
+      <div className="col" style={{ gap: 8 }}>
+        <button className="r-btn r-btn-green r-btn-lg" type="submit" disabled={pending} style={{ justifyContent: "center" }}>
+          <WhatsAppIcon size={15} /> {pending ? "Opening WhatsApp…" : "Send via WhatsApp"}
+        </button>
+        <span className="tiny muted" style={{ textAlign: "center" }}>
+          {signedIn ? "A copy is saved to your portal inbox." : "For emergencies call the hospital — do not use this form."}
         </span>
-        <div className="row" style={{ gap: 8 }}>
-          <a className="button button-ghost" href={waHref} target="_blank" rel="noreferrer">
-            <WhatsAppIcon size={15} /> Send via WhatsApp
-          </a>
-          <button className="button button-primary" type="submit" disabled={pending}>
-            {pending ? "Sending…" : <><Send size={15} /> Send message</>}
-          </button>
-        </div>
       </div>
     </form>
   );

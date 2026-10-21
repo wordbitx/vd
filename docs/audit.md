@@ -59,7 +59,7 @@ Four things make it feel trustworthy, and we reproduced all four:
 | Staff console | ✗ | ✓ `/admin` — KPI overview with SVG charts, today's dispatch board, appointment board with inline status/vet/payment, orders, clients, stock, services, adoption, journal, reviews, roles, settings |
 | Records spine | partial | ✓ pet → vaccines (batch/expiry) → consult notes; overdues surface in the portal **and** the console |
 | Emergency handling | phone + WhatsApp | ✓ same, plus an explicit "call, don't fill a form" path inside the booking wizard when emergency is toggled |
-| Shop | ✓ basic | ✓ 18 products / 8 categories, filters, promo codes, delivery threshold, stock decrement, order statuses, printable invoice |
+| Shop | ✓ basic | ✓ 18 products / 8 categories, category cards, promo codes, delivery threshold, stock decrement, order statuses, printable invoice (search/sort live in the admin and the cart, not on the storefront) |
 | Content | events-as-blog | ✓ `/pet-care-tips` journal + event listings, admin editor |
 | Trust | review wall | ✓ review moderation in the console; published reviews feed the site automatically |
 | SEO | Next metadata | ✓ per-page metadata, `VeterinaryCare` + `Article` JSON-LD, sitemap, robots (indexing gated on `NEXT_PUBLIC_SITE_URL`) |
@@ -237,17 +237,18 @@ legal pages inherit the premium palette without being rewritten. The slip's prin
 
 | Route | Mirrors | Sections |
 |---|---|---|
-| `/shop` | `/shop` | Page hero + delivery promise → 8 category tiles → "Trending now" product rail with −% badges and PKR strikethroughs → `ShopBrowser` (search, category + brand filters, sort) → trust tiles |
-| `/services` | `/services` | Page hero with trust chips → 4 promise tiles → service cards (duration, price, Learn More / Book Now) → emergency band |
-| `/team` | `/veterinarian-lahore` | Page hero → founder card (portrait, ribbon, RVMP/DVM/languages chips, focus checklist, Book with / WhatsApp directly / call) → team grid → care-standards panel + dark continuity panel → recruitment band |
-| `/about` | `/about` | Trust strip + headline → vision / journey two-column → six value tiles → three-step flow → team strip → review carousel → CTA band |
-| `/contact-vet-lahore` | `/contact-vet-lahore` | Three reach tiles (WhatsApp, email, hotline) → socials + business hours → "Send us a message" panel with **Name / Phone / Email / Subject select / Message** and both **Send via WhatsApp** and a stored message → emergency band |
-| `/adopt` | `/adopt` | Centred hero + species filter pills → live counts → adoption cards (vaccinated badge, sex pill, species · age, WhatsApp CTA) → reserved section → four-step adoption flow |
-| `/events` → `/pet-care-tips` | `/events` | "Events & Tips" hero → category filter pills → featured lead article → article grid → event cards with category chip and date → FAQ |
+| `/shop` | `/shop` | Page hero → "Browse Categories" tiles (each filters the grid) → "Trending Now" product grid with −% badges and PKR strikethroughs. No search panel, filters or trust tiles — the reference has none |
+| `/services` | `/services` | Page hero → nine service cards in the reference's order (description, "Typical Duration", Learn More / Book Now, **no fees**) → "Life-threatening emergency?" WhatsApp band |
+| `/team` | `/veterinarian-lahore` | Page hero → "Lead Vet" founder card (photo, Founder badge, credentials, bio, Specialisations pills, DVM/RVMP/PVMC badges, Book with / WhatsApp Direct) → Credentials & Qualifications rows → "We're Growing" band |
+| `/about` | `/about` | Hero + four intro paragraphs → "Our Vision" / "Our Journey" two-column → six value cards → "Legal Information" links. No stats strip, team strip, reviews or CTA band |
+| `/contact-vet-lahore` | `/contact-vet-lahore` | Three reach tiles (WhatsApp with 5-minute note, email, 24/7 hotline) → "Follow Us" + "Business Hours" → "Send Us a Message" (Name / Phone / Email / Subject select / Message) with a single **Send via WhatsApp** action; the submission is also stored in the clinic inbox |
+| `/adopt` | `/adopt` | Logo + "Find Your Perfect Companion" centred hero → species pills → adoption cards (vaccinated badge, sex pill, breed · age, WhatsApp) → **Post Pet** (login-gated posting form). No counts, reserved block or four-step flow |
+| `/events` → `/pet-care-tips` | `/events` | "Events & Tips" hero → one grid of large article cards (image, category chip, title, date). No category filters, lead article, event list or FAQ |
 | `/services/[slug]` | `/services/pet-vaccination-lahore` | Hero + duration/area meta → "What's included" checklist → three benefit cards → dark booking slot panel → FAQ accordion → area pills → related services → booking band |
 
-The contact form now posts a real record (name, phone, email, subject, message) to the clinic inbox *and* offers the
-reference's one-tap WhatsApp path, so nothing on the page is decorative.
+The contact form posts a real record (name, phone, email, subject, message) to the clinic inbox **and** hands the same
+message to WhatsApp, which is the reference's own submit behaviour. "Post Pet" is a working, login-gated listing form
+(`/adopt/post`) rather than a dead button.
 
 ### Reference URLs still work
 
@@ -261,3 +262,31 @@ equivalent page here.
 `rm -rf .next && JVH_AUTH_SECRET=… npm run build`, `npx tsc --noEmit`, `npm run lint`, `node scripts/smoke.mjs`,
 `node scripts/flows.mjs` — all clean on this pass; every route in the sweep returns 200 and every flow (booking → slip,
 cart → checkout → invoice, portal, console) still passes.
+
+
+---
+
+## 10. Reference-parity correction (21 Oct 2026, fifth review)
+
+The client compared the pages against the reference links again: *"jo mne uper links deye h tumne pages wese ni bnae …
+design or overlook sb same rkho or prices agr wha ni mentioned to tum b mt kro or jese wo kam kr rha h wese kro."*
+The pages had been over-built — extra sections the reference does not have, and invented fees.
+
+**What changed**
+
+- **No price unless the reference shows one.** Service cards and service detail pages no longer carry a fee, "From"
+  label or home-visit surcharge block. Prices remain where the reference shows them: the Pet Mall (live product prices
+  and strike-throughs) and the booking flow (visiting / emergency fees).
+- **Extra sections removed** on `/shop`, `/services`, `/services/[slug]`, `/team`, `/about`, `/contact-vet-lahore`,
+  `/adopt` and `/events`, so each page now has the same section list, in the same order, as its reference counterpart
+  (see the updated table in §9).
+- **Behaviour matched.** Category cards filter the Pet Mall; every service card's "Book Now" pre-selects that service in
+  the booking wizard; "Post Pet" opens a login-gated listing form that publishes into the adoption feed and the admin
+  desk; the contact form's single primary action is "Send via WhatsApp" (the record is still stored).
+- **Copy aligned** to the reference's own wording for the service list, durations, emergency band, contact tiles,
+  business-hours block, about-page values and legal strip.
+
+**Verification.** `tsc --noEmit`, `eslint`, `next build`, `scripts/smoke.mjs` and `scripts/flows.mjs` all pass; every
+route in the sweep returns 200 (`/adopt/post` correctly 307s to `/login?next=/adopt/post` when signed out), and a
+price audit confirms zero PKR strings on `/services`, `/services/<slug>`, `/about`, `/contact-vet-lahore`, `/adopt`,
+`/pet-care-tips` and `/team`.
