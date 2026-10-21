@@ -1,8 +1,8 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { Search, ShoppingBag, SlidersHorizontal } from "lucide-react";
 import { ProductCard } from "@/components/cards";
-import { CategoryArt } from "@/components/category-art";
 import { catalogCategories, catalogProducts } from "@/server/catalog";
 import { pageMetadata } from "@/lib/metadata";
 
@@ -100,7 +100,16 @@ export default async function ShopPage({
                 className="r-catrow-item"
                 data-active={c.slug === active?.slug ? "true" : undefined}
               >
-                <CategoryArt slug={c.slug} className="r-catrow-art" />
+                <span className="r-catrow-art">
+                  <Image
+                    src={`/images/categories/${c.slug}.png`}
+                    alt=""
+                    width={96}
+                    height={96}
+                    sizes="64px"
+                    unoptimized
+                  />
+                </span>
                 <span className="r-catrow-name">{c.name}</span>
               </Link>
             ))}
