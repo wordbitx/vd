@@ -2,7 +2,7 @@
 
 A complete clinic platform for **Jawad Veterinary Hospital**, Al Kabir Town, Lahore: marketing site, 3-step booking with a printable barcode slip, a client portal with Digital Pet Passports, a pet mall with real orders, and a staff console that runs the day.
 
-Built as a premium rebuild of the reference site in the same problem space, with a different palette (**petrol teal + brass on warm ivory**) and a much heavier back office. Read the reference-site audit in [`docs/audit.md`](docs/audit.md).
+Built as a close visual and functional clone of the reference site — same palette, typography, section order and interactions — with a much heavier back office (client portal, clinic console, printable slips). Read the reference-site audit in [`docs/audit.md`](docs/audit.md).
 
 ---
 

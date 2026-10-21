@@ -1,6 +1,7 @@
 const pkr = new Intl.NumberFormat("en-PK", { maximumFractionDigits: 0 });
 
 export const money = (n: number) => `Rs. ${pkr.format(Math.round(n || 0))}`;
+export const pkrLabel = (n: number) => `PKR ${pkr.format(Math.round(n || 0))}`;
 export const moneyShort = (n: number) => (n >= 100000 ? `${(n / 1000).toFixed(0)}k` : pkr.format(Math.round(n || 0)));
 export const num = (n: number) => pkr.format(Math.round(n || 0));
 

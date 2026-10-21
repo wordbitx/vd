@@ -68,7 +68,12 @@ Four things make it feel trustworthy, and we reproduced all four:
 
 ## 4. Colour scheme (deliberately changed)
 
-The brief said: same functionality, different palette. vetsondoor.com is a bright, clinical blue/white. This build uses a **petrol-teal + brass on warm ivory** system:
+> **Update (third review):** the client asked for an exact clone — *same palette, same UX* — so the public site now uses the
+> reference's own colours (section 8). The token table below documents the earlier, now-superseded scheme; the database,
+> portal, console and slip styling are unaffected because they use the legacy tokens, which the website bridges to the new
+> palette inside `.site-shell`.
+
+The earlier build used a **petrol-teal + brass on warm ivory** system:
 
 | Token | Value | Use |
 |---|---|---|
@@ -138,3 +143,50 @@ Lahore"), `/shop` ("Everything Your Pet Will Love" → Browse Categories → Tre
 ivory `#f7f3ea` / `#fffdfa` on white cards, with Manrope as the public typeface. All new public styles live in
 `src/app/site.css`, scoped under `.site-shell`, so the clinic console, client portal and printable slips keep their own
 design system untouched. The booking slip, barcode and portal/admin behaviour were not changed by this pass.
+
+---
+
+## 8. Exact-clone pass (21 Oct 2026, third review)
+
+The client supplied full-page screenshots of the live reference and asked for a like-for-like clone: same colours, same
+typography, same section order, same interactions. The public site was rebuilt against those screenshots.
+
+### Palette, sampled from the screenshots
+
+| Token | Value | Use |
+|---|---|---|
+| `--r-teal` | `#224c5c` | Hero background, dark feature cards, footer CTA |
+| `--r-teal-2` | `#316c87` | Primary buttons, links, icon accents, stat numbers |
+| `--r-ink` | `#1f2d34` | Dark navigation bar, footer, body headings |
+| `--r-orange` | `#d76638` | "Sign Up Free", Emergency pill, Call button, discount badges |
+| `--r-green-2` | `#65d072` | WhatsApp / adoption CTAs |
+| `--r-cream` | `#fefaf3` | Page background, alternating sections |
+| `--r-peach` / `--r-peach-2` | `#f8d7c4` / `#fdeee4` | Service bento tiles, certification chips |
+| `--r-blue` | `#ecf7fb` | Lab-tests tile, advantage blobs |
+| White | `#ffffff` | Header, cards, trust sections |
+
+Typography: **Fraunces** (display serif, matching the reference's serif headlines) + **Manrope** (UI), both self-hosted.
+
+### Structure cloned from the screenshots
+
+1. White header (logo, Get App, cart, Log In, Emergency, Book Now) **plus the separate dark nav bar** underneath.
+2. Deep-teal hero with two outline pills, three-line headline, three CTAs, four trust chips, and the **white veterinarian
+   card** with a rotated "Top Rated" ribbon, credential chips and the green WhatsApp button; the Digital Pet Passport
+   strip sits under the card and now really resolves a booking reference to its slip.
+3. Floating white statistics card overlapping the hero's bottom edge.
+4. **Bento services grid** — one wide teal tile plus peach/white/blue tiles, each with "Book Service →".
+5. Pet Mall rail with discount badges and circular cart buttons.
+6. Zig-zag "Why Pet Parents Trust Us" with organic blob art behind each advantage icon.
+7. Adoption cards with vaccinated/sex badges and full-width WhatsApp buttons.
+8. Three-step booking strip with a peach connector line.
+9. Dark-teal "Meet Your Veterinarian" band with the portrait, quote, certification chips and WhatsApp CTA.
+10. Events & Tips cards with category chips and circular arrow buttons.
+11. "Our Work in Action" four-image gallery.
+12. Google review wall: brand block with the green "Write a review" button and a **swipeable three-up carousel** with
+    floating arrow controls.
+13. Full-width "Pet Emergency?" gradient band with the orange call pill and email link.
+14. Teal CTA card above the dark four-column footer with ▸ service links, contact block and Google review pill.
+15. Mobile: floating Emergency / Book Visit bar, exactly as the reference does it.
+
+The interaction model is unchanged from the earlier build (booking wizard → server action → reference + printable slip,
+cart → checkout → invoice, portal and console), so the clone is visual and behavioural, not a static mock.

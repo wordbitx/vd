@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import { ArrowRight, Sparkles, Star, Truck } from "lucide-react";
 import { ShopBrowser } from "@/components/shop-browser";
 import { business, fees } from "@/lib/site";
-import { money } from "@/lib/format";
+import { money, pkrLabel } from "@/lib/format";
 import { catalogCategories, catalogProducts } from "@/server/catalog";
 import { pageMetadata } from "@/lib/metadata";
 
@@ -82,8 +82,8 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
                       <Link href={`/shop/${product.slug}`} className="v-product-name">{product.name}</Link>
                       <span className="v-product-stars"><Star size={11} fill="currentColor" strokeWidth={0} /> {product.rating.toFixed(1)} <span style={{ fontWeight: 500 }}>({product.reviews})</span></span>
                       <div className="v-product-price">
-                        <b>{money(product.price)}</b>
-                        {off > 0 ? <s>{money(product.compareAt!)}</s> : null}
+                        <b>{pkrLabel(product.price)}</b>
+                        {off > 0 ? <s>{pkrLabel(product.compareAt!)}</s> : null}
                       </div>
                     </div>
                   </article>

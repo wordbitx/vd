@@ -27,9 +27,9 @@ export default async function SiteLayout({ children }: { children: ReactNode }) 
       />
       <main id="main-content" style={{ flex: 1, display: "flex", flexDirection: "column" }}>{children}</main>
       <SiteFooter settings={settings} productCategories={categories} />
-      <div className="v-mobilebar">
-        <a href={`tel:${(settings?.phone ?? business.phone).replace(/[^\d+]/g, "")}`} className="v-mobilebar-em">Emergency</a>
-        <a href="/book-vet-appointment-lahore" className="v-mobilebar-book">Book Visit</a>
+      <div className="v-mobilebar r-mobilebar">
+        <a href={`tel:${(settings?.phone ?? business.phone).replace(/[^\d+]/g, "")}`} className="v-mobilebar-em r-mobilebar-em">Emergency</a>
+        <a href="/book-vet-appointment-lahore" className="v-mobilebar-book r-mobilebar-book">Book Visit</a>
       </div>
     </div>
   );
