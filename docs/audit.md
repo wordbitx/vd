@@ -237,7 +237,7 @@ legal pages inherit the premium palette without being rewritten. The slip's prin
 
 | Route | Mirrors | Sections |
 |---|---|---|
-| `/shop` | `/shop` | Page hero → "Browse Categories" tiles (each filters the grid) → "Trending Now" product grid with −% badges and PKR strikethroughs. No search panel, filters or trust tiles — the reference has none |
+| `/shop` | `/shop` | **Teal rounded banner** with the search field on top, headline and subtitle bottom-left and the bag watermark right → "Browse Categories" row of illustrated figures (each filters the grid) → "Trending Now" header with the filter/sort control → product grid with −% badges and PKR strikethroughs. Search, category and sort are all live via query params |
 | `/services` | `/services` | Page hero → nine service cards in the reference's order (description, "Typical Duration", Learn More / Book Now, **no fees**) → "Life-threatening emergency?" WhatsApp band |
 | `/team` | `/veterinarian-lahore` | Page hero → "Lead Vet" founder card (photo, Founder badge, credentials, bio, Specialisations pills, DVM/RVMP/PVMC badges, Book with / WhatsApp Direct) → Credentials & Qualifications rows → "We're Growing" band |
 | `/about` | `/about` | Hero + four intro paragraphs → "Our Vision" / "Our Journey" two-column → six value cards → "Legal Information" links. No stats strip, team strip, reviews or CTA band |
