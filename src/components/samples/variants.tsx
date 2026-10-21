@@ -34,6 +34,38 @@ function Foot() {
   );
 }
 
+function Tail() {
+  return (
+    <section className="smp-tail">
+      <div className="smp-tail-in">
+        <div className="smp-tail-copy">
+          <span className="smp-kicker">Ready when you are</span>
+          <h2>A calmer visit starts here.</h2>
+          <p>Home visits across Lahore and a fully equipped hospital in Al Kabir Town — same-day slots, seven days a week.</p>
+        </div>
+        <div className="smp-tail-actions">
+          <a className="smp-btn">Book a home visit <ArrowRight size={14} /></a>
+          <a className="smp-btn-2"><Phone size={13} /> 0307-8517122</a>
+        </div>
+      </div>
+      <div className="smp-tail-reviews">
+        {REVIEWS.map((r) => (
+          <figure key={r.name}>
+            <Stars />
+            <blockquote>“{r.text}”</blockquote>
+            <figcaption>{r.name} · {r.tag}</figcaption>
+          </figure>
+        ))}
+      </div>
+      <ul className="smp-tail-strip">
+        {["24/7 emergency line", "RVMP-registered vets", "Free follow-up visit", "Cash, Easypaisa or transfer"].map((t) => (
+          <li key={t}><Check size={12} /> {t}</li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
 const ICONS = [Stethoscope, ShieldCheck, Sparkles, Heart, Phone, Truck];
 
 function ServiceIcon({ i }: { i: number }) {
@@ -88,6 +120,7 @@ export function AuroraSplit() {
           ))}
         </div>
       </section>
+      <Tail />
       <Foot />
     </div>
   );
@@ -131,6 +164,7 @@ export function GrandEditorial() {
           </ul>
         </div>
       </section>
+      <Tail />
       <Foot />
     </div>
   );
@@ -178,6 +212,7 @@ export function MidnightLuxe() {
           ))}
         </div>
       </section>
+      <Tail />
       <Foot />
     </div>
   );
@@ -224,6 +259,7 @@ export function ClinicalCalm() {
           ))}
         </div>
       </section>
+      <Tail />
       <Foot />
     </div>
   );
@@ -266,6 +302,7 @@ export function BentoClinic() {
           {STATS.map((s) => <div key={s.l} className="smp-stat"><b>{s.v}</b><span>{s.l}</span></div>)}
         </div>
       </section>
+      <Tail />
       <Foot />
     </div>
   );
@@ -309,6 +346,7 @@ export function BookingFirst() {
           ))}
         </div>
       </section>
+      <Tail />
       <Foot />
     </div>
   );
@@ -340,6 +378,7 @@ export function MagazineSpread() {
           <a><b>Adopting in Lahore</b><small>Four cats looking</small></a>
         </aside>
       </section>
+      <Tail />
       <Foot />
     </div>
   );
@@ -391,6 +430,7 @@ export function WarmBoutique() {
           <cite>Hinnana Iqbal · DHA</cite>
         </div>
       </section>
+      <Tail />
       <Foot />
     </div>
   );
@@ -427,6 +467,7 @@ export function SwissGrid() {
           </a>
         ))}
       </section>
+      <Tail />
       <Foot />
     </div>
   );
@@ -466,6 +507,7 @@ export function ImmersiveOverlay() {
           </ul>
         </div>
       </section>
+      <Tail />
       <Foot />
     </div>
   );
@@ -561,6 +603,7 @@ export function SidebarApp() {
           </div>
         </section>
       </main>
+      <Tail />
       <Foot />
     </div>
   );
@@ -604,6 +647,7 @@ export function DuotonePoster() {
           ))}
         </div>
       </section>
+      <Tail />
       <Foot />
     </div>
   );
@@ -644,6 +688,7 @@ export function PetFirst() {
           ))}
         </div>
       </section>
+      <Tail />
       <Foot />
     </div>
   );
@@ -695,6 +740,7 @@ export function MallFirst() {
           <p className="smp-lead">Same-day inside Lahore. Cold-chain items travel in insulated boxes.</p>
         </div>
       </section>
+      <Tail />
       <Foot />
     </div>
   );
@@ -727,6 +773,7 @@ export function CoverStory() {
           <li><b>2.4k</b><span>visits made</span></li>
         </ul>
       </section>
+      <Tail />
       <Foot />
     </div>
   );
@@ -764,6 +811,7 @@ export function GlassModern() {
       <section className="smp-glass-band">
         {STATS.map((s) => <div key={s.l} className="smp-glass-stat"><b>{s.v}</b><span>{s.l}</span></div>)}
       </section>
+      <Tail />
       <Foot />
     </div>
   );
@@ -809,6 +857,7 @@ export function HeritageCrest() {
           ))}
         </div>
       </section>
+      <Tail />
       <Foot />
     </div>
   );
@@ -845,6 +894,7 @@ export function NeoBrutal() {
           </article>
         ))}
       </section>
+      <Tail />
       <Foot />
     </div>
   );
@@ -884,6 +934,7 @@ export function SoftGradient() {
           </article>
         ))}
       </section>
+      <Tail />
       <Foot />
     </div>
   );
@@ -925,6 +976,7 @@ export function SplitStats() {
           ))}
         </div>
       </section>
+      <Tail />
       <Foot />
     </div>
   );

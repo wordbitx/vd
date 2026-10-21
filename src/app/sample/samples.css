@@ -42,7 +42,7 @@
 /* ── shared base ──────────────────────────────────────────────────── */
 .smp { --serif: 'Cormorant Garamond Variable', Georgia, serif; --sans: 'Instrument Sans Variable', Arial, sans-serif;
   --i: #14231f; --a: #1c5d5c; --p: #fbf7ee; --s: #f4eee1; --line: #e3dac8;
-  font-family: var(--sans); color: var(--i); background: var(--p); min-height: 100dvh;
+  font-family: var(--sans); color: var(--i); background: var(--p); min-height: 100dvh; overflow-x: clip;
   display: flex; flex-direction: column; -webkit-font-smoothing: antialiased; }
 .smp * { box-sizing: border-box; }
 .smp h1, .smp h2, .smp h3 { font-family: var(--serif); font-weight: 500; margin: 0; letter-spacing: -0.015em; line-height: 1.06; }
@@ -131,19 +131,77 @@
 .smp-stat b { display: block; font-family: var(--serif); font-size: 34px; font-weight: 500; line-height: 1; }
 .smp-stat span { display: block; margin-top: 7px; font-size: 9px; letter-spacing: .18em; text-transform: uppercase; opacity: .6; }
 
+.smp-foot .smp-brand { letter-spacing: .01em; font-size: 14px; }
 .smp-foot { margin-top: auto; border-top: 1px solid var(--line); padding: 22px clamp(18px, 4vw, 56px); }
 .smp-foot-in { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
 .smp-foot-meta { font-size: 11.5px; color: #7d8c88; }
 
 @media (max-width: 900px) {
+  .smp--swiss .smp-nav nav { display: none; }
   .smp-hero, .smp-split { grid-template-columns: 1fr; }
   .smp-grid-3, .smp-grid-4 { grid-template-columns: repeat(2, 1fr); }
   .smp-nav nav { display: none; }
   .smp-nav-center { display: flex; }
 }
 @media (max-width: 560px) {
+  .smp-nav { flex-wrap: wrap; row-gap: 12px; }
+  .smp-nav-cta { margin-left: auto; }
   .smp-grid-3, .smp-grid-4 { grid-template-columns: 1fr; }
   .smp-hero-copy h1 { font-size: 38px; }
+}
+
+
+/* ── shared closing band (inherits each study's own tokens) ─────────── */
+.smp-tail { padding: clamp(34px, 4.4vw, 60px) clamp(18px, 4vw, 56px) clamp(24px, 3vw, 34px); background: var(--s); color: var(--i); border-top: 1px solid var(--line); }
+.smp-tail-in { display: flex; align-items: flex-end; justify-content: space-between; gap: 28px; flex-wrap: wrap; }
+.smp-tail-copy { max-width: 46ch; display: grid; gap: 10px; }
+.smp-tail-copy h2 { font-size: clamp(26px, 3vw, 40px); }
+.smp-tail-copy p { font-size: 13px; line-height: 1.7; opacity: .72; }
+.smp-tail-actions { display: flex; flex-wrap: wrap; gap: 9px; }
+.smp-tail-reviews { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; margin-top: 32px; padding-top: 22px; border-top: 1px solid var(--line); }
+.smp-tail-reviews figure { display: grid; gap: 8px; align-content: start; margin: 0; padding: 0 24px 0 0; border-right: 1px solid var(--line); }
+.smp-tail-reviews figure + figure { padding-left: 24px; }
+.smp-tail-reviews figure:last-child { border-right: 0; padding-right: 0; }
+.smp-tail-reviews blockquote { margin: 0; font-family: var(--serif); font-size: 15.5px; line-height: 1.55; letter-spacing: -.005em; min-height: 3.1em; }
+.smp-tail-reviews figcaption { font-size: 10px; letter-spacing: .12em; text-transform: uppercase; opacity: .58; }
+.smp-tail-strip { display: flex; flex-wrap: wrap; gap: 14px 30px; margin-top: 32px; padding-top: 18px; border-top: 1px solid var(--line); font-size: 11px; letter-spacing: .02em; opacity: .68; }
+.smp-tail-strip li { display: flex; align-items: center; gap: 6px; }
+.smp-tail-strip svg { opacity: .7; flex: none; }
+
+.smp--brutal .smp-tail { border-top: 2px solid #111; }
+.smp--brutal .smp-tail .smp-btn-2 { border: 2px solid #111; border-radius: 0; color: #111; box-shadow: 4px 4px 0 #111; }
+.smp--brutal .smp-tail-strip { border-top: 2px solid #111; opacity: .8; }
+.smp--midnight .smp-tail { background: #0b0f0d; border-top: 1px solid rgba(201, 169, 97, .22); }
+.smp--midnight .smp-tail .smp-btn-2 { border-color: rgba(201, 169, 97, .45); color: #d9c48e; }
+.smp--midnight .smp-tail .smp-kicker { color: #c9a961; }
+.smp--immersive .smp-tail { background: #0c1513; border-top: 1px solid rgba(246, 242, 231, .12); }
+.smp--immersive .smp-tail .smp-kicker { color: #d8c590; }
+.smp--glass .smp-tail { position: relative; z-index: 2; background: rgba(255, 255, 255, .05); border-top: 1px solid rgba(255, 255, 255, .12); }
+.smp--glass .smp-tail .smp-kicker { color: #9fe0c6; }
+.smp--app .smp-tail { grid-column: 1 / -1; background: #fff; }
+.smp--app .smp-tail-strip { opacity: .8; }
+.smp--app .smp-tail .smp-kicker { color: #1f6f62; }
+.smp--editorial .smp-tail { background: #f7f2e6; }
+.smp--swiss .smp-tail { border-top: 2px solid #111; }
+.smp--swiss .smp-tail .smp-btn { border-radius: 0; }
+.smp--swiss .smp-tail .smp-btn-2 { border-radius: 0; }
+.smp--brutal .smp-tail .smp-btn, .smp--brutal .smp-tail .smp-btn-2 { border-radius: 0; }
+.smp--duotone .smp-tail { background: #102a26; color: #fdf3e6; border-top: 0; }
+.smp--duotone .smp-tail .smp-kicker { color: #e86f43; }
+.smp--duotone .smp-tail .smp-btn { background: #e86f43; color: #fff; }
+.smp--duotone .smp-tail .smp-btn-2 { border-color: rgba(253, 243, 230, .35); color: #fdf3e6; }
+.smp--duotone .smp-tail-strip { border-top-color: rgba(253, 243, 230, .2); }
+.smp--cover .smp-tail { background: #efe7d7; }
+.smp--heritage .smp-tail { background: #f2ebdb; border-top: 3px double #c2ad86; }
+.smp--mall .smp-tail .smp-btn-2 { border-color: #cfc3aa; }
+@media (max-width: 860px) {
+  .smp-tail-in { align-items: flex-start; }
+  .smp-tail-reviews { grid-template-columns: 1fr; gap: 16px; }
+  .smp-tail-reviews figure { border-right: 0; border-bottom: 1px solid var(--line); padding: 0 0 14px; }
+  .smp-tail-reviews figure + figure { padding-left: 0; }
+  .smp-tail-reviews figure:last-child { border-bottom: 0; padding-bottom: 8px; }
+  .smp-tail-strip { margin-top: 28px; }
+  .smp--app .smp-tail { grid-column: auto; }
 }
 
 /* ══ 01 · AURORA SPLIT ══════════════════════════════════════════════════ */
@@ -214,7 +272,7 @@
 }
 .smp--midnight .smp-nav { border-bottom: 1px solid rgba(201, 169, 97, .18); padding-block: 22px; }
 .smp--midnight .smp-nav nav { font-size: 10.5px; letter-spacing: .18em; text-transform: uppercase; color: rgba(244, 239, 227, .68); }
-.smp--midnight .smp-brand { font-family: var(--serif); font-size: 19px; letter-spacing: .3em; }
+.smp--midnight .smp-nav .smp-brand { font-family: var(--serif); font-size: 19px; letter-spacing: .3em; }
 .smp--midnight .smp-btn-line { background: transparent; border-color: rgba(201, 169, 97, .55); color: #d9c48e; font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase; }
 .smp--midnight .smp-btn-line:hover { background: rgba(201, 169, 97, .12); }
 .smp--midnight .smp-hero-mid { padding-block: clamp(50px, 7vw, 92px); align-items: end; }
@@ -499,8 +557,8 @@
   display: grid; grid-template-columns: 244px minmax(0, 1fr); background: #f7f8f9; --sans: 'Figtree Variable', Arial, sans-serif;
 }
 .smp--app .smp-side {
-  position: sticky; top: 44px; align-self: start; display: flex; flex-direction: column; gap: 22px;
-  height: calc(100dvh - 44px); padding: 22px 16px; background: #12302b; color: #dfe9e4;
+  display: flex; flex-direction: column; gap: 22px; align-self: stretch;
+  padding: 22px 16px; background: #12302b; color: #dfe9e4;
 }
 .smp--app .smp-side .smp-brand { font-family: var(--serif); font-size: 21px; color: #fff; padding-left: 6px; }
 .smp--app .smp-side nav { display: grid; gap: 3px; }
@@ -556,7 +614,8 @@
   --serif: 'Bodoni Moda Variable', 'Times New Roman', serif; background: #fdf3e6;
 }
 .smp--duotone .smp-nav-invert { padding-block: 20px; }
-.smp--duotone .smp-brand { font-size: 13px; letter-spacing: .3em; font-weight: 700; }
+.smp--duotone .smp-nav .smp-brand { font-size: 13px; letter-spacing: .3em; font-weight: 700; }
+.smp--duotone .smp-foot .smp-brand { letter-spacing: .01em; }
 .smp--duotone .smp-nav nav { font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase; }
 .smp--duotone .smp-btn-flat { border-radius: 0; background: #102a26; color: #fdf3e6; font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase; }
 .smp--duotone .smp-btn-flat:hover { background: #e86f43; color: #fff; }
@@ -980,4 +1039,9 @@
   .smp--immersive .smp-full-copy h1 { font-size: 36px; }
   .smp--midnight .smp-hero-copy h1 { font-size: 40px; }
   .smp--booking .smp-two { grid-template-columns: 1fr; }
+}
+
+/* late overrides — must follow the per-variant blocks */
+@media (max-width: 900px) {
+  .smp--swiss .smp-nav nav { display: none; }
 }
