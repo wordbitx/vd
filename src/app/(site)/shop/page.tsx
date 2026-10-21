@@ -1,8 +1,8 @@
-import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ChevronRight } from "lucide-react";
 import { ProductCard } from "@/components/cards";
+import { CategoryIcon } from "@/components/icons";
 import { catalogCategories, catalogProducts } from "@/server/catalog";
 import { pageMetadata } from "@/lib/metadata";
 
@@ -18,7 +18,6 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
   const active = categories.find((c) => c.slug === category) ?? null;
   const list = active ? products.filter((p) => p.categorySlug === active.slug) : products;
   const nameOf = (slug: string) => categories.find((c) => c.slug === slug)?.name ?? "Pet care";
-  const coverOf = (slug: string) => products.find((p) => p.categorySlug === slug)?.image ?? "/images/pet-shop.jpg";
 
   return (
     <>
@@ -44,10 +43,9 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
                 className="r-cat"
                 data-active={c.slug === active?.slug ? "true" : undefined}
               >
-                <span className="r-cat-media">
-                  <Image src={coverOf(c.slug)} alt={c.name} fill sizes="(max-width:720px) 45vw, 22vw" className="object-cover" unoptimized />
-                </span>
+                <CategoryIcon slug={c.slug} />
                 <span className="r-cat-name">{c.name}</span>
+                <span className="r-cat-go"><ChevronRight size={13} /></span>
               </Link>
             ))}
           </div>

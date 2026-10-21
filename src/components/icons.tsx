@@ -1,6 +1,7 @@
 import {
-  Ambulance, Bath, Bone, Calendar, ClipboardList, Droplets, FlaskConical, HeartPulse, House, Microscope,
-  PawPrint, Scissors, Shield, Smile, Sparkles, Stethoscope, Syringe, TestTube, Truck, Utensils, type LucideIcon,
+  Ambulance, Bath, Bone, Calendar, Cat, ClipboardList, Dog, Droplets, FlaskConical, HeartPulse, House, Link2,
+  Microscope, Package, PawPrint, Pill, Scissors, Shield, Smile, Sofa, Sparkles, Stethoscope, Syringe, TestTube,
+  ToyBrick, Truck, Utensils, type LucideIcon,
 } from "lucide-react";
 import type { ServiceIcon } from "@/lib/site";
 
@@ -56,4 +57,26 @@ export function PetGlyph({ species, size = 18 }: { species?: string; size?: numb
   if (key.startsWith("cat") || key === "kitten") return <PawPrint size={size} strokeWidth={1.7} aria-hidden="true" />;
   if (key.startsWith("bird")) return <Droplets size={size} strokeWidth={1.7} aria-hidden="true" />;
   return <PawPrint size={size} strokeWidth={1.7} aria-hidden="true" />;
+}
+
+/** Premium line icons for the Pet Mall category rail — one per shop category. */
+const categoryRegistry: Record<string, LucideIcon> = {
+  "dog-food": Dog,
+  "cat-food": Cat,
+  "treats-chews": Bone,
+  "toys-enrichment": ToyBrick,
+  "grooming-care": Bath,
+  supplements: Pill,
+  "beds-carriers": Sofa,
+  "collars-leashes": Link2,
+};
+
+export function CategoryIcon({ slug, size = 27 }: { slug: string; size?: number }) {
+  const Cmp = categoryRegistry[slug] ?? Package;
+  return (
+    <span className="r-cat-emblem" aria-hidden="true">
+      <span className="r-cat-emblem-ring" />
+      <Cmp size={size} strokeWidth={1.55} />
+    </span>
+  );
 }
