@@ -62,8 +62,10 @@ for (const page of publicPages) {
 }
 
 const home = await get("/");
+/** Rendered copy, with tags stripped so inline <em>/<span> wrapping does not break assertions. */
+const homeText = home.body.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ");
 assert(home.body.includes("Jawad Veterinary Hospital"), "home page has the clinic name");
-assert(home.body.includes("At Your Doorstep"), "home page leads with the reference hero headline");
+assert(homeText.includes("At Your Doorstep"), "home page leads with the reference hero headline");
 assert(home.body.includes("Book in 3 Simple Steps"), "home page shows the three-step booking section");
 assert(home.body.includes("Our Veterinary Services"), "home page shows the services section");
 assert(home.body.includes("Why Pet Parents Trust Us"), "home page shows the trust advantages");

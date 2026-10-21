@@ -51,13 +51,12 @@ export default async function HomePage() {
         <div className="r-wrap r-hero-grid">
           <div>
             <div className="r-hero-badges">
-              <span className="r-hero-pill"><BadgeCheck size={13} /> Lahore&apos;s trusted veterinary hospital</span>
+              <span className="r-hero-pill is-solid"><BadgeCheck size={13} /> Lahore&apos;s trusted veterinary hospital</span>
               <span className="r-hero-pill"><ShieldCheck size={13} /> RVMP Registered Veterinarians</span>
             </div>
             <h1>
-              Professional Vet
-              <span>Care,</span>
-              <span>At Your Doorstep</span>
+              Professional Vet Care,
+              <span>At Your <em>Doorstep</em></span>
             </h1>
             <p>
               Skip the stressful clinic travel. {vet.name}{" "}brings Lahore&apos;s trusted veterinary expertise directly to
@@ -70,7 +69,7 @@ export default async function HomePage() {
             </div>
             <div className="r-hero-trust">
               {["24/7 Available", "RVMP Certified", "Fully Equipped", "All Pets Welcome"].map((item) => (
-                <span key={item}><CheckCircle2 size={14} /> {item}</span>
+                <span key={item}><CheckCircle2 size={13} /> {item}</span>
               ))}
             </div>
           </div>
@@ -89,6 +88,7 @@ export default async function HomePage() {
                   <span className="r-chip r-chip-peach">RVMP Registered</span>
                   <span className="r-chip r-chip-peach">DVM Certified</span>
                 </div>
+                <div className="r-vetcard-verified"><BadgeCheck size={12} /> Verified by the Pakistan Veterinary Medical Council</div>
                 <a className="r-btn r-btn-green" href={`https://wa.me/${business.whatsappNumber}`} target="_blank" rel="noopener noreferrer">
                   <WhatsAppIcon size={16} /> Consult on WhatsApp
                 </a>
