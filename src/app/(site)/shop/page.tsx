@@ -89,6 +89,18 @@ export default async function ShopPage({
         <div className="r-wrap">
           <h2 className="r-shop-h2">Browse Categories</h2>
           <div className="r-catrow">
+            <Link
+              href={`/shop${term ? `?q=${encodeURIComponent(term)}` : ""}`}
+              className="r-catrow-item r-catrow-all"
+              data-active={!active ? "true" : undefined}
+            >
+              <span className="r-catrow-art">
+                <span className="r-catrow-all-grid" aria-hidden="true">
+                  <span /><span /><span /><span />
+                </span>
+              </span>
+              <span className="r-catrow-name">All</span>
+            </Link>
             {categories.map((c) => (
               <Link
                 key={c.slug}
