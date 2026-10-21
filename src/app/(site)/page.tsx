@@ -71,30 +71,52 @@ export default async function HomePage() {
             </div>
           </div>
 
-          <div className="r-vetcard-wrap">
-            <div className="r-vetcard">
-              <div className="r-vetcard-photo">
-                <Image src={vet.image} alt={`${vet.name}, ${vet.role} at ${business.name}`} fill priority sizes="(max-width:980px) 90vw, 40vw" className="object-cover" unoptimized />
+          <div className="r-hero-media">
+            <figure className="r-hero-frame">
+              <div className="r-hero-photo">
+                <Image
+                  src={vet.image}
+                  alt={`${vet.name}, ${vet.role} at ${business.name}`}
+                  fill
+                  priority
+                  sizes="(max-width:980px) 92vw, 44vw"
+                  className="r-hero-photo-img"
+                  unoptimized
+                />
+                <span className="r-hero-scrim" aria-hidden="true" />
+                <span className="r-hero-sheen" aria-hidden="true" />
+                <span className="r-hero-stamp">Top Rated</span>
+                <span className="r-hero-verified"><BadgeCheck size={13} /> Verified · PVMC Registered</span>
               </div>
-              <div className="r-vetcard-body">
-                <span className="r-vetcard-eyebrow">Top Rated</span>
-                <h3>{vet.name}</h3>
-                <div className="r-vetcard-cred">{vet.credentials} · Lead Veterinarian</div>
-                <div className="r-vetcard-verified">Verified · PVMC Registered</div>
-                <a className="r-btn r-btn-green" href={`https://wa.me/${business.whatsappNumber}`} target="_blank" rel="noopener noreferrer">
-                  <WhatsAppIcon size={16} /> Consult on WhatsApp
-                </a>
-              </div>
-            </div>
 
-            <p className="r-passport-note">Already a patient? Access your Digital Pet Passport:</p>
-            <form className="r-passport" action="/slip" method="get">
-              <span className="r-passport-field">
-                <PawPrint size={15} />
-                <input name="ref" placeholder="Booking reference · JVH-2026-752699" aria-label="Booking reference" autoComplete="off" />
-              </span>
-              <button type="submit">Access</button>
-            </form>
+              <figcaption className="r-hero-plate">
+                <span className="r-hero-plate-eyebrow">{vet.credentials} · Lead Veterinarian</span>
+                <h3>{vet.name}</h3>
+                <p className="r-hero-plate-note">Home visits across Lahore · 24/7 emergency line</p>
+                <a
+                  className="r-hero-plate-cta"
+                  href={`https://wa.me/${business.whatsappNumber}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <WhatsAppIcon size={15} /> Consult on WhatsApp
+                </a>
+              </figcaption>
+            </figure>
+
+            <div className="r-hero-passport">
+              <div className="r-hero-passport-head">
+                <span>Already a patient?</span>
+                <b>Access your Digital Pet Passport</b>
+              </div>
+              <form className="r-passport" action="/slip" method="get">
+                <span className="r-passport-field">
+                  <PawPrint size={15} />
+                  <input name="ref" placeholder="JVH-2026-752699" aria-label="Booking reference" autoComplete="off" />
+                </span>
+                <button type="submit">Access</button>
+              </form>
+            </div>
           </div>
         </div>
       </section>
