@@ -1,10 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
-import { ArrowRight, Sparkles, Star, Truck } from "lucide-react";
+import { ArrowRight, PawPrint, ShoppingBag, Sparkles, Star, Truck } from "lucide-react";
 import { ShopBrowser } from "@/components/shop-browser";
 import { business, fees } from "@/lib/site";
-import { money, pkrLabel } from "@/lib/format";
+import { pkrLabel } from "@/lib/format";
 import { catalogCategories, catalogProducts } from "@/server/catalog";
 import { pageMetadata } from "@/lib/metadata";
 
@@ -23,38 +23,49 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
 
   return (
     <>
-      <section className="v-section" style={{ paddingBottom: 0 }}>
-        <div className="v-wrap">
-          <span className="v-eyebrow">The pet mall</span>
-          <h1 style={{ margin: "14px 0 12px", maxWidth: 760 }}>Everything Your Pet Will Love</h1>
-          <p className="lead" style={{ maxWidth: 700 }}>
-            Food, toys, care essentials and everyday favourites — the same shortlist we send people home with after a
-            consult. Batch and expiry on every pack, and honest advice when you do not need to buy anything today.
-          </p>
-          <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 20 }}>
-            <span className="v-eyebrow"><Truck size={13} /> Free Lahore delivery above {money(fees.freeDeliveryOver)}</span>
-            <span className="v-eyebrow"><Sparkles size={13} /> {money(fees.deliveryLahore)} otherwise</span>
-            <span className="v-eyebrow">Cash on delivery</span>
+      <section className="r-pagehero">
+        <div className="r-wrap">
+          <div className="r-crumbs">
+            <Link href="/">Home</Link><span className="sep">/</span><span>Pet Mall</span>
+          </div>
+          <div className="r-pagehero-inner">
+            <div>
+              <span className="label"><ShoppingBag size={14} /> Shop essentials</span>
+              <h1>Everything Your Pet Will Love</h1>
+              <p>
+                Food, toys, care essentials and everyday favourites — the same shortlist we send people home with after a
+                consult. Batch and expiry on every pack, and honest advice when you do not need to buy anything today.
+              </p>
+              <div className="r-pagehero-chips">
+                <span className="r-chip r-chip-teal"><Truck size={12} /> Free Lahore delivery above {pkrLabel(fees.freeDeliveryOver)}</span>
+                <span className="r-chip r-chip-teal"><Sparkles size={12} /> {pkrLabel(fees.deliveryLahore)} otherwise</span>
+                <span className="r-chip r-chip-teal"><PawPrint size={12} /> Cash on delivery</span>
+              </div>
+            </div>
+            <div className="r-pagehero-media" style={{ aspectRatio: "4 / 3.2" }}>
+              <Image src="/images/pet-shop.jpg" alt="Pet store shelves stocked with food and care products" fill sizes="(max-width:900px) 92vw, 42vw" className="object-cover" priority unoptimized />
+              <span className="r-media-tag">{business.shortName} pet mall · Al Kabir Town</span>
+            </div>
           </div>
         </div>
       </section>
 
-      <section className="v-section" style={{ paddingBottom: 0 }}>
-        <div className="v-wrap">
-          <h2 style={{ fontSize: 24, marginBottom: 16 }}>Browse Categories</h2>
-          <div className="v-grid v-cols-4">
+      <section className="r-section" style={{ paddingTop: 24 }}>
+        <div className="r-wrap">
+          <div className="r-rulehead"><h2>Browse categories</h2></div>
+          <div className="r-tiles r-tiles-4">
             {categories.map((c) => (
               <Link
                 key={c.slug}
                 href={`/shop?category=${c.slug}`}
-                className="v-card v-card-hover"
-                style={{ padding: "14px 16px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10, borderColor: category === c.slug ? "var(--v-brand)" : undefined }}
+                className="r-tile"
+                style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", borderColor: category === c.slug ? "var(--r-teal-2)" : undefined }}
               >
                 <span style={{ display: "grid", gap: 2 }}>
-                  <b style={{ fontSize: 13.5, fontWeight: 800, color: "var(--v-ink)" }}>{c.name}</b>
-                  <small style={{ fontSize: 10.5, color: "var(--v-muted)", fontWeight: 700 }}>{c.count} product{c.count === 1 ? "" : "s"}</small>
+                  <b style={{ fontSize: 13.5 }}>{c.name}</b>
+                  <span style={{ fontSize: 10.5, fontWeight: 700, color: "var(--r-muted)" }}>{c.count} product{c.count === 1 ? "" : "s"}</span>
                 </span>
-                <ArrowRight size={15} style={{ color: "var(--v-brass)" }} />
+                <ArrowRight size={15} style={{ color: "var(--r-gold)" }} />
               </Link>
             ))}
           </div>
@@ -62,28 +73,39 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
       </section>
 
       {trending.length ? (
-        <section className="v-section">
-          <div className="v-wrap">
-            <div className="v-head-row">
-              <h2 style={{ fontSize: 26, margin: 0 }}>Trending Now</h2>
-              <Link href="/shop" className="button button-ghost button-sm">View all <ArrowRight size={14} /></Link>
+        <section className="r-section" style={{ paddingTop: 0 }}>
+          <div className="r-wrap">
+            <div className="r-head-row">
+              <div>
+                <h2 style={{ margin: 0, fontSize: 26 }}>Trending now</h2>
+                <p style={{ margin: "6px 0 0", fontSize: 12.5, color: "var(--r-muted)" }}>What Lahore is buying this week</p>
+              </div>
+              <Link href="/shop" className="r-btn r-btn-outline r-btn-sm">View all <ArrowRight size={14} /></Link>
             </div>
-            <div className="v-grid v-cols-4">
+            <div className="r-products">
               {trending.map((product) => {
                 const off = product.compareAt && product.compareAt > product.price ? Math.round(((product.compareAt - product.price) / product.compareAt) * 100) : 0;
                 return (
-                  <article key={product.id} className="v-card v-card-hover v-product">
-                    <Link href={`/shop/${product.slug}`} className="v-product-media" aria-label={product.name}>
-                      {off > 0 ? <span className="v-product-off">−{off}%</span> : null}
+                  <article key={product.id} className="r-prod">
+                    <Link href={`/shop/${product.slug}`} className="r-prod-media" aria-label={product.name}>
+                      {off > 0 ? <span className="r-prod-off">−{off}%</span> : null}
                       <Image src={product.image} alt={product.name} fill sizes="(max-width:900px) 45vw, 22vw" className="object-cover" unoptimized />
                     </Link>
-                    <div className="v-product-body">
-                      <span className="v-product-cat">{categoryName(product.categorySlug)}</span>
-                      <Link href={`/shop/${product.slug}`} className="v-product-name">{product.name}</Link>
-                      <span className="v-product-stars"><Star size={11} fill="currentColor" strokeWidth={0} /> {product.rating.toFixed(1)} <span style={{ fontWeight: 500 }}>({product.reviews})</span></span>
-                      <div className="v-product-price">
-                        <b>{pkrLabel(product.price)}</b>
-                        {off > 0 ? <s>{pkrLabel(product.compareAt!)}</s> : null}
+                    <div className="r-prod-body">
+                      <span className="r-prod-cat">{categoryName(product.categorySlug)}</span>
+                      <Link href={`/shop/${product.slug}`} className="r-prod-name">{product.name}</Link>
+                      <span style={{ display: "inline-flex", alignItems: "center", gap: 4, fontSize: 10.5, color: "#8b9aa0" }}>
+                        <Star size={11} fill="currentColor" strokeWidth={0} style={{ color: "var(--r-orange)" }} /> {product.rating.toFixed(1)}
+                        <span style={{ fontWeight: 500 }}>({product.reviews})</span>
+                      </span>
+                      <div className="r-prod-foot">
+                        <span className="r-prod-price">
+                          <b>{pkrLabel(product.price)}</b>
+                          {off > 0 ? <s>{pkrLabel(product.compareAt!)}</s> : null}
+                        </span>
+                        <Link href={`/shop/${product.slug}`} className="r-prod-cart" aria-label={`Buy ${product.name}`}>
+                          <ShoppingBag size={15} />
+                        </Link>
                       </div>
                     </div>
                   </article>
@@ -94,31 +116,33 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
         </section>
       ) : null}
 
-      <section className="v-section" style={{ paddingTop: 0 }}>
-        <div className="v-wrap">
-          <div className="v-head-row">
+      <section className="r-section" style={{ paddingTop: 0 }}>
+        <div className="r-wrap">
+          <div className="r-head-row" style={{ marginBottom: 20 }}>
             <div>
-              <h2 style={{ fontSize: 26, margin: 0 }}>All Products</h2>
-              <p style={{ margin: "6px 0 0", color: "var(--v-muted)", fontSize: 13.5 }}>Search, filter and add to basket — delivered across Lahore.</p>
+              <h2 style={{ margin: 0, fontSize: 26 }}>All products</h2>
+              <p style={{ margin: "6px 0 0", fontSize: 12.5, color: "var(--r-muted)" }}>
+                {products.length} products · {brands.length} brands · delivered across Lahore
+              </p>
             </div>
-            <span className="small muted">{products.length} products · {brands.length} brands</span>
           </div>
           <ShopBrowser products={products} categories={categories} initialCategory={category} initialQuery={q} brands={brands} />
         </div>
       </section>
 
-      <section className="v-section" style={{ paddingTop: 0 }}>
-        <div className="v-wrap">
-          <div className="v-grid v-cols-4">
+      <section className="r-section" style={{ paddingTop: 0 }}>
+        <div className="r-wrap">
+          <div className="r-tiles r-tiles-4">
             {[
-              { t: "Vet-approved only", d: `Chosen by ${business.shortName}'s own veterinarians.` },
-              { t: "Same-day in Lahore", d: "Ordered before 4 pm, delivered the same evening." },
-              { t: "Ask before you buy", d: "Send us the label on WhatsApp and we will tell you if it suits your pet." },
-              { t: "Add to any visit", d: "Prescribed items can be handed over at the appointment." },
+              { icon: <PawPrint size={17} />, t: "Vet-approved only", d: `Chosen by ${business.shortName}'s own veterinarians.` },
+              { icon: <Truck size={17} />, t: "Same-day in Lahore", d: "Ordered before 4 pm, delivered the same evening." },
+              { icon: <Sparkles size={17} />, t: "Ask before you buy", d: "Send us the label on WhatsApp and we will tell you if it suits your pet." },
+              { icon: <ShoppingBag size={17} />, t: "Add to any visit", d: "Prescribed items can be handed over at the appointment." },
             ].map((item) => (
-              <div key={item.t} className="v-card" style={{ padding: 16, display: "grid", gap: 4 }}>
-                <b style={{ fontSize: 13.5, color: "var(--v-ink)" }}>{item.t}</b>
-                <span style={{ fontSize: 12, color: "var(--v-muted)", lineHeight: 1.55 }}>{item.d}</span>
+              <div key={item.t} className="r-tile">
+                <span className="r-tile-icon">{item.icon}</span>
+                <b>{item.t}</b>
+                <span>{item.d}</span>
               </div>
             ))}
           </div>

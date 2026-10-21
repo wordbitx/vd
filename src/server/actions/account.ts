@@ -130,14 +130,21 @@ export async function requestReschedule(_prev: AccountResult | null, form: FormD
 
 export async function sendMessage(_prev: AccountResult | null, form: FormData): Promise<AccountResult> {
   const errors: FieldErrors = {};
+  const user = await currentUser();
   const subject = required(form, errors, "subject", "Subject", 90);
   const body = required(form, errors, "body", "Message", 1200);
-  if (Object.keys(errors).length) return { ok: false, errors, message: "Add a subject and your question." };
-  const user = await currentUser();
+  const phone = (field(form, "phone") || "").trim();
+  const email = (field(form, "email") || "").trim();
+  const typedName = (field(form, "name") || "").trim();
+  if (!user && !typedName) errors.name = "Tell us who we are replying to.";
+  if (phone.replace(/[^\d]/g, "").length < 9) errors.phone = "Add a number the front desk can reach you on.";
+  if (Object.keys(errors).length) return { ok: false, errors, message: "Add your name, number and your question." };
   const id = user?.id ?? "guest";
-  const name = user?.name ?? (field(form, "name") || "Website visitor");
+  const name = user?.name ?? typedName;
+  const reach = [phone, email].filter(Boolean).join(" · ");
   await insert("messages", {
-    id: uid("m"), userId: id, userName: name, subject: subject.slice(0, 90), body: body.slice(0, 1200),
+    id: uid("m"), userId: id, userName: name, subject: subject.slice(0, 90),
+    body: (reach ? `${body}\n\nReply to: ${reach}` : body).slice(0, 1200),
     at: new Date().toISOString(), from: user ? "customer" : "customer",
   });
   await audit(name, "Question sent to the clinic", subject.slice(0, 40), body.slice(0, 80));

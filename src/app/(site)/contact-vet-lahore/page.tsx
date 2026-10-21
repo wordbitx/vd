@@ -1,9 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
-import { ArrowRight, Clock, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
-import { Breadcrumbs, EmergencyStrip, Eyebrow, WhatsAppButton } from "@/components/ui";
+import { ArrowRight, Clock, Mail, MapPin, MessageCircle, Phone, ShieldCheck } from "lucide-react";
 import { ContactForm } from "@/components/contact-form";
+import { FacebookIcon, InstagramIcon, WhatsAppIcon } from "@/components/icons";
 import { business } from "@/lib/site";
 import { currentUser } from "@/server/auth";
 import { getSettings } from "@/server/store";
@@ -18,97 +18,145 @@ export const metadata: Metadata = pageMetadata(
 
 export default async function ContactPage() {
   const [user, settings] = await Promise.all([currentUser().catch(() => null), getSettings()]);
-  const tiles = [
-    { icon: <Phone size={18} />, label: "Call the desk", value: settings.phone || business.phone, href: `tel:${(settings.phone || business.phone).replace(/\s/g, "")}`, note: "Urdu, Punjabi, English" },
-    { icon: <MessageCircle size={18} />, label: "WhatsApp", value: "Chat with the clinic", href: `https://wa.me/${settings.whatsapp || business.whatsappNumber}`, note: "Fastest for photos of a wound or lump" },
-    { icon: <Mail size={18} />, label: "Email", value: settings.email || business.email, href: `mailto:${settings.email || business.email}`, note: "Records, invoices and referrals" },
-    { icon: <MapPin size={18} />, label: "Visit", value: business.shortAddress, href: business.mapsUrl, note: "Free street parking" },
-  ];
+  const phone = settings.phone || business.phone;
+  const email = settings.email || business.email;
+  const wa = settings.whatsapp || business.whatsappNumber;
 
   return (
     <>
-      <section className="page-head">
-        <div className="container">
-          <Breadcrumbs items={[{ label: "Contact" }]} />
-          <div className="split">
+      <section className="r-pagehero">
+        <div className="r-wrap">
+          <div className="r-crumbs">
+            <Link href="/">Home</Link><span className="sep">/</span><span>Contact</span>
+          </div>
+          <div className="r-pagehero-inner">
             <div>
-              <Eyebrow>Get in touch</Eyebrow>
-              <h1 style={{ margin: "16px 0 16px", fontSize: "clamp(32px,4.4vw,56px)" }}>
-                Contact Us</h1>
-              <p className="lead">
-                The desk answers between 10 am and 11 pm; clinical questions are passed to the veterinarian on duty. If your pet is in
-                danger, skip the form and call — we will triage on the phone and dispatch.
+              <span className="label"><MessageCircle size={14} /> Get in touch</span>
+              <h1>Contact Us</h1>
+              <p>
+                Have questions, or need to book a home vet visit in Lahore? We are available on WhatsApp, phone and email —
+                usually replying within minutes. If your pet is in danger, skip the form and call; we will triage on the
+                phone and dispatch.
               </p>
-              <div className="row" style={{ gap: 11, marginTop: 22 }}>
-                <a href={`tel:${business.phone.replace(/\s/g, "")}`} className="button button-primary button-lg"><Phone size={16} /> {business.phone}</a>
-                <WhatsAppButton message="Assalam-o-Alaikum, I need to speak to the clinic." className="button button-ghost button-lg" label="WhatsApp instead" />
+              <div className="r-pagehero-chips">
+                <span className="r-chip r-chip-teal"><Clock size={12} /> Replies in under 5 minutes</span>
+                <span className="r-chip r-chip-teal"><ShieldCheck size={12} /> 24/7 emergency line</span>
+                <span className="r-chip r-chip-teal"><MapPin size={12} /> Al Kabir Town</span>
+              </div>
+              <div className="r-pagehero-actions">
+                <a href={`tel:${phone.replace(/[^\d+]/g, "")}`} className="r-btn r-btn-teal r-btn-lg"><Phone size={15} /> {phone}</a>
+                <a href={`https://wa.me/${wa}`} target="_blank" rel="noopener noreferrer" className="r-btn r-btn-green r-btn-lg">
+                  <WhatsAppIcon size={15} /> WhatsApp us
+                </a>
               </div>
             </div>
-            <div className="figure figure-wide" style={{ boxShadow: "var(--shadow)" }}>
-              <Image src="/images/clinic-interior.jpg" alt="Reception at Jawad Veterinary Hospital, Al Kabir Town" fill sizes="45vw" className="object-cover" priority unoptimized />
-              <span className="figure-tag">Al Kabir Town · Town Gate 3</span>
+            <div className="r-pagehero-media" style={{ aspectRatio: "4 / 3.2" }}>
+              <Image src="/images/clinic-interior.jpg" alt="Reception at Jawad Veterinary Hospital, Al Kabir Town" fill sizes="(max-width:900px) 92vw, 42vw" className="object-cover" priority unoptimized />
+              <span className="r-media-tag">Al Kabir Town · Town Gate 3</span>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="section-tight" style={{ paddingTop: 20 }}>
-        <div className="container">
-          <div className="grid cols-4" style={{ gap: 12 }}>
-            {tiles.map((tile) => (
-              <a key={tile.label} href={tile.href} target={tile.href.startsWith("http") ? "_blank" : undefined} rel="noreferrer" className="card card-hover card-pad" style={{ display: "grid", gap: 8 }}>
-                <span className="service-icon" style={{ width: 36, height: 36, marginBottom: 0 }}>{tile.icon}</span>
-                <span className="tiny" style={{ fontWeight: 800, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--muted-2)" }}>{tile.label}</span>
-                <b style={{ fontSize: 14.5, letterSpacing: "-0.02em" }}>{tile.value}</b>
-                <span className="tiny muted">{tile.note}</span>
-              </a>
-            ))}
+      <section className="r-section" style={{ paddingTop: 24 }}>
+        <div className="r-wrap">
+          <div className="r-rulehead"><h2>Reach us directly</h2></div>
+          <div className="r-tiles">
+            <a href={`https://wa.me/${wa}`} target="_blank" rel="noopener noreferrer" className="r-contact-tile">
+              <span className="r-tile-icon"><WhatsAppIcon size={18} /></span>
+              <b>WhatsApp</b>
+              <span>+{wa}</span>
+              <small><span className="r-pulse" style={{ background: "var(--r-green)" }} /> Typically replies in under 5 minutes</small>
+            </a>
+            <a href={`mailto:${email}`} className="r-contact-tile">
+              <span className="r-tile-icon"><Mail size={18} /></span>
+              <b>Email</b>
+              <span>{email}</span>
+              <small style={{ color: "var(--r-muted)" }}>Replies within 24 hours</small>
+            </a>
+            <a href={`tel:${phone.replace(/[^\d+]/g, "")}`} className="r-contact-tile">
+              <span className="r-tile-icon"><Phone size={18} /></span>
+              <b>Emergency hotline · 24/7</b>
+              <span>{phone}</span>
+              <small style={{ color: "var(--r-orange)" }}>Available around the clock</small>
+            </a>
           </div>
         </div>
       </section>
 
-      <section className="section">
-        <div className="container">
-          <div className="grid" style={{ gridTemplateColumns: "minmax(0,1fr) minmax(0,1.05fr)", gap: 30, alignItems: "start" }}>
-            <div className="card card-pad">
-              <Eyebrow>Message the clinic</Eyebrow>
-              <h2 style={{ margin: "12px 0 6px", fontSize: 26 }}>Ask before you travel.</h2>
-              <p className="small muted" style={{ margin: "0 0 18px" }}>
-                {user ? `Sending as ${user.name}. A veterinarian replies inside the portal within one working day.` : "No account needed. We reply on the number or email you give us."}
+      <section className="r-section" style={{ paddingTop: 0 }}>
+        <div className="r-wrap">
+          <div className="r-grid-2" style={{ alignItems: "start", gap: 24 }}>
+            <div className="r-panel">
+              <span className="r-kicker">Send us a message</span>
+              <h2 style={{ margin: "10px 0 6px", fontSize: 27 }}>Ask before you travel</h2>
+              <p style={{ margin: "0 0 18px", fontSize: 12.5, lineHeight: 1.65, color: "var(--r-muted)" }}>
+                {user
+                  ? `Sending as ${user.name}. A veterinarian replies inside the portal within one working day.`
+                  : "No account needed. We reply on the number or email you give us — usually the same day."}
               </p>
               <ContactForm signedIn={!!user} />
             </div>
-
-            <div className="col" style={{ gap: 16 }}>
-              <div className="card" style={{ overflow: "hidden" }}>
-                <div className="figure figure-wide" style={{ borderRadius: 0 }}>
-                  <Image src="/images/hero-care.jpg" alt="Veterinarian with a dog and cat at the hospital" fill sizes="50vw" className="object-cover" unoptimized />
-                </div>
-                <div className="card-pad">
-                  <h3 style={{ fontSize: 19 }}>Finding us</h3>
-                  <p className="small muted" style={{ margin: "8px 0 14px" }}>{business.address}. Landmark: opposite the main gate market, Town Gate 3 — the blue sign with the paw. Plus code {business.plusCode}.</p>
-                  <div className="row" style={{ gap: 10 }}>
-                    <a href={business.mapsUrl} target="_blank" rel="noreferrer" className="button button-primary button-sm">Directions <ArrowRight size={14} /></a>
-                    <Link href="/gallery" className="button button-ghost button-sm">See the rooms</Link>
-                  </div>
+            <div style={{ display: "grid", gap: 16 }}>
+              <div className="r-panel">
+                <span className="r-kicker">Follow us</span>
+                <div className="r-socials2" style={{ marginTop: 12 }}>
+                  <a href="#" aria-label="Instagram"><InstagramIcon size={14} /> Instagram</a>
+                  <a href="#" aria-label="Facebook"><FacebookIcon size={14} /> Facebook</a>
+                  <a href={`https://wa.me/${wa}`} target="_blank" rel="noopener noreferrer"><WhatsAppIcon size={14} /> WhatsApp</a>
                 </div>
               </div>
-              <div className="card card-pad">
-                <span className="row" style={{ gap: 9 }}><Clock size={17} style={{ color: "var(--brand)" }} /><h3 style={{ fontSize: 18 }}>Opening hours</h3></span>
-                <div className="footer-hours" style={{ marginTop: 12, color: "var(--muted)" }}>
+              <div className="r-panel">
+                <span className="r-kicker">Business hours</span>
+                <div className="r-hours" style={{ marginTop: 10 }}>
                   {business.hours.map((h) => (
-                    <div key={h.day} style={{ borderColor: "var(--line)" }}><span>{h.day}</span><span style={{ color: "var(--ink)" }}>{h.hours}</span></div>
+                    <div key={h.day} className="r-hours-row">
+                      <b>{h.day}</b>
+                      <span>{h.hours}</span>
+                    </div>
                   ))}
+                  <div className="r-hours-row is-emergency">
+                    <b>Emergency services</b>
+                    <span>24/7</span>
+                  </div>
                 </div>
-                <p className="tiny muted" style={{ margin: "12px 0 0" }}>{settings.hoursNote}. Emergency home visits are dispatched at any hour.</p>
+                <p style={{ margin: "12px 0 0", fontSize: 11.5, color: "var(--r-muted)" }}>{settings.hoursNote}</p>
+              </div>
+              <div className="r-panel" style={{ overflow: "hidden", padding: 0 }}>
+                <div style={{ position: "relative", aspectRatio: "16 / 9" }}>
+                  <Image src="/images/hero-care.jpg" alt="Veterinarian with a dog and cat at the hospital" fill sizes="46vw" className="object-cover" unoptimized />
+                </div>
+                <div style={{ padding: 20 }}>
+                  <b style={{ fontSize: 14 }}>Finding us</b>
+                  <p style={{ margin: "6px 0 12px", fontSize: 12, lineHeight: 1.65, color: "var(--r-muted)" }}>
+                    {business.address}. Landmark: opposite the main gate market, Town Gate 3 — the blue sign with the paw.
+                    Plus code {business.plusCode}.
+                  </p>
+                  <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+                    <a href={business.mapsUrl} target="_blank" rel="noreferrer" className="r-btn r-btn-teal r-btn-sm">Directions <ArrowRight size={13} /></a>
+                    <Link href="/gallery" className="r-btn r-btn-outline r-btn-sm">See the rooms</Link>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="section-tight" style={{ paddingBottom: 48 }}>
-        <div className="container"><EmergencyStrip settings={settings} /></div>
+      <section className="r-section" style={{ paddingTop: 0 }}>
+        <div className="r-wrap">
+          <div className="r-band">
+            <div>
+              <span className="label" style={{ color: "#e7b39a" }}><Phone size={13} /> Pet emergency?</span>
+              <h2>Don&apos;t wait — call the clinic now.</h2>
+              <p>Our team is available 24/7 for critical cases and responds rapidly with life-saving equipment.</p>
+            </div>
+            <div className="r-band-actions">
+              <a className="r-btn r-btn-orange r-btn-lg" href={`tel:${phone.replace(/[^\d+]/g, "")}`}><Phone size={15} /> Call {phone}</a>
+              <Link href="/book-vet-appointment-lahore" className="r-btn r-btn-ghost-dark r-btn-lg">Book a regular visit</Link>
+            </div>
+          </div>
+        </div>
       </section>
     </>
   );

@@ -190,3 +190,74 @@ Typography: **Fraunces** (display serif, matching the reference's serif headline
 
 The interaction model is unchanged from the earlier build (booking wizard → server action → reference + printable slip,
 cart → checkout → invoice, portal and console), so the clone is visual and behavioural, not a static mock.
+
+---
+
+## 9. Premium-palette pass + interior-page migration (21 Oct 2026, fourth review)
+
+The client's review of the clone: *"Pet Mall aur baqi sab pages ko dekho … colour scheme thori premium kar lo but design
+aur overall look waise hi rakho jaise links de rahe hain."* Named pages: the Pet Mall (`/shop`), `/services`,
+`/veterinarian-lahore`, `/about`, `/contact-vet-lahore`, `/adopt`, `/events`.
+
+So this pass **changed no layout, no section order and no interaction**. It did two things:
+
+1. **Refined the palette in the same colour family** — the reference's cream / teal / copper / peach system, moved from
+   flat web colours to deeper, less saturated "hospital-luxury" values. Contrast is unchanged or better; the peach and
+   blue tints keep their role (service tiles, lab tile, advantage blobs) and the greens still mean WhatsApp/adoption.
+2. **Rebuilt every named interior page on the same bespoke component layer as the home page**, so the interior pages are
+   no longer riding the older global classes. Each page mirrors its reference counterpart section for section.
+
+### Palette (current, authoritative)
+
+| Token | Value | Was (screenshot sample) | Use |
+|---|---|---|---|
+| `--r-ink` | `#152329` | `#1f2d34` | Dark nav, footer, headings |
+| `--r-ink-2` | `#2f4149` | — | Secondary headings, select arrows |
+| `--r-muted` | `#5c6e76` | — | Body copy on light surfaces |
+| `--r-teal` | `#163e4a` | `#224c5c` | Hero, dark feature cards, footer CTA |
+| `--r-teal-2` | `#2a6073` | `#316c87` | Primary buttons, links, icon accents |
+| `--r-teal-3` | `#0f2c35` | — | Deepest gradient stop |
+| `--r-orange` | `#b45f34` | `#d76638` | Emergency pill, call button, discount badges |
+| `--r-copper-soft` | `#e7b39a` | `#f8d7c4` | Kickers on dark bands, chip text |
+| `--r-gold` | `#a8863f` | — | Serif eyebrows, hairline rules, halo details |
+| `--r-peach` / `--r-peach-2` | `#f2d9c9` / `#fbece2` | `#f8d7c4` / `#fdeee4` | Service tiles, certification chips |
+| `--r-cream` / `--r-cream-2` | `#fbf8f1` / `#f6efe3` | `#fefaf3` | Page background, alternating bands |
+| `--r-blue` | `#e9f2f5` | `#ecf7fb` | Lab-tests tile, info notices |
+| `--r-green` / `--r-green-2` | `#2f9c50` / `#4bbd68` | `#65d072` | WhatsApp and adoption CTAs |
+| `--r-line` | `#e7ded0` | — | Hairlines, panel borders |
+| `--r-radius` | `22px` | — | Card and panel radius |
+| card shadow | `0 20px 44px -32px rgba(21,35,41,.5)` | — | Lift on white cards |
+
+The portal, the clinic console and the **printable slip keep their own palettes**. Inside `.site-shell` every legacy token
+(`--brand`, `--brass`, `--noir`, `--ok` …) is bridged to the values above, so the checkout, booking wizard, gallery and
+legal pages inherit the premium palette without being rewritten. The slip's print palette is pinned separately
+(`.site-shell .slip`) so an A5 print never inherits a screen colour.
+
+### Interior pages, section for section
+
+| Route | Mirrors | Sections |
+|---|---|---|
+| `/shop` | `/shop` | Page hero + delivery promise → 8 category tiles → "Trending now" product rail with −% badges and PKR strikethroughs → `ShopBrowser` (search, category + brand filters, sort) → trust tiles |
+| `/services` | `/services` | Page hero with trust chips → 4 promise tiles → service cards (duration, price, Learn More / Book Now) → emergency band |
+| `/team` | `/veterinarian-lahore` | Page hero → founder card (portrait, ribbon, RVMP/DVM/languages chips, focus checklist, Book with / WhatsApp directly / call) → team grid → care-standards panel + dark continuity panel → recruitment band |
+| `/about` | `/about` | Trust strip + headline → vision / journey two-column → six value tiles → three-step flow → team strip → review carousel → CTA band |
+| `/contact-vet-lahore` | `/contact-vet-lahore` | Three reach tiles (WhatsApp, email, hotline) → socials + business hours → "Send us a message" panel with **Name / Phone / Email / Subject select / Message** and both **Send via WhatsApp** and a stored message → emergency band |
+| `/adopt` | `/adopt` | Centred hero + species filter pills → live counts → adoption cards (vaccinated badge, sex pill, species · age, WhatsApp CTA) → reserved section → four-step adoption flow |
+| `/events` → `/pet-care-tips` | `/events` | "Events & Tips" hero → category filter pills → featured lead article → article grid → event cards with category chip and date → FAQ |
+| `/services/[slug]` | `/services/pet-vaccination-lahore` | Hero + duration/area meta → "What's included" checklist → three benefit cards → dark booking slot panel → FAQ accordion → area pills → related services → booking band |
+
+The contact form now posts a real record (name, phone, email, subject, message) to the clinic inbox *and* offers the
+reference's one-tap WhatsApp path, so nothing on the page is decorative.
+
+### Reference URLs still work
+
+`/veterinarian-lahore` → `/team`, `/events` and `/events/:slug` → `/pet-care-tips[/:slug]`, `/contact` →
+`/contact-vet-lahore`, `/blog[/:slug]` → `/pet-care-tips[/:slug]`, `/privacy` → `/privacy-policy`, `/terms` →
+`/terms-and-conditions` (307 redirects in `next.config.ts`), so links copied from the reference site land on the
+equivalent page here.
+
+### Verification
+
+`rm -rf .next && JVH_AUTH_SECRET=… npm run build`, `npx tsc --noEmit`, `npm run lint`, `node scripts/smoke.mjs`,
+`node scripts/flows.mjs` — all clean on this pass; every route in the sweep returns 200 and every flow (booking → slip,
+cart → checkout → invoice, portal, console) still passes.
