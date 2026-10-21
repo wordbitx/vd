@@ -1,11 +1,11 @@
-@import "@fontsource-variable/playfair-display/wght.css";
-@import "@fontsource-variable/playfair-display/wght-italic.css";
-@import "@fontsource-variable/inter/wght.css";
+@import "@fontsource-variable/cormorant-garamond/wght.css";
+@import "@fontsource-variable/cormorant-garamond/wght-italic.css";
+@import "@fontsource-variable/instrument-sans/wght.css";
 @import "tailwindcss";
 
 /* ==================================================================
    Jawad Veterinary Hospital — design system
-   Teal + ivory, matching the reference. Playfair Display (headings) / Inter (UI).
+   Deep jewel teal, ivory and champagne gold. Cormorant Garamond / Instrument Sans.
    ================================================================== */
 
 :root {
@@ -43,8 +43,8 @@
   --shadow-lg: 0 4px 10px rgba(7, 26, 32, 0.06), 0 42px 90px -20px rgba(7, 26, 32, 0.26);
   --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
   --header-h: 74px;
-  --serif: "Playfair Display Variable", "Iowan Old Style", Georgia, "Times New Roman", serif;
-  --sans: "Inter Variable", "Helvetica Neue", Arial, sans-serif;
+  --serif: "Cormorant Garamond Variable", "Iowan Old Style", Georgia, "Times New Roman", serif;
+  --sans: "Instrument Sans Variable", "Helvetica Neue", Arial, sans-serif;
 }
 
 * { box-sizing: border-box; }

@@ -50,45 +50,37 @@ export default async function HomePage() {
       <section className="r-hero">
         <div className="r-wrap r-hero-grid">
           <div>
-            <div className="r-hero-badges">
-              <span className="r-hero-pill is-solid"><BadgeCheck size={13} /> Lahore&apos;s trusted veterinary hospital</span>
-              <span className="r-hero-pill"><ShieldCheck size={13} /> RVMP Registered Veterinarians</span>
-            </div>
+            <span className="r-hero-rule"><i /> Lahore · Est. 2026</span>
             <h1>
               Professional Vet Care,
-              <span>At Your <em>Doorstep</em></span>
+              <span className="r-hero-em">At Your <em>Doorstep</em></span>
             </h1>
             <p>
-              Skip the stressful clinic travel. {vet.name}{" "}brings Lahore&apos;s trusted veterinary expertise directly to
-              your home — and our fully equipped hospital in Al Kabir Town is ready when your pet needs more.
+              Clinic-grade care in your own home, backed by a fully equipped hospital in Al Kabir Town. Skip the clinic
+              queue, skip the stress — your pet stays where it is calmest.
             </p>
             <div className="r-hero-actions">
-              <Link href="/book-vet-appointment-lahore" className="r-btn r-btn-white r-btn-lg">Book Home Visit <ArrowRight size={16} /></Link>
-              <Link href="/register" className="r-btn r-btn-orange r-btn-lg"><PawPrint size={16} /> Sign Up Free</Link>
+              <Link href="/book-vet-appointment-lahore" className="r-btn r-btn-gold r-btn-lg">Book a Home Visit <ArrowRight size={15} /></Link>
+              <Link href="/register" className="r-btn r-btn-ivory r-btn-lg"><PawPrint size={15} /> Sign Up Free</Link>
               <Link href="/login" className="r-btn r-btn-ghost-dark r-btn-lg">Log In</Link>
             </div>
             <div className="r-hero-trust">
-              {["24/7 Available", "RVMP Certified", "Fully Equipped", "All Pets Welcome"].map((item) => (
-                <span key={item}><CheckCircle2 size={13} /> {item}</span>
+              {["24/7 Emergency", "RVMP Certified", "Fully Equipped", "All Pets Welcome"].map((item) => (
+                <span key={item}>{item}</span>
               ))}
             </div>
           </div>
 
           <div className="r-vetcard-wrap">
             <div className="r-vetcard">
-              <span className="r-vetcard-top">Top Rated ★</span>
               <div className="r-vetcard-photo">
                 <Image src={vet.image} alt={`${vet.name}, ${vet.role} at ${business.name}`} fill priority sizes="(max-width:980px) 90vw, 40vw" className="object-cover" unoptimized />
               </div>
               <div className="r-vetcard-body">
+                <span className="r-vetcard-eyebrow">Top Rated</span>
                 <h3>{vet.name}</h3>
-                <div className="r-vetcard-cred">{vet.credentials}</div>
-                <div className="r-vetcard-role">{vet.role}</div>
-                <div className="r-vetcard-chips">
-                  <span className="r-chip r-chip-peach">RVMP Registered</span>
-                  <span className="r-chip r-chip-peach">DVM Certified</span>
-                </div>
-                <div className="r-vetcard-verified"><BadgeCheck size={12} /> Verified by the Pakistan Veterinary Medical Council</div>
+                <div className="r-vetcard-cred">{vet.credentials} · Lead Veterinarian</div>
+                <div className="r-vetcard-verified">Verified · PVMC Registered</div>
                 <a className="r-btn r-btn-green" href={`https://wa.me/${business.whatsappNumber}`} target="_blank" rel="noopener noreferrer">
                   <WhatsAppIcon size={16} /> Consult on WhatsApp
                 </a>
