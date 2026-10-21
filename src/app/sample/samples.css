@@ -10,8 +10,13 @@
 .smp-index-kicker { font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: #9dbfae; }
 .smp-index-head h1 { margin: 14px 0 12px; font-size: clamp(30px, 4vw, 52px); line-height: 1.06; letter-spacing: -0.02em; font-weight: 500; }
 .smp-index-head p { margin: 0; color: #9fb3a9; font-size: 14.5px; line-height: 1.7; }
+.smp-index-group { margin-bottom: clamp(30px, 4vw, 48px); }
+.smp-index-grouphead { display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px 16px; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid #24352e; }
+.smp-index-grouphead h2 { margin: 0; font-size: clamp(19px, 2vw, 25px); font-weight: 500; letter-spacing: -.01em; }
+.smp-index-grouphead span { font-size: 10.5px; letter-spacing: .08em; color: #7f9b8e; }
 .smp-index-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(258px, 1fr)); gap: 18px; }
 .smp-tile-card { display: flex; flex-direction: column; height: 100%; background: #121e1a; border: 1px solid #24352e; border-radius: 14px; overflow: hidden; color: inherit; transition: transform .22s ease, border-color .22s ease, box-shadow .22s ease; }
+.smp-index-grid--full { grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); }
 .smp-tile-card:hover { transform: translateY(-4px); border-color: #3d6a58; box-shadow: 0 24px 44px -30px rgba(0,0,0,.9); }
 .smp-tile-thumb { position: relative; display: block; aspect-ratio: 32 / 22.5; background: #0e1815; overflow: hidden; }
 .smp-tile-thumb img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; transition: transform .4s ease; }

@@ -4,6 +4,7 @@ import {
   Phone, Search, ShieldCheck, ShoppingBag, Sparkles, Star, Stethoscope, Truck,
 } from "lucide-react";
 import { ADOPTS, CAT_IMG, HERO_IMG, PRODUCTS, REVIEWS, SERVICES, STATS, VET_IMG, CLINIC_IMG, DOG_IMG } from "./data";
+import { PawWellGreen, PawWellIvory, PawWellSlate, PawWellSage } from "./pawwell";
 
 /* ── shared primitives ───────────────────────────────────────────────── */
 
@@ -1003,6 +1004,10 @@ export const VARIANT_MAP = {
   "neo-brutal": NeoBrutal,
   "soft-gradient": SoftGradient,
   "split-stats": SplitStats,
+  "pawwell-green": PawWellGreen,
+  "pawwell-ivory": PawWellIvory,
+  "pawwell-slate": PawWellSlate,
+  "pawwell-sage": PawWellSage,
 } as const;
 
 export type VariantSlug = keyof typeof VARIANT_MAP;

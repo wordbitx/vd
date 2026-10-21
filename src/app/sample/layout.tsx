@@ -6,6 +6,7 @@ import "@fontsource-variable/figtree/wght.css";
 import "@fontsource-variable/inter/wght.css";
 import "@fontsource-variable/playfair-display/wght.css";
 import "./samples.css";
+import "./pawwell.css";
 
 export const metadata: Metadata = {
   title: { default: "20 home page studies", template: "%s · Jawad design studies" },

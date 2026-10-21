@@ -12,6 +12,7 @@ export type Sample = {
   bestFor: string;
   palette: [string, string, string, string];
   type: string;
+  group?: "full";
 };
 
 export const SAMPLES: Sample[] = [
@@ -194,6 +195,46 @@ export const SAMPLES: Sample[] = [
     bestFor: "Data-forward, transparent practices",
     palette: ["#ffffff", "#0e3b38", "#eef4f1", "#14231f"],
     type: "Cormorant + Instrument Sans",
+  },
+  {
+    slug: "pawwell-green",
+    n: "21",
+    name: "PawWell · Green",
+    blurb: "The mockup layout end to end: photo hero, ten services, shop and why-us split, about with stats, categories, reviews, blog, five-column footer.",
+    bestFor: "Closest to the reference mockup",
+    palette: ["#1d4736", "#e9f0e1", "#f8f4ec", "#d8a13f"],
+    type: "Playfair Display + Figtree",
+    group: "full",
+  },
+  {
+    slug: "pawwell-ivory",
+    n: "22",
+    name: "PawWell · Ivory",
+    blurb: "The same full page warmed up — ivory paper, bronze buttons and a deep olive reviews band.",
+    bestFor: "Warm, boutique practice",
+    palette: ["#6b5227", "#f1e6d1", "#fbf6ec", "#b8894a"],
+    type: "Playfair Display + Figtree",
+    group: "full",
+  },
+  {
+    slug: "pawwell-slate",
+    n: "23",
+    name: "PawWell · Slate",
+    blurb: "Same sections, modern dress: Figtree headings, cool grey surfaces and a copper accent.",
+    bestFor: "Contemporary, clinical feel",
+    palette: ["#253330", "#e8ece7", "#f4f5f3", "#c07a4a"],
+    type: "Figtree only",
+    group: "full",
+  },
+  {
+    slug: "pawwell-sage",
+    n: "24",
+    name: "PawWell · Sage",
+    blurb: "Same full page in soft sage with Newsreader headings — calm, natural and easy to read.",
+    bestFor: "Calm, natural first impression",
+    palette: ["#17453f", "#e0ead5", "#eff4e9", "#c08a4e"],
+    type: "Newsreader + Figtree",
+    group: "full",
   },
 ];
 
